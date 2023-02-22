@@ -3,6 +3,22 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Welcome, @ViewData["UserName"]</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @{
+        if(Convert.ToInt32(ViewData["LoggedIn"])==0)
+        {
+            <p>Login Form should Show Here.</p>
+            <p>
+            <form asp-action="LogIn">
+            <input type="text" name="UserName"><br>
+            <input type="submit" value="LogIn">
+            </form>
+            </p>
+        }
+        if(Convert.ToInt32(ViewData["LoggedIn"])==1)
+        {
+            <a asp-action="logOut">Log Out</a>
+        }
+    }
 </div>

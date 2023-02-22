@@ -18,9 +18,22 @@ namespace ScheduleManager.Controllers
             return View();
         }
 
+        public IActionResult LogIn()
+        {
+            ViewData["UserName"] = HttpContext.Request.Form["UserName"];
+            ViewData["LoggedIn"] = 1;
+            return View("Index");
+        }
+
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult LogOut()
+        {
+            ViewData["LoggedIn"] = 0;
+            return View("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
