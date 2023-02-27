@@ -7,17 +7,18 @@
     @{
         if(Convert.ToInt32(ViewData["LoggedIn"])==0)
         {
-                    <p>Here is the Login Form. Please enter your username below.</p>
-                    <p>I have pushed changes. Kent, can you see them?</p>
+                <p>Here is the Login Form. Please enter your username below.</p>
+                <p>I have pushed changes. Kent, can you see them?</p>    
+                <form asp-action="LogIn">
                     <p>
-                    <form asp-action="LogIn">
-                    <input type="text" name="UserName"><br>
-                    <input type="submit" value="LogIn">
-                    </form>
+                        <input type="text" name="UserName"><br>
+                        <input type="submit" value="LogIn">
                     </p>
+                </form>        
         }
         if(Convert.ToInt32(ViewData["LoggedIn"])==1)
         {
+            <p>Anydata contains @ViewData["AnyData"] </p>
                     <a asp-action="logOut">Log Out</a>
         }
     }

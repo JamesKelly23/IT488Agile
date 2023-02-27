@@ -22,6 +22,7 @@ namespace ScheduleManager.Controllers
         {
             ViewData["UserName"] = HttpContext.Request.Form["UserName"];
             ViewData["LoggedIn"] = 1;
+            ViewData["AnyData"] = "This is some random data.";
             return View("Index");
         }
 
