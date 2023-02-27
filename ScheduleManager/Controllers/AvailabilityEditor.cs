@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ScheduleManager.Models;
+using System.Diagnostics;
 
 namespace ScheduleManager.Controllers
 {
@@ -8,5 +10,11 @@ namespace ScheduleManager.Controllers
         {
             return View();
         }
+
+
+
+
+
+
     }
 }
