@@ -2,6 +2,7 @@
 {
     public class Availability
     {
+        private SqlConnection theConnection = new(ConnectionStrings.local);
         public int ID { get; private set; }
         public int EmployeeID { get; set; }
         public DateTime EffectiveDate { get; set; }
@@ -19,7 +20,7 @@
         public DateTime SaturdayEnd { get; set; }
         public DateTime SundayStart { get; set; }
         public DateTime SundayEnd { get; set; }
-        public Employee getEmployee()
+        public Employee GetEmployee()
         {
             return new Employee(EmployeeID);
         }
@@ -45,9 +46,9 @@
         public Availability (int theID)
         {
             ID = theID;
-            SqlConnection theConnection = new SqlConnection(ConnectionStrings.local);
+            SqlConnection theConnection = new(ConnectionStrings.local);
             theConnection.Open();
-            SqlCommand theCommand = new SqlCommand("SELECT * FROM Availability WHERE ID = " + theID, theConnection);
+            SqlCommand theCommand = new("SELECT * FROM Availability WHERE ID = " + theID, theConnection);
             SqlDataReader theReader = theCommand.ExecuteReader();
             theReader.Read();
             EmployeeID = theReader.GetInt32(1);
@@ -69,9 +70,9 @@
         }
         public static List<Availability> GetList()
         {
-            SqlConnection staticConnection = new SqlConnection(ConnectionStrings.local);
-            List<Availability> list = new List<Availability>();
-            SqlCommand theCommand = new SqlCommand("SELECT ID From Availability;", staticConnection);
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            List<Availability> list = new();
+            SqlCommand theCommand = new("SELECT ID From Availability;", staticConnection);
             staticConnection.Open();
             SqlDataReader theReader = theCommand.ExecuteReader();
             while (theReader.Read())
@@ -80,6 +81,36 @@
             }
             staticConnection.Close();
             return list;
+        }
+        public string Save()
+        {
+            SqlCommand theCommand;
+            if (ID == 0)
+            {
+                theCommand = new SqlCommand("INSERT INTO Availability ('EmployeeID', 'EffectiveDate', 'MondayStart', 'MondayEnd', 'TuesdayStart', 'TuesdayEnd', 'WednesdayStart', 'WednesdayEnd', 'ThursdayStart', 'ThursdayEnd', 'FridayStart', 'FridayEnd', 'SaturdayStart', 'SaturdayEnd', 'SundayStart', 'SundayEnd') OUTPUT INSERTED.ID VALUES (" + EmployeeID + ", '" + EffectiveDate + "', '" + MondayStart + "', '" + MondayEnd + "', '" + TuesdayStart + "', '" + TuesdayEnd + "', '" + WednesdayStart + "', '" + WednesdayEnd + "', '" + ThursdayStart + "', '" + ThursdayEnd + "', '" + FridayStart + "', '" + FridayEnd + "', '" + SaturdayStart + "', '" + SaturdayEnd + "', '" + SundayStart + "', '" + SundayEnd + "');", theConnection);
+                theConnection.Open();
+                ID = Convert.ToInt32(theCommand.ExecuteScalar());
+                theConnection.Close();
+                return "Success, the ID of the new record is " + ID;
+            }
+            else
+            {
+                theCommand = new SqlCommand("UPDATE Availability SET EmployeeID=" + EmployeeID + ", EffectiveDate='" + EffectiveDate + "', MondayStart='" + MondayStart + "', MondayEnd='" + MondayEnd + "', TuesdayStart='" + TuesdayStart + "', TuesdayEnd='" + TuesdayEnd + "', WednesdayStart='" + WednesdayStart + "', WednesdayEnd='" + WednesdayEnd + "', ThursdayStart='" + ThursdayStart + "', ThursdayEnd='" + ThursdayEnd + "', FridayStart='" + FridayStart + "', FridayEnd='" + FridayEnd + "', SaturdayStart='" + SaturdayStart + "', SaturdayEnd='" + SaturdayEnd + "', SundayStart='" + SundayStart + "', SundayEnd='" + SundayEnd + "' WHERE ID=" + ID + ";", theConnection);
+                String message;
+                try
+                {
+                    theConnection.Open();
+                    theCommand.ExecuteNonQuery();
+                    message= "The row was successfully updated.";
+                } catch (Exception ex)
+                {
+                    message= "The row was not successfully updated. Error: " + ex.Message;
+                } finally
+                {
+                    theConnection.Close();
+                }
+                return message;
+            }
         }
     }
 }

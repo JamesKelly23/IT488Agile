@@ -43,10 +43,22 @@ namespace ScheduleManager.Models
             } else
             {
                 theCommand = new SqlCommand("UPDATE Rank SET Title='" + Title + "' WHERE ID=" +ID +";", theConnection);
-                theConnection.Open();
-                theCommand.ExecuteNonQuery();
-                theConnection.Close();
-                return "The row was successfully updated.";
+                String message;
+                try
+                {
+                    theConnection.Open();
+                    theCommand.ExecuteNonQuery();
+                    message = "The row was successfully updated.";
+                }
+                catch (Exception ex)
+                {
+                    message = "The row was not successfully updated. Error: " + ex.Message;
+                }
+                finally
+                {
+                    theConnection.Close();
+                }
+                return message;
             }
         }
         public static List<Rank> GetList()

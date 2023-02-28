@@ -66,7 +66,7 @@
             SqlCommand theCommand;
             if (ID == 0)
             {
-                theCommand = new SqlCommand("INSERT INTO Rank ('FirstName', 'LastName', 'RankID', 'Password', 'UserName', 'Phone', 'Email', 'DateOfBirth') OUTPUT INSERTED.ID VALUES ('" + FirstName + "', '" + LastName + "', " + RankID + "', '" + Password + "', '" + Username + "', '" + Phone + "', '" + Email + "', '" + DOB.ToString() + "');", theConnection);
+                theCommand = new SqlCommand("INSERT INTO Employee ('FirstName', 'LastName', 'RankID', 'Password', 'UserName', 'Phone', 'Email', 'DateOfBirth') OUTPUT INSERTED.ID VALUES ('" + FirstName + "', '" + LastName + "', " + RankID + ", '" + Password + "', '" + Username + "', '" + Phone + "', '" + Email + "', '" + DOB.ToString() + "');", theConnection);
                 theConnection.Open();
                 ID = Convert.ToInt32(theCommand.ExecuteScalar());
                 theConnection.Close();
@@ -74,11 +74,23 @@
             }
             else
             {
-                theCommand = new SqlCommand("UPDATE Rank SET FirstName='" + FirstName + ", LastName='" + LastName + ", RankID=" + RankID + ", Password='" + Password + "', Username='" + Username + "', Phone='" +Phone + "', Email='" + Email + "', DateOfBirth='" +DOB.ToString() + "' WHERE ID=" + ID + ";", theConnection);
-                theConnection.Open();
-                theCommand.ExecuteNonQuery();
-                theConnection.Close();
-                return "The row was successfully updated.";
+                theCommand = new SqlCommand("UPDATE Employee SET FirstName='" + FirstName + "', LastName='" + LastName + "', RankID=" + RankID + ", Password='" + Password + "', Username='" + Username + "', Phone='" +Phone + "', Email='" + Email + "', DateOfBirth='" +DOB.ToString() + "' WHERE ID=" + ID + ";", theConnection);
+                String message;
+                try
+                {
+                    theConnection.Open();
+                    theCommand.ExecuteNonQuery();
+                    message = "The row was successfully updated.";
+                }
+                catch (Exception ex)
+                {
+                    message = "The row was not successfully updated. Error: " + ex.Message;
+                }
+                finally
+                {
+                    theConnection.Close();
+                }
+                return message;
             }
         }
         public static int ValidateLogin(string userName, string password)

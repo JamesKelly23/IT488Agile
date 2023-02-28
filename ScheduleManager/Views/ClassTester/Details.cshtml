@@ -3,7 +3,10 @@
 *@
 @{
     ViewData["Title"] = "Details Screen";
-
+    if(ViewData["Message"] != null)
+    {
+        <p>Message: @ViewData["Message"]</p>
+    }
     switch(ViewData["ClassType"])
     {
         case "Employee":
@@ -11,7 +14,7 @@
             Rank theRank = new Rank(theEmployee.RankID);
             <p>@theEmployee.FullName()</p>
             <p>Rank: @theRank.Title</p>
-            <p>Password: @theEmployee.Password</p>
+            <p>Password: @theEmployee.Password <form asp-action="Update" asp-route-type="Employee" asp-route-id=@theEmployee.ID><input type="text" name="NewPassword" /><input type="submit" value="Change" /></form></p>
             <p>Username: @theEmployee.Username</p>
             <p>Phone: @theEmployee.Phone</p>
             <p>Email: @theEmployee.Email</p>
@@ -19,7 +22,7 @@
             break;
         case "Availability":
             Availability theAvailability = ViewBag.theAvailability;
-            Employee thisEmployee = theAvailability.getEmployee();
+            Employee thisEmployee = theAvailability.GetEmployee();
             <p>Availability ID: @theAvailability.ID</p>
             <p>Employee: @thisEmployee.FullName()</p>
             <table>
@@ -31,6 +34,39 @@
                 <tr><td>Friday</td><td>@theAvailability.FridayStart.ToString("t")</td><td>@theAvailability.FridayEnd.ToString("t")</td></tr>
                 <tr><td>Saturday</td><td>@theAvailability.SaturdayStart.ToString("t")</td><td>@theAvailability.SaturdayEnd.ToString("t")</td></tr>
                 <tr><td>Sunday</td><td>@theAvailability.SundayStart.ToString("t")</td><td>@theAvailability.SundayEnd.ToString("t")</td></tr>
+                <form asp-action="Update" asp-route-type="Availability" asp-route-id=@theAvailability.ID>
+                <tr>
+                    <td>New Sunday</td>
+                    <td>
+                        <select name="NewSundayStart">
+                                @{
+                                    DateTime theDate = Convert.ToDateTime("1/1/2001 00:00:00");
+                                    for(int i=0; i<24; i++)
+                                    {
+                                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                                        theDate=theDate.AddHours(1);
+                                    }
+                                }
+                        </select>
+                    </td>
+                    <td>
+                        <select name="NewSundayEnd">
+                                @{
+                                    theDate = Convert.ToDateTime("1/1/2001 00:00:00");
+                                    for (int i = 0; i < 24; i++)
+                                    {
+                                    <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                                        theDate=theDate.AddHours(1);
+                                    }
+                                }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                <td></td>
+                <td colspan=2><input type="submit" value="Submit" /></td>
+                </tr>
+                </form>
             </table>
             break;
     }

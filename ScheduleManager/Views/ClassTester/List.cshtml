@@ -9,7 +9,7 @@
             {
                 <p>@theRank.ID - @theRank.Title</p>
             }
-        break;
+            break;
         case "Employee":
             foreach (Employee theEmployee in ViewBag.EmployeeList)
             {
@@ -20,11 +20,11 @@
             <p>Password: <input type="password" name="Password" /></p>
             <p><input type="submit" Value="Submit" /></p>
             </form>
-        break;
+            break;
         case "Availability":
             foreach (Availability theAvailability in ViewBag.AvailabilityList)
             {
-                <p><a asp-action="Details" asp-route-type="Availability" asp-route-id=@theAvailability.ID>@theAvailability.ID - @theAvailability.getEmployee().FullName() Effective @theAvailability.EffectiveDate</a></p>
+                <p><a asp-action="Details" asp-route-type="Availability" asp-route-id=@theAvailability.ID>@theAvailability.ID - @theAvailability.GetEmployee().FullName() Effective @theAvailability.EffectiveDate</a></p>
             }
             break;
     }

@@ -59,5 +59,29 @@ namespace ScheduleManager.Controllers
             }
             return View("Details");
         }
+        public IActionResult Update(int id, string type)
+        {
+            switch(type)
+            {
+                case "Employee":
+                    ScheduleManager.Models.Employee emp = new(id);
+                    emp.Password = HttpContext.Request.Form["NewPassword"];
+                    ViewData["Message"]=emp.Save();
+                    ViewData["ClassType"] = "Employee";
+                    ViewBag.theEmployee = new ScheduleManager.Models.Employee(id);
+                    return View("Details");
+                case "Availability":
+                    Models.Availability avail = new(id)
+                    {
+                        SundayStart = Convert.ToDateTime(HttpContext.Request.Form["NewSundayStart"]),
+                        SundayEnd = Convert.ToDateTime(HttpContext.Request.Form["NewSundayEnd"])
+                    };
+                    ViewData["Message"] = avail.Save();
+                    ViewData["ClassType"] = "Availability";
+                    ViewBag.theAvailability = new ScheduleManager.Models.Availability(id);
+                    return View("Details");
+            }
+            return View("Index");
+        }
     }
 }
