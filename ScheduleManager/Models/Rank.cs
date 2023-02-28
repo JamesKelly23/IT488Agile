@@ -10,13 +10,21 @@ namespace ScheduleManager.Models
 
         public Rank(int theID)
         {
-            ID = theID;
-            theConnection.Open();
-            SqlCommand theCommand = new SqlCommand("SELECT * FROM Rank WHERE ID=" + ID, theConnection);
-            SqlDataReader theReader = theCommand.ExecuteReader();
-            theReader.Read();
-            Title = theReader.GetString(1);
-            theConnection.Close();
+            if(theID !=0)
+            {
+                ID = theID;
+                theConnection.Open();
+                SqlCommand theCommand = new SqlCommand("SELECT * FROM Rank WHERE ID=" + ID, theConnection);
+                SqlDataReader theReader = theCommand.ExecuteReader();
+                theReader.Read();
+                Title = theReader.GetString(1);
+                theConnection.Close();
+            } else
+            {
+                ID = 0;
+                Title = "";
+            }
+
         }
         public Rank(string theTitle)
         {

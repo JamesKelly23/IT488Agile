@@ -33,20 +33,33 @@
         }
         public Employee(int theID)
         {
-            ID = theID;
-            theConnection.Open();
-            SqlCommand theCommand = new SqlCommand("SELECT * FROM Employee WHERE ID = " + theID, theConnection);
-            SqlDataReader theReader = theCommand.ExecuteReader();
-            theReader.Read();
-            FirstName = theReader.GetString(1);
-            LastName = theReader.GetString(2);
-            RankID = theReader.GetInt32(3);
-            Password = theReader.GetString(4);
-            Username = theReader.GetString(5);
-            Email = theReader.GetString(6);
-            Phone = theReader.GetString(7);
-            DOB = theReader.GetDateTime(8);
-            theConnection.Close();
+            if(theID !=0)
+            {
+                ID = theID;
+                theConnection.Open();
+                SqlCommand theCommand = new SqlCommand("SELECT * FROM Employee WHERE ID = " + theID, theConnection);
+                SqlDataReader theReader = theCommand.ExecuteReader();
+                theReader.Read();
+                FirstName = theReader.GetString(1);
+                LastName = theReader.GetString(2);
+                RankID = theReader.GetInt32(3);
+                Password = theReader.GetString(4);
+                Username = theReader.GetString(5);
+                Phone = theReader.GetString(6);
+                Email = theReader.GetString(7);
+                DOB = theReader.GetDateTime(8);
+                theConnection.Close();
+            } else
+            {
+                FirstName = "";
+                LastName = "";
+                RankID = 0;
+                Password = "";
+                Username = "";
+                Email = "";
+                Phone = "";
+                DOB = DateTime.Now;
+            }
         }
         public string Save()
         {
@@ -67,6 +80,26 @@
                 theConnection.Close();
                 return "The row was successfully updated.";
             }
+        }
+        public static int ValidateLogin(string userName, string password)
+        {
+            SqlConnection staticConnection = new SqlConnection(ConnectionStrings.local);
+            SqlCommand theCommand = new SqlCommand("SELECT ID FROM Employee WHERE Username='" + userName + "' AND Password='" + password + "';", staticConnection);
+            staticConnection.Open();
+            int theID;
+            try
+            {
+                theID = Convert.ToInt32(theCommand.ExecuteScalar());
+            }
+            catch(Exception ex)
+            {
+                theID = 0;
+            } 
+            finally
+            {
+                staticConnection.Close();
+            }
+            return theID;
         }
         public static List<Employee> GetList()
         {

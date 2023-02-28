@@ -49,6 +49,13 @@ namespace ScheduleManager.Controllers
                 case "Availability":
                     ViewBag.theAvailability = new ScheduleManager.Models.Availability(id);
                     break;
+                case "EmployeeLogin":
+                    ViewData["ClassType"] = "Employee";
+                    string userName = HttpContext.Request.Form["Username"];
+                    string passWord = HttpContext.Request.Form["Password"];
+                    int theID = ScheduleManager.Models.Employee.ValidateLogin(userName, passWord);
+                    ViewBag.theEmployee = new ScheduleManager.Models.Employee(theID);
+                    break;
             }
             return View("Details");
         }
