@@ -1,0 +1,26 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    switch(ViewData["ClassType"])
+    {
+        case "Rank":
+            foreach (Rank theRank in ViewBag.RankList)
+            {
+                <p>@theRank.ID - @theRank.Title</p>
+            }
+        break;
+        case "Employee":
+            foreach (Employee theEmployee in ViewBag.EmployeeList)
+            {
+                <p><a asp-action="Details" asp-route-type="Employee" asp-route-id=@theEmployee.ID>@theEmployee.ID - @theEmployee.FullName()</a></p>
+            }
+        break;
+        case "Availability":
+            foreach (Availability theAvailability in ViewBag.AvailabilityList)
+            {
+                <p><a asp-action="Details" asp-route-type="Availability" asp-route-id=@theAvailability.ID>@theAvailability.ID - @theAvailability.getEmployee().FullName() Effective @theAvailability.EffectiveDate</a></p>
+            }
+            break;
+    }
+}

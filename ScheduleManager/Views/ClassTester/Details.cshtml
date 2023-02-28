@@ -1,0 +1,37 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Details Screen";
+
+    switch(ViewData["ClassType"])
+    {
+        case "Employee":
+            Employee theEmployee = ViewBag.theEmployee;
+            Rank theRank = new Rank(theEmployee.RankID);
+            <p>@theEmployee.FullName()</p>
+            <p>Rank: @theRank.Title</p>
+            <p>Password: @theEmployee.Password</p>
+            <p>Username: @theEmployee.Username</p>
+            <p>Phone: @theEmployee.Phone</p>
+            <p>Email: @theEmployee.Email</p>
+            <p>DOB: @theEmployee.DOB.ToString()</p>
+            break;
+        case "Availability":
+            Availability theAvailability = ViewBag.theAvailability;
+            Employee thisEmployee = theAvailability.getEmployee();
+            <p>Availability ID: @theAvailability.ID</p>
+            <p>Employee: @thisEmployee.FullName()</p>
+            <table>
+            <tr><td>Weekday</td><td>Start Time</td><td>End Time</td></tr>
+                <tr><td>Monday</td><td>@theAvailability.MondayStart.ToString("t")</td><td>@theAvailability.MondayEnd.ToString("t")</td></tr>
+                <tr><td>Tuesday</td><td>@theAvailability.TuesdayStart.ToString("t")</td><td>@theAvailability.TuesdayEnd.ToString("t")</td></tr>
+                <tr><td>Wednesday</td><td>@theAvailability.WednesdayStart.ToString("t")</td><td>@theAvailability.WednesdayEnd.ToString("t")</td></tr>
+                <tr><td>Thursday</td><td>@theAvailability.ThursdayStart.ToString("t")</td><td>@theAvailability.ThursdayEnd.ToString("t")</td></tr>
+                <tr><td>Friday</td><td>@theAvailability.FridayStart.ToString("t")</td><td>@theAvailability.FridayEnd.ToString("t")</td></tr>
+                <tr><td>Saturday</td><td>@theAvailability.SaturdayStart.ToString("t")</td><td>@theAvailability.SaturdayEnd.ToString("t")</td></tr>
+                <tr><td>Sunday</td><td>@theAvailability.SundayStart.ToString("t")</td><td>@theAvailability.SundayEnd.ToString("t")</td></tr>
+            </table>
+            break;
+    }
+}
