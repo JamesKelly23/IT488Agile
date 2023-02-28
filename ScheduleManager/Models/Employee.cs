@@ -2,11 +2,12 @@
 {
     public class ConnectionStrings
     {
-        public static string local = "Data Source=localhost\\SQLEXORESS; Integrated Security=true; Initial Catalog=ScheduleManager;";
+        public static string local = "Data Source=localhost\\SQLEXPRESS; Integrated Security=true; Initial Catalog=ScheduleManager;";
     }
     public class Employee
     {
-        public int ID { get; }
+        private SqlConnection theConnection = new SqlConnection(ConnectionStrings.local);
+        public int ID { get; private set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }  
         public int RankID { get; set; }
@@ -15,6 +16,10 @@
         public string Email { get; set; }
         public String Phone { get; set; }
         public DateTime DOB { get; set; }
+        public String FullName()
+        {
+            return FirstName + " " + LastName;
+        }
         public Employee(string firstName, string lastName, int rankID, string password, string username, string email, string phone, DateTime dOB)
         {
             FirstName = firstName;
@@ -29,7 +34,6 @@
         public Employee(int theID)
         {
             ID = theID;
-            SqlConnection theConnection = new SqlConnection(ConnectionStrings.local);
             theConnection.Open();
             SqlCommand theCommand = new SqlCommand("SELECT * FROM Employee WHERE ID = " + theID, theConnection);
             SqlDataReader theReader = theCommand.ExecuteReader();
@@ -44,6 +48,39 @@
             DOB = theReader.GetDateTime(8);
             theConnection.Close();
         }
-
+        public string Save()
+        {
+            SqlCommand theCommand;
+            if (ID == 0)
+            {
+                theCommand = new SqlCommand("INSERT INTO Rank ('FirstName', 'LastName', 'RankID', 'Password', 'UserName', 'Phone', 'Email', 'DateOfBirth') OUTPUT INSERTED.ID VALUES ('" + FirstName + "', '" + LastName + "', " + RankID + "', '" + Password + "', '" + Username + "', '" + Phone + "', '" + Email + "', '" + DOB.ToString() + "');", theConnection);
+                theConnection.Open();
+                ID = Convert.ToInt32(theCommand.ExecuteScalar());
+                theConnection.Close();
+                return "Success, the ID of the new record is " + ID;
+            }
+            else
+            {
+                theCommand = new SqlCommand("UPDATE Rank SET FirstName='" + FirstName + ", LastName='" + LastName + ", RankID=" + RankID + ", Password='" + Password + "', Username='" + Username + "', Phone='" +Phone + "', Email='" + Email + "', DateOfBirth='" +DOB.ToString() + "' WHERE ID=" + ID + ";", theConnection);
+                theConnection.Open();
+                theCommand.ExecuteNonQuery();
+                theConnection.Close();
+                return "The row was successfully updated.";
+            }
+        }
+        public static List<Employee> GetList()
+        {
+            SqlConnection staticConnection = new SqlConnection(ConnectionStrings.local);
+            List<Employee> list = new List<Employee>();
+            SqlCommand theCommand = new SqlCommand("SELECT ID From Employee;", staticConnection);
+            staticConnection.Open();
+            SqlDataReader theReader = theCommand.ExecuteReader();
+            while (theReader.Read())
+            {
+                list.Add(new Employee(theReader.GetInt32(0)));
+            }
+            staticConnection.Close();
+            return list;
+        }
     }
 }
