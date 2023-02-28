@@ -1,53 +1,6 @@
-﻿USE [ScheduleManager]
+﻿USE [master]
 GO
-ALTER TABLE [dbo].[TimeOffRequest] DROP CONSTRAINT [FK_TimeOffRequest_ManagerID]
-GO
-ALTER TABLE [dbo].[TimeOffRequest] DROP CONSTRAINT [FK_TimeOffRequest_Employee]
-GO
-ALTER TABLE [dbo].[Shift] DROP CONSTRAINT [FK_Shift_Employee]
-GO
-ALTER TABLE [dbo].[PickupRequest] DROP CONSTRAINT [FK_PickupRequest_Shift]
-GO
-ALTER TABLE [dbo].[PickupRequest] DROP CONSTRAINT [FK_PickupRequest_Employee]
-GO
-ALTER TABLE [dbo].[Employee] DROP CONSTRAINT [FK_Employee_Rank]
-GO
-ALTER TABLE [dbo].[Availability] DROP CONSTRAINT [FK_Availability_Employee]
-GO
-/****** Object:  Table [dbo].[TimeOffRequest]    Script Date: 2/27/2023 11:20:28 PM ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TimeOffRequest]') AND type in (N'U'))
-DROP TABLE [dbo].[TimeOffRequest]
-GO
-/****** Object:  Table [dbo].[Shift]    Script Date: 2/27/2023 11:20:28 PM ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Shift]') AND type in (N'U'))
-DROP TABLE [dbo].[Shift]
-GO
-/****** Object:  Table [dbo].[Role]    Script Date: 2/27/2023 11:20:28 PM ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Role]') AND type in (N'U'))
-DROP TABLE [dbo].[Role]
-GO
-/****** Object:  Table [dbo].[Rank]    Script Date: 2/27/2023 11:20:28 PM ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Rank]') AND type in (N'U'))
-DROP TABLE [dbo].[Rank]
-GO
-/****** Object:  Table [dbo].[PickupRequest]    Script Date: 2/27/2023 11:20:28 PM ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PickupRequest]') AND type in (N'U'))
-DROP TABLE [dbo].[PickupRequest]
-GO
-/****** Object:  Table [dbo].[Employee]    Script Date: 2/27/2023 11:20:28 PM ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Employee]') AND type in (N'U'))
-DROP TABLE [dbo].[Employee]
-GO
-/****** Object:  Table [dbo].[Availability]    Script Date: 2/27/2023 11:20:28 PM ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Availability]') AND type in (N'U'))
-DROP TABLE [dbo].[Availability]
-GO
-USE [master]
-GO
-/****** Object:  Database [ScheduleManager]    Script Date: 2/27/2023 11:20:28 PM ******/
-DROP DATABASE [ScheduleManager]
-GO
-/****** Object:  Database [ScheduleManager]    Script Date: 2/27/2023 11:20:28 PM ******/
+/****** Object:  Database [ScheduleManager]    Script Date: 2/28/2023 12:49:02 AM ******/
 CREATE DATABASE [ScheduleManager]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -127,7 +80,7 @@ ALTER DATABASE [ScheduleManager] SET QUERY_STORE = OFF
 GO
 USE [ScheduleManager]
 GO
-/****** Object:  Table [dbo].[Availability]    Script Date: 2/27/2023 11:20:28 PM ******/
+/****** Object:  Table [dbo].[Availability]    Script Date: 2/28/2023 12:49:03 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -156,7 +109,7 @@ CREATE TABLE [dbo].[Availability](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Employee]    Script Date: 2/27/2023 11:20:28 PM ******/
+/****** Object:  Table [dbo].[Employee]    Script Date: 2/28/2023 12:49:03 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -177,7 +130,7 @@ CREATE TABLE [dbo].[Employee](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PickupRequest]    Script Date: 2/27/2023 11:20:28 PM ******/
+/****** Object:  Table [dbo].[PickupRequest]    Script Date: 2/28/2023 12:49:03 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -194,7 +147,7 @@ CREATE TABLE [dbo].[PickupRequest](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Rank]    Script Date: 2/27/2023 11:20:28 PM ******/
+/****** Object:  Table [dbo].[Rank]    Script Date: 2/28/2023 12:49:03 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -208,7 +161,7 @@ CREATE TABLE [dbo].[Rank](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Role]    Script Date: 2/27/2023 11:20:28 PM ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 2/28/2023 12:49:03 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -222,7 +175,7 @@ CREATE TABLE [dbo].[Role](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Shift]    Script Date: 2/27/2023 11:20:28 PM ******/
+/****** Object:  Table [dbo].[Shift]    Script Date: 2/28/2023 12:49:03 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -242,7 +195,7 @@ CREATE TABLE [dbo].[Shift](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TimeOffRequest]    Script Date: 2/27/2023 11:20:28 PM ******/
+/****** Object:  Table [dbo].[TimeOffRequest]    Script Date: 2/28/2023 12:49:03 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -259,6 +212,16 @@ CREATE TABLE [dbo].[TimeOffRequest](
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Availability] ON 
+
+INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (1, 1, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime))
+INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (2, 2, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime))
+INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (5, 6, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T12:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T06:00:00.000' AS DateTime), CAST(N'2001-01-01T20:00:00.000' AS DateTime), CAST(N'2001-01-01T07:00:00.000' AS DateTime), CAST(N'2001-01-01T16:00:00.000' AS DateTime), CAST(N'2001-01-01T10:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime))
+INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (7, 7, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime))
+INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (9, 8, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T06:00:00.000' AS DateTime), CAST(N'2001-01-01T15:00:00.000' AS DateTime), CAST(N'2001-01-01T06:00:00.000' AS DateTime), CAST(N'2001-01-01T15:00:00.000' AS DateTime), CAST(N'2001-01-01T06:00:00.000' AS DateTime), CAST(N'2001-01-01T15:00:00.000' AS DateTime), CAST(N'2001-01-01T06:00:00.000' AS DateTime), CAST(N'2001-01-01T15:00:00.000' AS DateTime), CAST(N'2001-01-01T06:00:00.000' AS DateTime), CAST(N'2001-01-01T15:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime))
+INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (11, 9, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime))
+SET IDENTITY_INSERT [dbo].[Availability] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Employee] ON 
 
