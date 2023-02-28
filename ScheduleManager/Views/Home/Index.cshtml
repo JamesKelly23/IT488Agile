@@ -1,25 +1,28 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<div class="text-center">
+    <h1 class="display-4">Welcome, Please Login. @ViewData["UserName"]</h1>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome, @ViewData["UserName"]</h1>
+
     @{
-        if(Convert.ToInt32(ViewData["LoggedIn"])==0)
+        if (Convert.ToInt32(ViewData["LoggedIn"]) == 0)
         {
-                <p>Here is the Login Form. Please enter your username below.</p>
-                <p>I have pushed changes. Kent, can you see them?</p>    
+            <!--<p>Login Form should Show Here.</p>-->
+            <p>
                 <form asp-action="LogIn">
-                    <p>
-                        <input type="text" name="UserName"><br>
-                        <input type="submit" value="LogIn">
-                    </p>
-                </form>        
+                    <label>Username:</label>
+                    <input type="text" placeholder="Enter Username" name="username" required><br>
+                    <!--input type="text" name="UserName"-->
+                    <label>Password:</label>
+                    <input type="text" placeholder="Enter Password" name="password" required><br>
+                    <!--input type="text" name="Password"-->
+                    <input type="submit" value="LogIn"><br>
+                    <input type="checkbox" checked="checked"> Remember me<br>
+                    <button type="button" class="cancelbtn"> Cancel</button>
+                </form>
+            </p>
         }
-        if(Convert.ToInt32(ViewData["LoggedIn"])==1)
+        if (Convert.ToInt32(ViewData["LoggedIn"]) == 1)
         {
-            <p>Anydata contains @ViewData["AnyData"] </p>
-                    <a asp-action="logOut">Log Out</a>
+            <a asp-action="logOut">Log Out</a>
         }
     }
 </div>
