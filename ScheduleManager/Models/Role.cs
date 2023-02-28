@@ -10,7 +10,7 @@ namespace ScheduleManager.Models
         public Rank(int theID)
         {
             ID = theID;
-            SqlConnection theConnection = new SqlConnection("Data Source=localhost\\SQLEXPRESS; Integrated Security=true; Initial Catalog='ScheduleManager'");
+            SqlConnection theConnection = new SqlConnection(ConnectionStrings.local);
             theConnection.Open();
             SqlCommand theCommand = new SqlCommand("SELECT * FROM Rank WHERE ID=" + ID, theConnection);
             SqlDataReader theReader = theCommand.ExecuteReader();

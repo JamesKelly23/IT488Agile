@@ -15,6 +15,14 @@ namespace ScheduleManager.Controllers
 
         public IActionResult Index()
         {
+            int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
+            if(loggedInEmployee == 0)
+            {
+               
+            } else
+            {
+                ViewBag["LoggedInEmployee"] = new Employee(loggedInEmployee);
+            }
             return View();
         }
 
