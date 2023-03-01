@@ -7,6 +7,12 @@
                 <p>@theRank.ID - @theRank.Title</p>
             }
             break;
+        case "Role":
+            foreach (Role theRole in ViewBag.RoleList)
+            {
+                <p>@theRole.ID - @theRole.Name</p>
+            }
+            break;
         case "Employee":
             foreach (Employee theEmployee in ViewBag.EmployeeList)
             {

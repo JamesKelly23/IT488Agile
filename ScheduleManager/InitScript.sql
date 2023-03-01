@@ -1,6 +1,6 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [ScheduleManager]    Script Date: 3/1/2023 4:39:29 PM ******/
+/****** Object:  Database [ScheduleManager]    Script Date: 3/1/2023 5:19:27 PM ******/
 CREATE DATABASE [ScheduleManager]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -80,7 +80,7 @@ ALTER DATABASE [ScheduleManager] SET QUERY_STORE = OFF
 GO
 USE [ScheduleManager]
 GO
-/****** Object:  Table [dbo].[Availability]    Script Date: 3/1/2023 4:39:29 PM ******/
+/****** Object:  Table [dbo].[Availability]    Script Date: 3/1/2023 5:19:27 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -109,7 +109,7 @@ CREATE TABLE [dbo].[Availability](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Employee]    Script Date: 3/1/2023 4:39:29 PM ******/
+/****** Object:  Table [dbo].[Employee]    Script Date: 3/1/2023 5:19:27 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -130,7 +130,7 @@ CREATE TABLE [dbo].[Employee](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PickupRequest]    Script Date: 3/1/2023 4:39:29 PM ******/
+/****** Object:  Table [dbo].[PickupRequest]    Script Date: 3/1/2023 5:19:27 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -147,7 +147,7 @@ CREATE TABLE [dbo].[PickupRequest](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Rank]    Script Date: 3/1/2023 4:39:29 PM ******/
+/****** Object:  Table [dbo].[Rank]    Script Date: 3/1/2023 5:19:27 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -161,7 +161,7 @@ CREATE TABLE [dbo].[Rank](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Role]    Script Date: 3/1/2023 4:39:29 PM ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 3/1/2023 5:19:27 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -175,7 +175,7 @@ CREATE TABLE [dbo].[Role](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Shift]    Script Date: 3/1/2023 4:39:29 PM ******/
+/****** Object:  Table [dbo].[Shift]    Script Date: 3/1/2023 5:19:27 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -195,7 +195,7 @@ CREATE TABLE [dbo].[Shift](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TimeOffRequest]    Script Date: 3/1/2023 4:39:29 PM ******/
+/****** Object:  Table [dbo].[TimeOffRequest]    Script Date: 3/1/2023 5:19:27 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -260,6 +260,26 @@ GO
 INSERT [dbo].[Rank] ([ID], [Title]) VALUES (3, N'General Manager')
 GO
 SET IDENTITY_INSERT [dbo].[Rank] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Role] ON 
+GO
+INSERT [dbo].[Role] ([ID], [Name]) VALUES (1, N'General Manager')
+GO
+INSERT [dbo].[Role] ([ID], [Name]) VALUES (2, N'Manager')
+GO
+INSERT [dbo].[Role] ([ID], [Name]) VALUES (3, N'Cashier')
+GO
+INSERT [dbo].[Role] ([ID], [Name]) VALUES (4, N'Cook')
+GO
+INSERT [dbo].[Role] ([ID], [Name]) VALUES (5, N'Runner')
+GO
+INSERT [dbo].[Role] ([ID], [Name]) VALUES (6, N'Drive-Thru')
+GO
+INSERT [dbo].[Role] ([ID], [Name]) VALUES (7, N'Dining Room')
+GO
+INSERT [dbo].[Role] ([ID], [Name]) VALUES (8, N'Driver')
+GO
+SET IDENTITY_INSERT [dbo].[Role] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Shift] ON 
 GO

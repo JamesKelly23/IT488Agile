@@ -9,6 +9,12 @@ namespace ScheduleManager.Controllers
         {
             return View();
         }
+        public IActionResult RoleList()
+        {
+            ViewData["ClassType"] = "Role";
+            ViewBag.RoleList = Models.Role.GetList();
+            return View("List");
+        }
         public IActionResult EmployeeList()
         {
             ViewData["ClassType"] = "Employee";
