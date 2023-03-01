@@ -69,5 +69,50 @@
                 </form>
             </table>
             break;
+        case "Shift":
+            Shift theShift = ViewBag.theShift;
+            Employee shiftEmployee = theShift.GetEmployee();
+            <p>Shift ID: @theShift.ID</p>
+            <p>Shift Is Open: @theShift.IsOpen.ToString()</p>
+            <p>Employee ID: @theShift.EmployeeID</p>
+            <form asp-action="Update" asp-route-type="Shift" asp-route-id="@theShift.ID">
+            <p>Employee Full Name: @shiftEmployee.FullName() New Employee: <select name="NewEmployeeID">
+                @{
+                    foreach(Employee iEmployee in Employee.GetList())
+                    {
+                        <option value="@iEmployee.ID">@iEmployee.FullName()</option>
+                    }
+                }
+                </select>
+                <input type="submit" value="Save">
+            </p>
+            </form>
+            <p>Shift Date: @theShift.ShiftDate.ToString("D")</p>
+            <p>Shift Start Time: @theShift.StartTime.ToString("t")</p>
+            <p>Shift End Time: @theShift.EndTime.ToString("t")</p>
+            <p>Role: @theShift.Role</p>
+            <p>Notes: @theShift.Notes</p>
+            break;
+        case "PickupRequest":
+            PickupRequest theRequest = ViewBag.thePickupRequest;
+            Employee requestEmployee = theRequest.GetEmployee();
+            Shift requestShift = theRequest.GetShift();
+            String managerName = theRequest.ManagerID == 0 ? "None" : theRequest.GetManager().FullName();
+            <h2>Requested Shift:</h2>
+            <hr />
+            <p>ID: @theRequest.ShiftID</p>
+            <p>Date: @requestShift.ShiftDate.ToString("D")</p>
+            <p>Start: @requestShift.StartTime.ToString("t")</p>
+            <p>End: @requestShift.EndTime.ToString("t")</p>
+            <p>Role: @requestShift.Role</p>
+            <h2>Requested Employee:</h2>
+            <hr />
+            <p>Full Name: @requestEmployee.FullName()</p>
+            <h2>Request Information:</h2>
+            <hr />
+            <p>Approved: @theRequest.IsApproved <form asp-action="UpdatePickupRequest" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID"><input type="submit" value="Change" /></form>
+            </p>
+            <p>Actioning Manager: @managerName</p>
+            break;
     }
 }

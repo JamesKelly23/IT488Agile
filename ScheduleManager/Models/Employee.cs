@@ -6,7 +6,7 @@
     }
     public class Employee
     {
-        private SqlConnection theConnection = new SqlConnection(ConnectionStrings.local);
+        private SqlConnection theConnection = new(ConnectionStrings.local);
         public int ID { get; private set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }  
@@ -37,7 +37,7 @@
             {
                 ID = theID;
                 theConnection.Open();
-                SqlCommand theCommand = new SqlCommand("SELECT * FROM Employee WHERE ID = " + theID, theConnection);
+                SqlCommand theCommand = new("SELECT * FROM Employee WHERE ID = " + theID, theConnection);
                 SqlDataReader theReader = theCommand.ExecuteReader();
                 theReader.Read();
                 FirstName = theReader.GetString(1);
@@ -95,8 +95,8 @@
         }
         public static int ValidateLogin(string userName, string password)
         {
-            SqlConnection staticConnection = new SqlConnection(ConnectionStrings.local);
-            SqlCommand theCommand = new SqlCommand("SELECT ID FROM Employee WHERE Username='" + userName + "' AND Password='" + password + "';", staticConnection);
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            SqlCommand theCommand = new("SELECT ID FROM Employee WHERE Username='" + userName + "' AND Password='" + password + "';", staticConnection);
             staticConnection.Open();
             int theID;
             try
@@ -106,6 +106,7 @@
             catch(Exception ex)
             {
                 theID = 0;
+                Console.WriteLine(ex.Message);
             } 
             finally
             {
@@ -115,9 +116,9 @@
         }
         public static List<Employee> GetList()
         {
-            SqlConnection staticConnection = new SqlConnection(ConnectionStrings.local);
-            List<Employee> list = new List<Employee>();
-            SqlCommand theCommand = new SqlCommand("SELECT ID From Employee;", staticConnection);
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            List<Employee> list = new();
+            SqlCommand theCommand = new("SELECT ID From Employee;", staticConnection);
             staticConnection.Open();
             SqlDataReader theReader = theCommand.ExecuteReader();
             while (theReader.Read())

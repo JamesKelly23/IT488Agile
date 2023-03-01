@@ -4,7 +4,7 @@ namespace ScheduleManager.Models
 {
     public class Rank
     {
-        private SqlConnection theConnection = new SqlConnection(ConnectionStrings.local);
+        private SqlConnection theConnection = new(ConnectionStrings.local);
         public int ID { get; private set; }
         public string Title { get; set; }
 
@@ -14,7 +14,7 @@ namespace ScheduleManager.Models
             {
                 ID = theID;
                 theConnection.Open();
-                SqlCommand theCommand = new SqlCommand("SELECT * FROM Rank WHERE ID=" + ID, theConnection);
+                SqlCommand theCommand = new("SELECT * FROM Rank WHERE ID=" + ID, theConnection);
                 SqlDataReader theReader = theCommand.ExecuteReader();
                 theReader.Read();
                 Title = theReader.GetString(1);
@@ -63,9 +63,9 @@ namespace ScheduleManager.Models
         }
         public static List<Rank> GetList()
         {
-            SqlConnection staticConnection = new SqlConnection(ConnectionStrings.local);
-            List<Rank> list = new List<Rank>();
-            SqlCommand theCommand = new SqlCommand("SELECT ID From Rank;", staticConnection);
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            List<Rank> list = new();
+            SqlCommand theCommand = new("SELECT ID From Rank;", staticConnection);
             staticConnection.Open();
             SqlDataReader theReader = theCommand.ExecuteReader();
             while(theReader.Read())

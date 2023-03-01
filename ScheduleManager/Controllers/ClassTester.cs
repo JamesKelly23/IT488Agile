@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ScheduleManager.Models;
 
 namespace ScheduleManager.Controllers
 {
@@ -8,35 +9,46 @@ namespace ScheduleManager.Controllers
         {
             return View();
         }
-        public IActionResult Employee()
+        public IActionResult EmployeeList()
         {
             ViewData["ClassType"] = "Employee";
-            ViewBag.EmployeeList = ScheduleManager.Models.Employee.GetList();
+            ViewBag.EmployeeList = Models.Employee.GetList();
             return View("List");
         }
-        public IActionResult Rank()
+        public IActionResult RankList()
         {
             ViewData["ClassType"] = "Rank";
-            ViewBag.RankList = ScheduleManager.Models.Rank.GetList();
+            ViewBag.RankList = Models.Rank.GetList();
             return View("List");
         }
-        public IActionResult Shift()
+        public IActionResult ShiftList()
         {
-            return View();
+            ViewData["ClassType"] = "Shift";
+            ViewBag.ShiftList = Models.Shift.GetList();
+            return View("List");
         }
-        public IActionResult PickupRequest()
+        public IActionResult PickupRequestList()
         {
-            return View();
+            ViewData["ClassType"] = "PickupRequest";
+            ViewBag.PickupRequestList = Models.PickupRequest.GetList();
+            return View("List");
         }
-        public IActionResult TimeOffRequest()
+        public IActionResult TimeOffRequestList()
         {
-            return View();
+            ViewData["ClassType"] = "TimeOffRequest";
+            return View("List");
         }
-        public IActionResult Availability()
+        public IActionResult AvailabilityList()
         {
             ViewData["ClassType"] = "Availability";
-            ViewBag.AvailabilityList = ScheduleManager.Models.Availability.GetList();
+            ViewBag.AvailabilityList = Models.Availability.GetList();
             return View("List");
+        }
+        public IActionResult PickupRequestDetails(int shiftid, int empid)
+        {
+            ViewData["ClassType"] = "PickupRequest";
+            ViewBag.thePickupRequest = new PickupRequest(shiftid, empid);
+            return View("Details");
         }
         public IActionResult Details(int id, string type)
         {
@@ -44,19 +56,32 @@ namespace ScheduleManager.Controllers
             switch(type)
             {
                 case "Employee":
-                    ViewBag.theEmployee = new ScheduleManager.Models.Employee(id);
+                    ViewBag.theEmployee = new Models.Employee(id);
                     break;
                 case "Availability":
-                    ViewBag.theAvailability = new ScheduleManager.Models.Availability(id);
+                    ViewBag.theAvailability = new Models.Availability(id);
                     break;
                 case "EmployeeLogin":
                     ViewData["ClassType"] = "Employee";
                     string userName = HttpContext.Request.Form["Username"];
                     string passWord = HttpContext.Request.Form["Password"];
-                    int theID = ScheduleManager.Models.Employee.ValidateLogin(userName, passWord);
-                    ViewBag.theEmployee = new ScheduleManager.Models.Employee(theID);
+                    int theID = Models.Employee.ValidateLogin(userName, passWord);
+                    ViewBag.theEmployee = new Models.Employee(theID);
+                    break;
+                case "Shift":
+                    ViewBag.theShift = new Models.Shift(id);
                     break;
             }
+            return View("Details");
+        }
+        public IActionResult UpdatePickupRequest(int shiftid, int empid)
+        {
+            ViewData["ClassType"] = "PickupRequest";
+            PickupRequest theRequest = new(shiftid, empid);
+            theRequest.IsApproved = !theRequest.IsApproved;
+            theRequest.ManagerID = 1;
+            ViewData["Message"] = theRequest.Save();
+            ViewBag.thePickupRequest = new PickupRequest(shiftid, empid);
             return View("Details");
         }
         public IActionResult Update(int id, string type)
@@ -64,11 +89,11 @@ namespace ScheduleManager.Controllers
             switch(type)
             {
                 case "Employee":
-                    ScheduleManager.Models.Employee emp = new(id);
+                    Models.Employee emp = new(id);
                     emp.Password = HttpContext.Request.Form["NewPassword"];
                     ViewData["Message"]=emp.Save();
                     ViewData["ClassType"] = "Employee";
-                    ViewBag.theEmployee = new ScheduleManager.Models.Employee(id);
+                    ViewBag.theEmployee = new Models.Employee(id);
                     return View("Details");
                 case "Availability":
                     Models.Availability avail = new(id)
@@ -78,7 +103,16 @@ namespace ScheduleManager.Controllers
                     };
                     ViewData["Message"] = avail.Save();
                     ViewData["ClassType"] = "Availability";
-                    ViewBag.theAvailability = new ScheduleManager.Models.Availability(id);
+                    ViewBag.theAvailability = new Models.Availability(id);
+                    return View("Details");
+                case "Shift":
+                    Models.Shift theShift = new(id)
+                    {
+                        EmployeeID = Convert.ToInt32(HttpContext.Request.Form["NewEmployeeID"])
+                    };
+                    ViewData["Message"]=theShift.Save();
+                    ViewData["ClassType"] = "Shift";
+                    ViewBag.theShift = new Models.Shift(id);
                     return View("Details");
             }
             return View("Index");

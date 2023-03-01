@@ -27,5 +27,19 @@
                 <p><a asp-action="Details" asp-route-type="Availability" asp-route-id=@theAvailability.ID>@theAvailability.ID - @theAvailability.GetEmployee().FullName() Effective @theAvailability.EffectiveDate</a></p>
             }
             break;
+        case "Shift":
+            foreach (Shift theShift in ViewBag.ShiftList)
+            {
+                <p><a asp-action="Details" asp-route-type="Shift" asp-route-id=@theShift.ID>@theShift.ID : @theShift.GetEmployee().FullName() - @theShift.ShiftDate.ToString("D") - @theShift.StartTime.ToString("t")-@theShift.EndTime.ToString("t")</a></p>
+            }
+            break;
+        case "PickupRequest":
+            foreach(PickupRequest theRequest in ViewBag.PickupRequestList)
+            {
+                Shift theShift = theRequest.GetShift();
+                Employee theEmployee = theRequest.GetEmployee();
+                <p><a asp-action="PickupRequestDetails" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID">@theShift.ShiftDate.ToString("D") - @theEmployee.FullName()</a></p>
+            }
+            break;
     }
 }
