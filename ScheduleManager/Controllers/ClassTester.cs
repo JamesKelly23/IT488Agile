@@ -79,7 +79,7 @@ namespace ScheduleManager.Controllers
             ViewData["ClassType"] = "PickupRequest";
             PickupRequest theRequest = new(shiftid, empid);
             theRequest.IsApproved = !theRequest.IsApproved;
-            theRequest.ManagerID = 1;
+            theRequest.ManagerID = theRequest.ManagerID==0 ? 1 : 0;
             ViewData["Message"] = theRequest.Save();
             ViewBag.thePickupRequest = new PickupRequest(shiftid, empid);
             return View("Details");
