@@ -1,7 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     ViewData["Title"] = "Details Screen";
     if(ViewData["Message"] != null)
     {
@@ -113,6 +110,20 @@
             <p>Approved: @theRequest.IsApproved <form asp-action="UpdatePickupRequest" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID"><input type="submit" value="Change" /></form>
             </p>
             <p>Actioning Manager: @managerName</p>
+            break;
+        case "TimeOffRequest":
+            TimeOffRequest theTORequest = ViewBag.theTimeOffRequest;
+            Employee toRequestEmployee = theTORequest.GetEmployee();
+            String toManagerName = theTORequest.ManagerID == 0 ? "None" : theTORequest.GetManager().FullName();
+            <p>ID: @theTORequest.ID</p>
+            <p>Employee: @toRequestEmployee.FullName()</p>
+            <p>Start Date: @theTORequest.StartDate.ToString("D")</p>
+            <p>End Date: @theTORequest.EndDate.ToString("D")</p>
+            <p>Approved: @theTORequest.IsApproved</p>
+            <form asp-action="Update" asp-route-type="TimeOffRequest" asp-route-id="@theTORequest.ID">
+            <p><input type="submit" value="Change" /></p>
+            </form>
+            <p>Actioning Manager: @toManagerName</p>
             break;
     }
 }

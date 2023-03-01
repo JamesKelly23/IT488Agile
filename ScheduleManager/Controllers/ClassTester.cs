@@ -36,6 +36,7 @@ namespace ScheduleManager.Controllers
         public IActionResult TimeOffRequestList()
         {
             ViewData["ClassType"] = "TimeOffRequest";
+            ViewBag.TimeOffRequestList = Models.TimeOffRequest.GetList();
             return View("List");
         }
         public IActionResult AvailabilityList()
@@ -70,6 +71,9 @@ namespace ScheduleManager.Controllers
                     break;
                 case "Shift":
                     ViewBag.theShift = new Models.Shift(id);
+                    break;
+                case "TimeOffRequest":
+                    ViewBag.theTimeOffRequest = new Models.TimeOffRequest(id);
                     break;
             }
             return View("Details");
@@ -113,6 +117,14 @@ namespace ScheduleManager.Controllers
                     ViewData["Message"]=theShift.Save();
                     ViewData["ClassType"] = "Shift";
                     ViewBag.theShift = new Models.Shift(id);
+                    return View("Details");
+                case "TimeOffRequest":
+                    Models.TimeOffRequest theTimeOffRequest = new(id);
+                    theTimeOffRequest.IsApproved=!theTimeOffRequest.IsApproved;
+                    theTimeOffRequest.ManagerID = theTimeOffRequest.ManagerID == 0 ? 1 : 0;
+                    ViewData["Message"] = theTimeOffRequest.Save();
+                    ViewData["ClassType"] = "TimeOffRequest";
+                    ViewBag.theTimeOffRequest = new TimeOffRequest(id);
                     return View("Details");
             }
             return View("Index");

@@ -1,7 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     switch(ViewData["ClassType"])
     {
         case "Rank":
@@ -39,6 +36,13 @@
                 Shift theShift = theRequest.GetShift();
                 Employee theEmployee = theRequest.GetEmployee();
                 <p><a asp-action="PickupRequestDetails" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID">@theShift.ShiftDate.ToString("D") - @theEmployee.FullName()</a></p>
+            }
+            break;
+        case "TimeOffRequest":
+            foreach(TimeOffRequest theRequest in ViewBag.TimeOffRequestList)
+            {
+                Employee theEmployee = theRequest.GetEmployee();
+                <p><a asp-action="Details" asp-route-type="TimeOffRequest" asp-route-id="@theRequest.ID">@theRequest.ID - @theEmployee.FullName() - @theRequest.StartDate.ToString("d") - @theRequest.EndDate.ToString("d")</a></p>
             }
             break;
     }
