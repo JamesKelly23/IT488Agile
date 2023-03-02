@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Role Manager";
+}
+<div>
+    <h2>Role Editor</h2>
+    <p>Roles allow you to quickly choose a station for an employee when creating shifts. The roles in the list below will populate in a drop-down box in the shift creation screen so you don't have to repetitively type the same roles over and over when writing schedules.</p>
+</div>
+@{
+    foreach(Role theRole in ViewBag.RoleList)
+    {
+        <div class="item-box">
+        @{
+
+            if(Convert.ToInt32(ViewData["RoleToEdit"]) == theRole.ID)
+            {
+                <form asp-action="UpdateRole" asp-route-id="@theRole.ID">
+                <input name="NewRoleName" type="text" style="width:160px;" value="@theRole.Name">
+                <br>
+                <input type="submit" value="Save">
+                </form>
+            }
+            else
+            {
+                <p><h5>@theRole.Name</h5></p>
+            }     
+        }
+        <br />
+        <a class="item-box" asp-action="EditRole" asp-route-id="@theRole.ID">Edit</a>
+        <br />
+        <a class="item-box" asp-action="DeleteRole" asp-route-id="@theRole.ID">Delete</a>
+        </div>
+    }
+    <div class="item-box">
+        <p><h5>Add New Role</h5></p>
+        <br />
+        <form asp-action="AddRole"><input style="width: 160px;"type="text" name="NewRoleName" /><br /><input type="submit" value="Add" /></form>
+    </div>
+}

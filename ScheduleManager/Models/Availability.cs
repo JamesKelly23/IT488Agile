@@ -87,7 +87,7 @@
             SqlCommand theCommand;
             if (ID == 0)
             {
-                theCommand = new SqlCommand("INSERT INTO Availability ('EmployeeID', 'EffectiveDate', 'MondayStart', 'MondayEnd', 'TuesdayStart', 'TuesdayEnd', 'WednesdayStart', 'WednesdayEnd', 'ThursdayStart', 'ThursdayEnd', 'FridayStart', 'FridayEnd', 'SaturdayStart', 'SaturdayEnd', 'SundayStart', 'SundayEnd') OUTPUT INSERTED.ID VALUES (" + EmployeeID + ", '" + EffectiveDate + "', '" + MondayStart + "', '" + MondayEnd + "', '" + TuesdayStart + "', '" + TuesdayEnd + "', '" + WednesdayStart + "', '" + WednesdayEnd + "', '" + ThursdayStart + "', '" + ThursdayEnd + "', '" + FridayStart + "', '" + FridayEnd + "', '" + SaturdayStart + "', '" + SaturdayEnd + "', '" + SundayStart + "', '" + SundayEnd + "');", theConnection);
+                theCommand = new SqlCommand("INSERT INTO Availability (EmployeeID, EffectiveDate, MondayStart, MondayEnd, TuesdayStart, TuesdayEnd, WednesdayStart, WednesdayEnd, ThursdayStart, ThursdayEnd, FridayStart, FridayEnd, SaturdayStart, SaturdayEnd, SundayStart, SundayEnd) OUTPUT INSERTED.ID VALUES (" + EmployeeID + ", '" + EffectiveDate + "', '" + MondayStart + "', '" + MondayEnd + "', '" + TuesdayStart + "', '" + TuesdayEnd + "', '" + WednesdayStart + "', '" + WednesdayEnd + "', '" + ThursdayStart + "', '" + ThursdayEnd + "', '" + FridayStart + "', '" + FridayEnd + "', '" + SaturdayStart + "', '" + SaturdayEnd + "', '" + SundayStart + "', '" + SundayEnd + "');", theConnection);
                 theConnection.Open();
                 ID = Convert.ToInt32(theCommand.ExecuteScalar());
                 theConnection.Close();

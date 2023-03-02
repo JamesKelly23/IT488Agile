@@ -64,7 +64,7 @@
             SqlCommand theCommand;
             if(IsNew) 
             {
-                theCommand = new SqlCommand("INSERT INTO PickupRequest ('ShiftID', 'EmployeeID', 'IsApproved', 'ManagerID') VALUES (" + ShiftID + ", " + EmployeeID + ", '" + IsApproved + "', " + (ManagerID == 0 ? "NULL" : ManagerID) + ");", theConnection);
+                theCommand = new SqlCommand("INSERT INTO PickupRequest (ShiftID, EmployeeID, IsApproved, ManagerID) VALUES (" + ShiftID + ", " + EmployeeID + ", '" + IsApproved + "', " + (ManagerID == 0 ? "NULL" : ManagerID) + ");", theConnection);
                 theConnection.Open();
                 theCommand.ExecuteNonQuery();
                 theConnection.Close();

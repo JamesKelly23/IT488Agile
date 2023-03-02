@@ -1,9 +1,35 @@
 html {
   font-size: 14px;
 }
+.bulletless {
+    list-style-type: none;
+}
+div.item-box {
+    float: left;
+    width: 200px;
+    height: 150px;
+    margin: 10px;
+    padding: 5px;
+    border: 3pt double black;
+    border-radius: 15px;
+    box-shadow: 8px 8px 6px #bbbbbb;
+    text-align: center;
+}
+a.item-box{
+    color: #000000;
+}
 
+.list {
+    float: left;
+    margin: 10px;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 15px;
+    box-shadow: 5px 5px 3px #888888;
+    list-style-position: inside;
+}
 @media (min-width: 768px) {
-  html {
+    html {
     font-size: 16px;
   }
 }
@@ -14,5 +40,5 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }

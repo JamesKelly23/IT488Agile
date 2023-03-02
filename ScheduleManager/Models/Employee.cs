@@ -66,7 +66,7 @@
             SqlCommand theCommand;
             if (ID == 0)
             {
-                theCommand = new SqlCommand("INSERT INTO Employee ('FirstName', 'LastName', 'RankID', 'Password', 'UserName', 'Phone', 'Email', 'DateOfBirth') OUTPUT INSERTED.ID VALUES ('" + FirstName + "', '" + LastName + "', " + RankID + ", '" + Password + "', '" + Username + "', '" + Phone + "', '" + Email + "', '" + DOB.ToString() + "');", theConnection);
+                theCommand = new SqlCommand("INSERT INTO Employee (FirstName, LastName, RankID, Password, UserName, Phone, Email, DateOfBirth) OUTPUT INSERTED.ID VALUES ('" + FirstName + "', '" + LastName + "', " + RankID + ", '" + Password + "', '" + Username + "', '" + Phone + "', '" + Email + "', '" + DOB.ToString() + "');", theConnection);
                 theConnection.Open();
                 ID = Convert.ToInt32(theCommand.ExecuteScalar());
                 theConnection.Close();

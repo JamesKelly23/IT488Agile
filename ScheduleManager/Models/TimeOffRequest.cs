@@ -65,7 +65,7 @@
             SqlCommand theCommand;
             if (ID == 0)
             {
-                theCommand = new SqlCommand("INSERT INTO TimeOffRequest ('EmployeeID', 'StartDate', 'EndDate', 'IsApproved', 'ManagerID') OUTPUT INSERTED.ID VALUES (" + EmployeeID + ", '" + StartDate + "', '" + EndDate + "', '" + IsApproved + "', '" + (ManagerID==0 ? "NULL" : ManagerID) + "');", theConnection);
+                theCommand = new SqlCommand("INSERT INTO TimeOffRequest (EmployeeID, StartDate, EndDate, IsApproved, ManagerID) OUTPUT INSERTED.ID VALUES (" + EmployeeID + ", '" + StartDate + "', '" + EndDate + "', '" + IsApproved + "', '" + (ManagerID==0 ? "NULL" : ManagerID) + "');", theConnection);
                 theConnection.Open();
                 ID = Convert.ToInt32(theCommand.ExecuteScalar());
                 theConnection.Close();

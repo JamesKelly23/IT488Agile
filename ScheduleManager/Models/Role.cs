@@ -1,4 +1,6 @@
-﻿namespace ScheduleManager.Models
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace ScheduleManager.Models
 {
     public class Role
     {
@@ -33,12 +35,29 @@
             }
             return list;
         }
+        public static void Delete(int id)
+        {
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            SqlCommand theCommand = new("DELETE FROM Role WHERE ID=" + id + ";",staticConnection);
+            staticConnection.Open();
+            try
+            {
+                theCommand.ExecuteNonQuery();
+            } catch (Exception ex)
+            {
+                String theMessage = ex.Message;
+            }
+            finally
+            {
+                staticConnection.Close();
+            }
+        }
         public String Save()
         {
             SqlCommand theCommand;
             if (ID == 0)
             {
-                theCommand = new SqlCommand("INSERT INTO Role ('Title') OUTPUT INSERTED.ID VALUES ('" + Name + "');", theConnection);
+                theCommand = new SqlCommand("INSERT INTO Role (Name) OUTPUT INSERTED.ID VALUES ('" + Name + "');", theConnection);
                 theConnection.Open();
                 ID = Convert.ToInt32(theCommand.ExecuteScalar());
                 theConnection.Close();

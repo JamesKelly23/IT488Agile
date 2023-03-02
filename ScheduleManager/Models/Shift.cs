@@ -42,7 +42,7 @@
             SqlCommand theCommand;
             if (ID == 0)
             {
-                theCommand = new SqlCommand("INSERT INTO Shift ('IsOpen', 'EmployeeID', 'Date', 'StartTime', 'EndTime', 'Role', 'Notes')" + " OUTPUT INSERTED.ID VALUES ('" + IsOpen.ToString() + "', " + EmployeeID + ", '" + ShiftDate + "', '" + StartTime + "', '" + EndTime + "', '" + Role + "', '" + Notes + "');", theConnection);
+                theCommand = new SqlCommand("INSERT INTO Shift (IsOpen, EmployeeID, Date, StartTime, EndTime, Role, Notes)" + " OUTPUT INSERTED.ID VALUES ('" + IsOpen.ToString() + "', " + EmployeeID + ", '" + ShiftDate + "', '" + StartTime + "', '" + EndTime + "', '" + Role + "', '" + Notes + "');", theConnection);
                 theConnection.Open();
                 ID = Convert.ToInt32(theCommand.ExecuteScalar());
                 theConnection.Close();

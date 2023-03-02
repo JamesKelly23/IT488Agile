@@ -24,7 +24,6 @@ namespace ScheduleManager.Models
                 ID = 0;
                 Title = "";
             }
-
         }
         public Rank(string theTitle)
         {
@@ -35,7 +34,7 @@ namespace ScheduleManager.Models
             SqlCommand theCommand;
             if(ID==0)
             {
-                theCommand = new SqlCommand("INSERT INTO Rank ('Title') OUTPUT INSERTED.ID VALUES ('" + Title + "');", theConnection);
+                theCommand = new SqlCommand("INSERT INTO Rank (Title) OUTPUT INSERTED.ID VALUES ('" + Title + "');", theConnection);
                 theConnection.Open();
                 ID = Convert.ToInt32(theCommand.ExecuteScalar());
                 theConnection.Close();
