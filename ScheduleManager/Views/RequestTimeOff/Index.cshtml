@@ -1,4 +1,33 @@
-﻿@*
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Request Time Off</title>
+</head>
+<body>
+    <h1>Request Time Off</h1>
+    <form>
+        <label for="employee-name">Name:</label>
+        <input type="text" id="employee-name" name="employee-name" required /><br /><br />
+
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date" name="start-date" required /><br /><br />
+
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date" name="end-date" required /><br /><br />
+
+        <label for="reason">Reason for Time Off:</label>
+        <textarea id="reason" name="reason" rows="4" cols="50"></textarea><br /><br />
+
+        <input type="submit" value="Submit" />
+    </form>
+</body>
+</html>
+
+   
+       
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
