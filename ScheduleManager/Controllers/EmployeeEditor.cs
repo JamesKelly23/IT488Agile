@@ -6,8 +6,9 @@ namespace ScheduleManager.Controllers
 {
     public class EmployeeEditor : Controller
     {
-        public IActionResult Index()
+        public IActionResult EditorIndex()
         {
+            Employee logon = new Employee(0);
             EmployeeTester Test = new EmployeeTester();
             Test.FirstName = "Test";
             Test.LastName = "Test";
@@ -16,7 +17,12 @@ namespace ScheduleManager.Controllers
             Test.Phone = "1234567890";
             Test.Username = "Test";
 
-            return View(Test);
+            return View(logon);
+        }
+        public IActionResult Edit()
+        {
+            
+            return View();
         }
     }
 }
