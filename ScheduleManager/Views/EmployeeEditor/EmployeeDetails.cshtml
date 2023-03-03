@@ -1,8 +1,12 @@
 ﻿
 @{
     @model ScheduleManager.Models.Employee
-    ViewData["Title"] = "Account Info";
+    ViewData["Title"] = "Employee Details";
+    
+    Employee currentDetails = ViewBag.currentDetails;
+
 }
+
 <div class="text-center">
     <h1>Employee Information</h1>
 </div>
@@ -17,7 +21,7 @@
             First Name
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
+            @currentDetails.FirstName
         </dd>
     </dl>
     <dl class="row">
@@ -25,7 +29,7 @@
             Last Name
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
+            @currentDetails.LastName
         </dd>
     </dl>
     <dl class="row">
@@ -33,7 +37,7 @@
             Rank
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RankID)
+            @currentDetails.RankID
         </dd>
     </dl>
     <dl class="row">
@@ -41,7 +45,7 @@
             Date of Birth
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DOB)
+            @currentDetails.DOB
         </dd>
     </dl>
     <a asp-action="Edit">Edit</a>
@@ -55,7 +59,7 @@
             Email
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Email)
+            @currentDetails.Email
         </dd>
     </dl>
     <dl class="row">
@@ -63,7 +67,7 @@
             Phone
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Phone)
+            @currentDetails.Phone
         </dd>
     </dl>
 </div>
@@ -76,7 +80,7 @@
             User Name
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Username)
+            @currentDetails.Username
         </dd>
     </dl>
     <dl class="row">
@@ -84,7 +88,7 @@
             Password
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Password)
+            <a class="nav-link">Reset Password</a>
         </dd>
     </dl>
 </div>

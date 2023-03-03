@@ -8,30 +8,25 @@ namespace ScheduleManager.Controllers
     {
         public IActionResult EditorIndex()
         {
-            Employee logon = new Employee(0);
-            EmployeeTester Test = new EmployeeTester();
-            Test.FirstName = "Test";
-            Test.LastName = "Test";
-            Test.DOB = "01 / 11 / 2000";
-            Test.Email = "johndoe@gmail.com";
-            Test.Phone = "1234567890";
-            Test.Username = "Test";
+            EmployeeDetails(6);
+            return View("EmployeeDetails");
 
-            return View(logon);
         }
         public IActionResult Edit()
         {
-            
             return View();
         }
-        public IActionResult EmployeeDetails()
+        public IActionResult EmployeeDetails(int a)
         {
+            
+            ViewBag.currentDetails = new Models.Employee(a);
             return View();
         }
         public IActionResult Update() 
         {
-            ViewData["Title"] = "EmployeeDetails";
-            return EmployeeDetails();
+
+            EmployeeDetails(7);
+            return View("EmployeeDetails");
         }
     }
 }
