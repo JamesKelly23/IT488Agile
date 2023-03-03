@@ -37,6 +37,7 @@ namespace ScheduleManager.Controllers
             else
             {
                 HttpContext.Session.SetInt32("_LoggedInEmployeeID", theID);
+                HttpContext.Session.SetInt32("_LoggedInRank", new Employee(theID).RankID);
             }
             return Index();
         }

@@ -23,7 +23,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @{
-                            if((Context.Session.GetInt32("_LoggedInEmployeeID")??0)!=0)
+                            if ((Context.Session.GetInt32("_LoggedInEmployeeID") ?? 0) != 0)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="ScheduleViewer" asp-action="Index">View Schedule</a>
@@ -32,14 +32,20 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="AvailabilityEditor" asp-action="Index">Availability Editor</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="EmployeeEditor" asp-action="Index">Employee Editor</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="RequestTimeOff" asp-action="Index">Request Time Off</a>
+                                </li>
+                            }
+                            if((Context.Session.GetInt32("_LoggedInRank") ?? 0 ) > 2)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="EmployeeEditor" asp-action="EditorIndex">Employee Editor</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Utility" asp-action="Index">Utilities</a>
                                 </li>
+                            }
+                            if ((Context.Session.GetInt32("_LoggedInEmployeeID") ?? 0) != 0)
+                            {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Log-Out</a>
                                 </li>
