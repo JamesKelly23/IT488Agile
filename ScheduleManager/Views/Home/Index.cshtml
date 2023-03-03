@@ -1,18 +1,17 @@
 ﻿<div class="text-center">
-    <h1 class="display-4">Welcome, Please Login. @ViewData["UserName"]</h1>
-
-
+    <h1 class="display-4">Welcome, @(Convert.ToInt32(ViewData["LoggedIn"]) == 0 ? "Please Login" : ViewBag.CurrentUser.FirstName).</h1>
     @{
         if (Convert.ToInt32(ViewData["LoggedIn"]) == 0)
         {
             <!--<p>Login Form should Show Here.</p>-->
+            <p class="error">@ViewData["Message"]</p>
             <p>
                 <form asp-action="LogIn">
                     <label>Username:</label>
-                    <input type="text" placeholder="Enter Username" name="username" required><br>
+                    <input type="text" placeholder="Enter Username" name="Username" required><br>
                     <!--input type="text" name="UserName"-->
                     <label>Password:</label>
-                    <input type="text" placeholder="Enter Password" name="password" required><br>
+                    <input type="text" placeholder="Enter Password" name="Password" required><br>
                     <!--input type="text" name="Password"-->
                     <input type="submit" value="LogIn"><br>
                     <input type="checkbox" checked="checked"> Remember me<br>
@@ -22,7 +21,7 @@
         }
         if (Convert.ToInt32(ViewData["LoggedIn"]) == 1)
         {
-            <a asp-action="logOut">Log Out</a>
+            <p>Welcome @ViewBag.CurrentUser.FirstName</p>
         }
     }
 </div>

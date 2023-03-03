@@ -4,6 +4,10 @@ html {
 .bulletless {
     list-style-type: none;
 }
+p.error {
+    color: red;
+    font-weight: bold;
+}
 div.item-box {
     float: left;
     width: 200px;

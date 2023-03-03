@@ -21,17 +21,24 @@ namespace ScheduleManager.Controllers
                
             } else
             {
-                ViewBag["LoggedInEmployee"] = new Employee(loggedInEmployee);
+                ViewData["LoggedIn"] = 1;
+                ViewBag.CurrentUser = new Employee(loggedInEmployee);
             }
-            return View();
+            return View("Index");
         }
 
         public IActionResult LogIn()
         {
-            ViewData["UserName"] = HttpContext.Request.Form["UserName"];
-            ViewData["LoggedIn"] = 1;
-            ViewData["AnyData"] = "This is some random data.";
-            return View("Index");
+            int theID = Models.Employee.ValidateLogin(HttpContext.Request.Form["Username"], HttpContext.Request.Form["Password"]);
+            if(theID ==0)
+            {
+                ViewData["Message"] = "Login Failed! Please Try again!";
+            }
+            else
+            {
+                HttpContext.Session.SetInt32("_LoggedInEmployeeID", theID);
+            }
+            return Index();
         }
 
         public IActionResult Privacy()
@@ -41,8 +48,9 @@ namespace ScheduleManager.Controllers
 
         public IActionResult LogOut()
         {
-            ViewData["LoggedIn"] = 0;
-            return View("Index");
+            HttpContext.Session.SetInt32("_LoggedInEmployeeID",0);
+            ViewData["Message"] = "Successfully Logged Out.";
+            return Index();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
