@@ -24,5 +24,14 @@ namespace ScheduleManager.Controllers
             
             return View();
         }
+        public IActionResult EmployeeDetails()
+        {
+            return View();
+        }
+        public IActionResult Update() 
+        {
+            ViewData["Title"] = "EmployeeDetails";
+            return EmployeeDetails();
+        }
     }
 }
