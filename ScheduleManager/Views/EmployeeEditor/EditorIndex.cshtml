@@ -1,14 +1,13 @@
 ﻿@{
     @model ScheduleManager.Models.Employee
-    ViewData["Title"] = "Verify Account";
+    ViewData["Title"] = "Account Look-Up";
 }
 
 <div class="text-center">
     <h2>Employee Look-up</h2>
-    <form>
-        <label>EmployeeID:&nbsp;&nbsp;</label><input class ="text-center"style="width:160px;" type="text" name="EmpyID"/>
-        <br/>
-        <input asp-action="EmployeeDetails" type="submit" value="Verify"/>
-    </form>
 </div>
-
+<form asp-action="Search">
+    <label>EmployeeID:&nbsp;&nbsp;</label><input style="width:160px;" type="number" name="EmplyID" />
+    <br />
+    <input type="submit" value="Search" />
+</form>
