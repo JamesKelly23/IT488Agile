@@ -18,10 +18,17 @@
                     <button type="button" class="cancelbtn"> Cancel</button>
                 </form>
             </p>
+            <p>Sample Logins:</p>
+            <ul>
+            <li>General Manager Level: Username GM Password GM</li>
+            <li>Manager Level: Username M Password M</li>
+            <li>4 Team Members. William Max James and Kent. Username and Password are both the first name.</li>
+            </ul>
         }
         if (Convert.ToInt32(ViewData["LoggedIn"]) == 1)
         {
             <p>Welcome @ViewBag.CurrentUser.FirstName</p>
+            <p>This page should eventually contain a dashboard that shows some common items or maybe defaulting to the user's schedule.</p>
         }
     }
 </div>
