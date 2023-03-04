@@ -151,7 +151,7 @@
         public static Shift GetShift(int EmployeeID, DateTime shiftDate)
         {
             SqlConnection StaticConnection = new(ConnectionStrings.local);
-            SqlCommand theCommand = new("SELECT ID FROM Shift WHERE ShiftDate='" + shiftDate + "' AND EmployeeID = '" + EmployeeID + ";", StaticConnection);
+            SqlCommand theCommand = new("SELECT ID FROM Shift WHERE Date='" + shiftDate + "' AND EmployeeID = '" + EmployeeID + ";", StaticConnection);
             StaticConnection.Open();
             try
             {
@@ -163,7 +163,20 @@
                 StaticConnection.Close();
                 return null;
             }
-
+        }
+        public static List<Shift> GetOpenShifts(int EmployeeID, DateTime shiftDate)
+        {
+            SqlConnection StaticConnection = new(ConnectionStrings.local);
+            SqlCommand theCommand = new("SELECT ID FROM Shift WHERE IsOpen='TRUE' AND Date >= '" + DateTime.Today + "';", StaticConnection);
+            StaticConnection.Open();
+            SqlDataReader theReader = theCommand.ExecuteReader();
+            List<Shift> list = new List<Shift>();
+            while (theReader.Read())
+            {
+                list.Add(new Shift(theReader.GetInt32(0)));
+            }
+            StaticConnection.Close();
+            return list;
         }
     }
 }

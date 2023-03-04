@@ -24,6 +24,45 @@
             }
             return list;
         }
+        public static List<TimeOffRequest> GetAllByEmployee(int EmployeeID) //Returns all time off requests for a specific EmployeeID
+        {
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            List<TimeOffRequest> list = new();
+            SqlCommand theCommand = new("SELECT ID FROM TimeOffRequest WHERE EmployeeID=" + EmployeeID + ";", staticConnection);
+            staticConnection.Open();
+            SqlDataReader theReader = theCommand.ExecuteReader();
+            while (theReader.Read())
+            {
+                list.Add(new TimeOffRequest(theReader.GetInt32(0)));
+            }
+            return list;
+        }
+        public static List<TimeOffRequest> GetApprovedByDate(DateTime theDate) //Returns all approved time off requests that affect a certain day
+        {
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            List<TimeOffRequest> list = new();
+            SqlCommand theCommand = new("SELECT ID FROM TimeOffRequest WHERE IsApproved='TRUE' AND '" + theDate + "' BETWEEN StartDate AND EndDate;", staticConnection);
+            staticConnection.Open();
+            SqlDataReader theReader = theCommand.ExecuteReader();
+            while (theReader.Read())
+            {
+                list.Add(new TimeOffRequest(theReader.GetInt32(0)));
+            }
+            return list;
+        }
+        public static List<TimeOffRequest> GetAllByDate(DateTime theDate) //Returns all time off requests that affect a certain day, whether approved or not
+        {
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            List<TimeOffRequest> list = new();
+            SqlCommand theCommand = new("SELECT ID FROM TimeOffRequest WHERE '" + theDate + "' BETWEEN StartDate AND EndDate;", staticConnection);
+            staticConnection.Open();
+            SqlDataReader theReader = theCommand.ExecuteReader();
+            while (theReader.Read())
+            {
+                list.Add(new TimeOffRequest(theReader.GetInt32(0)));
+            }
+            return list;
+        }
         public Employee GetEmployee()
         {
             return new Employee(EmployeeID);
