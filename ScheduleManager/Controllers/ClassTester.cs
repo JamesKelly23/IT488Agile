@@ -9,6 +9,12 @@ namespace ScheduleManager.Controllers
         {
             return View();
         }
+        public IActionResult GetEmployeeSchedule(int id)
+        {
+            ViewData["ClassType"] = "Shift";
+            ViewBag.ShiftList = Models.Shift.GetScheduleByEmployee(new DateTime(2001,1,1), new DateTime(2201,1,1), id);
+            return View("List");
+        }
         public IActionResult RoleList()
         {
             ViewData["ClassType"] = "Role";
