@@ -2,20 +2,28 @@
     ViewData["Title"] = "Availibility Editor";
 }
 <div class="text-center">
-    <h1>
+    <p>@ViewData["Message"]</p>
+
+    <h1 class=display>
         Availibility Editor <br/>
-        Employee Name:  Name
+        Employee Name: Name;
     </h1>
 
 
+ 
 
-    <table>
-        <tr id="table-title"><th colspan="3">Enter availibility below</th></tr>
-        <tr><td></td><td>Start</td><td>End</td></tr>
+</div>
+
+
+
+    <table class="center">
+        <tr id="table-title"><th colspan="6">Enter availibility below</th></tr>
+        <tr><td></td><td>Open?</td><td>Start</td><td>End</td><td>Close?</td><td>Not availible?</td></tr>
         <tr>
             <td>Monday</td>
+            <td><input type="checkbox" name="m_OP" value="no"></td>
             <td>
-                <select name="time">
+                <select name="m_start">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -43,7 +51,7 @@
                 </select>
             </td>
             <td>
-                <select name="time">
+                <select name="m_end">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -70,11 +78,14 @@
                     <option value="23">11PM</option>
                 </select>
             </td>
+            <td><input type="checkbox" value="MondayCl"></td>
+            <td><input type="checkbox" value="MondayNA"></td>
         </tr>
         <tr>
             <td>Tuesday</td>
+            <td><input type="checkbox" name="tu_OP" value="no"></td>
             <td>
-                <select name="time">
+                <select name="tu_start">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -102,7 +113,7 @@
                 </select>
             </td>
             <td>
-                <select name="time">
+                <select name="tu_end">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -129,11 +140,14 @@
                     <option value="23">11PM</option>
                 </select>
             </td>
+            <td><input type="checkbox" value="TuesdayCl"></td>
+            <td><input type="checkbox" value="TuesdayNA"></td>
         </tr>
         <tr>
             <td>Wednesday</td>
+            <td><input type="checkbox" name="w_OP" value="no"></td>
             <td>
-                <select name="time">
+                <select name="w_start">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -161,7 +175,7 @@
                 </select>
             </td>
             <td>
-                <select name="time">
+                <select name="w_end">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -188,11 +202,14 @@
                     <option value="23">11PM</option>
                 </select>
             </td>
+            <td><input type="checkbox" value="WednesdayCl"></td>
+            <td><input type="checkbox" value="WednesdayNA"></td>
         </tr>
         <tr>
             <td>Thursday</td>
+            <td><input type="checkbox" name="th_OP" value="no"></td>
             <td>
-                <select name="time">
+                <select name="th_start">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -220,7 +237,7 @@
                 </select>
             </td>
             <td>
-                <select name="time">
+                <select name="th_end">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -247,11 +264,14 @@
                     <option value="23">11PM</option>
                 </select>
             </td>
+            <td><input type="checkbox" value="ThursdayCl"></td>
+            <td><input type="checkbox" value="ThursdayNA"></td>
         </tr>
         <tr>
             <td>Friday</td>
+            <td><input type="checkbox" name="f_OP" value="no"></td>
             <td>
-                <select name="time">
+                <select name="f_start">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -279,7 +299,7 @@
                 </select>
             </td>
             <td>
-                <select name="time">
+                <select name="f_end">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -306,11 +326,14 @@
                     <option value="23">11PM</option>
                 </select>
             </td>
+            <td><input type="checkbox" value="FridayCl"></td>
+            <td><input type="checkbox" value="FridayNA"></td>
         </tr>
         <tr>
             <td>Saturday</td>
+            <td><input type="checkbox" name="sa_OP" value="no"></td>
             <td>
-                <select name="time">
+                <select name="sa_start">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -338,7 +361,7 @@
                 </select>
             </td>
             <td>
-                <select name="time">
+                <select name="sa_end">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -365,11 +388,14 @@
                     <option value="23">11PM</option>
                 </select>
             </td>
+            <td><input type="checkbox" value="SaturdayCl"></td>
+            <td><input type="checkbox" value="SaturdayNA"></td>
         </tr>
         <tr>
             <td>Sunday</td>
+            <td><input type="checkbox" name="su_OP" value="no"></td>
             <td>
-                <select name="time">
+                <select name="su_start">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -397,7 +423,7 @@
                 </select>
             </td>
             <td>
-                <select name="time">
+                <select name="su_end">
                     <option value="#">12 AM</option>
                     <option value="1">1 AM</option>
                     <option value="2">2 AM</option>
@@ -424,23 +450,31 @@
                     <option value="23">11PM</option>
                 </select>
             </td>
+            <td><input type="checkbox" value="SundayCl"></td>
+            <td><input type="checkbox" value="SundayNA"></td>
         </tr>
     </table>
-    
 
-
-</div>
-<div> 
+  
+<div class="text-center">
+    <br />
+   
     <label>Effective Date:</label>
-    <input type="text" name="effectDate" required>
-</div>
+    <input type="text" name="EffectDate" required>
+  
+    <br/>
+    
+    <br/>
 
+    <form asp-action="Undo">
+        <input type="submit" value="Undo">
+   </form>
+ 
+   <br />
 
-
-
-<div >
-    <input type="reset" value="Clear Screen"> 
-    <input type="submit" value="Submit">
+   <form asp-action="Update">
+        <input type="submit" value="Update" >
+    </form>
 
 </div>
 
