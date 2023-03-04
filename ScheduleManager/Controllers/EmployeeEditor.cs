@@ -13,6 +13,10 @@ namespace ScheduleManager.Controllers
         public IActionResult EditorIndex()
         {
 
+            List<Employee> theEmployeeList = Models.Employee.GetList();
+
+            ViewBag.EmployeeList = theEmployeeList;
+
             return View();
 
         }
@@ -21,10 +25,10 @@ namespace ScheduleManager.Controllers
             return View();
         }
         //[HttpPost]
-        public IActionResult EmployeeDetails(int a)
+        public IActionResult EmployeeDetails(int id)
         {
             
-            ViewBag.currentDetails = new Models.Employee(a);
+            ViewBag.currentDetails = new Models.Employee(id);
             return View("EmployeeDetails");
         }
         public IActionResult Search(int EmplyID)
@@ -46,9 +50,7 @@ namespace ScheduleManager.Controllers
                 {
                     throw ex;
                 }
-                
             }
-
         }
         public IActionResult Update() 
         {

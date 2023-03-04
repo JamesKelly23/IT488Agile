@@ -3,6 +3,17 @@
     ViewData["Title"] = "Account Look-Up";
 }
 
+<p>Employee List:</p>
+<table>
+    <tr><td>ID</td><td>First Name</td><td>Last Name</td><td>Birthday</td><td>Functions</td></tr>
+@{
+    foreach(Employee theEmployee in ViewBag.EmployeeList)
+    {
+            <tr><td>@theEmployee.ID</td><td>@theEmployee.FirstName</td><td>@theEmployee.LastName</td><td>@theEmployee.DOB</td><td><a asp-action="EmployeeDetails" asp-route-id="@theEmployee.ID">Edit</a></td></tr>    
+    }
+}
+</table>
+
 <div class="text-center">
     <h2>Employee Look-up</h2>
 </div>
