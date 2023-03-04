@@ -128,5 +128,19 @@
             staticConnection.Close();
             return list;
         }
+        public static List<Employee> GetEmployeesOfLowerRank(int MaxRank)
+        {
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            List<Employee> list = new();
+            SqlCommand theCommand = new("SELECT ID From Employee WHERE RankID <= " + MaxRank + ";", staticConnection);
+            staticConnection.Open();
+            SqlDataReader theReader = theCommand.ExecuteReader();
+            while (theReader.Read())
+            {
+                list.Add(new Employee(theReader.GetInt32(0)));
+            }
+            staticConnection.Close();
+            return list;
+        }
     }
 }
