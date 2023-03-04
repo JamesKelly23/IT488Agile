@@ -1,0 +1,15 @@
+﻿
+@{
+    @model ScheduleManager.Models.Employee
+    ViewData["Title"] = "Employee List";
+}
+
+
+<div class="text-center">
+    <h2>Employee Look-up</h2>
+</div>
+<form asp-action="Search">
+    <label>EmployeeID:&nbsp;&nbsp;</label><input style="width:160px;" type="number" name="EmplyID" />
+    <br />
+    <input type="submit" value="Search" />
+</form>

@@ -20,30 +20,52 @@ namespace ScheduleManager.Controllers
             return View();
 
         }
-        public IActionResult Edit()
+        public IActionResult Edit(int id, int a)
         {
-            return View();
+            if(a == 1)
+            {
+                ViewData["EmployeeEditGeneral"] = id;
+                return EmployeeDetails(id);
+            }
+            else if(a == 2) 
+            {
+                ViewData["EmployeeEditContact"] = id;
+                return EmployeeDetails(id);
+            }
+            else if (a == 3) 
+            {
+                ViewData["EmployeeEditAccount"] = id;
+                return EmployeeDetails(id);
+            }
+            else
+            {
+                return EmployeeDetails(id);
+            }
         }
-        //[HttpPost]
+
         public IActionResult EmployeeDetails(int id)
         {
             
             ViewBag.currentDetails = new Models.Employee(id);
             return View("EmployeeDetails");
         }
+        public IActionResult SearchEmply()
+        {
+            return View();
+        }
         public IActionResult Search(int EmplyID)
         {
             try
             {
-                //b = Convert.ToInt32((HttpContext.Request.Form["EmplyID"]));
 
                 EmployeeDetails(EmplyID);
                 return View("EmployeeDetails");
             }
             catch (Exception ex) 
             {
-                if (ViewBag.currentDetails == false)
+                if (ViewBag.currentDetails == null)
                 {
+                    EditorIndex();
                     return View("EditorIndex");
                 }
                 else
