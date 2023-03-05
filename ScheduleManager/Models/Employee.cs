@@ -61,6 +61,30 @@
                 DOB = DateTime.Now;
             }
         }
+        public string Delete()
+        {
+            if(ID !=0)
+            {
+                    SqlCommand theCommand = new SqlCommand("DELETE FROM Employee WHERE ID=" + ID + ";", theConnection);
+                    String message;
+                    try
+                    {
+                        theConnection.Open();
+                        theCommand.ExecuteNonQuery();
+                        message = "The row was successfully updated.";
+                    }
+                    catch (Exception ex)
+                    {
+                        message = "The row was not successfully updated. Error: " + ex.Message;
+                    }
+                    finally
+                    {
+                        theConnection.Close();
+                    }
+                    return message;
+            }
+            return "There is no record to delete.";
+        }
         public string Save()
         {
             SqlCommand theCommand;
