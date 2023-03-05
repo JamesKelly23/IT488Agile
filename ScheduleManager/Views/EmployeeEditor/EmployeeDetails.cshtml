@@ -8,14 +8,18 @@
 }
 
 <div>
-    <a asp-action="EditorIndex" class="text-lg-start">Back to List</a><h1 class="text-center">Employee Information</h1>
+    <a asp-action="EditorIndex" class="text-lg-start">Back to List</a>
+    <br/>
+
+    <h1 class="text-center">Employee Information</h1>
+    
 </div>
 <hr />
 
 @{
     if (Convert.ToInt32(ViewData["EmployeeEditGeneral"]) == currentDetails.ID)
     {
-        <form asp-action="UpdateGeneral">
+        <form asp-action="Update" asp-route-id =@currentDetails.ID asp-route-a ="1">
             <h2 class="text-center">Edit General Details</h2>
             <dl class="row">
                 <dt class="col-sm-2">
@@ -28,7 +32,7 @@
                     New First Name
                 </dt>
                 <dd class="col-sm-4">
-                    <input name="NewFirstName" value=@currentDetails.FirstName>
+                    <input name="newFirstName" value=@currentDetails.FirstName>
                 </dd>
             </dl>
             <dl class="row">
@@ -56,7 +60,7 @@
                     New Rank
                 </dt>
                 <dd class="col-sm-4">
-                    <input name="NewRank"value=@currentDetails.RankID>
+                    <input name="newRank"value=@currentDetails.RankID>
                 </dd>
             </dl>
             <dl class="row">
@@ -70,16 +74,16 @@
                     New Date of Birth
                 </dt>
                 <dd class="col-sm-4">
-                    <input name="NewDOB" value=@currentDetails.DOB>
+                    <input name="newDOB" value=@currentDetails.DOB>
                 </dd>
             </dl>
-            <a asp-action="Edit" asp-route-id=@currentDetails.ID>Save</a><br/>
+            <input type="submit" name="Save"><br/>
             <a asp-action="EmployeeDetails" asp-route-id=@currentDetails.ID>Cancel</a> 
         </form>
     }
     else if (Convert.ToInt32(ViewData["EmployeeEditContact"]) == currentDetails.ID)
     {
-        <form asp-action="UpdateContact">
+        <form asp-action="Update" asp-route-id=@currentDetails.ID asp-route-a ="2">
             <h2 class="text-center">Edit Contact Details</h2><br/>
             <dl class="row">
                 <dt class="col-sm-2">
@@ -92,7 +96,7 @@
                     New Email
                 </dt>
                 <dd class="col-sm-4">
-                    <input name="NewEmail" value=@currentDetails.Email>
+                    <input name="newEmail" value=@currentDetails.Email>
                 </dd>
             </dl>
             <dl class="row">
@@ -106,16 +110,16 @@
                     New Phone
                 </dt>
                 <dd class="col-sm-4">
-                    <input name="NewPhone" value=@currentDetails.Phone>
+                    <input name="newPhone" value=@currentDetails.Phone>
                 </dd>
             </dl>
-            <a asp-action="Edit" asp-route-id=@currentDetails.ID>Save</a><br />
+            <input type="submit"><br />
             <a asp-action="EmployeeDetails" asp-route-id=@currentDetails.ID>Cancel</a>
         </form>
     }
     else if (Convert.ToInt32(ViewData["EmployeeEditAccount"]) == currentDetails.ID)
     {
-        <form asp-action="Update">
+        <form asp-action="Update" asp-route-id=@currentDetails.ID asp-route-a ="3">
             <h2 class="text-center">Edit Account Credentials</h2><br />
             <dl class="row">
                 <dt class="col-sm-2">
@@ -128,7 +132,7 @@
                     New User Name
                 </dt>
                 <dd class="col-sm-4">
-                    <input name="NewUserName" value=@currentDetails.Username>
+                    <input name="newUserName" value=@currentDetails.Username>
                 </dd>
             </dl>
             <dl class="row">
@@ -136,7 +140,7 @@
                    New Password
                 </dt>
                 <dd class="col-sm-4">
-                    <input name="NewPassword" placeholder="##############">
+                    <input name="newPassword" placeholder="##############">
                 </dd>
             </dl>
             <dl class="row">
@@ -144,10 +148,10 @@
                     Verify Password
                 </dt>
                 <dd class="col-sm-4">
-                    <input name="NewPassword" placeholder="##############">
+                    <input name="verifyPassword" placeholder="##############">
                 </dd>
             </dl>
-            <a asp-action="Edit" asp-route-id=@currentDetails.ID>Save</a><br />
+            <input type="Submit"><br />
             <a asp-action="EmployeeDetails" asp-route-id=@currentDetails.ID>Cancel</a>
         </form>
     }
@@ -231,10 +235,12 @@
                     Password
                 </dt>
                 <dd class="col-sm-10">
-                    <a class="nav-link">Reset Password</a>
+                    ############
                 </dd>
             </dl>
             <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a="3">Edit</a>
         </div>
+        <hr/>
+        <a asp-action="Delete" asp-route-id=@currentDetails.ID>Delete</a>
     }
 }

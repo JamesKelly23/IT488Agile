@@ -74,11 +74,59 @@ namespace ScheduleManager.Controllers
                 }
             }
         }
-        public IActionResult Update() 
+        public IActionResult Update(int id, int a) 
         {
+            Employee thisEmployee = new(id);
+            if (a == 1)
+            {
+                thisEmployee.FirstName = HttpContext.Request.Form["newFirstName"];
+                thisEmployee.LastName = HttpContext.Request.Form["newLastName"];
+                thisEmployee.RankID = Convert.ToInt32(HttpContext.Request.Form["newRank"]);
+                thisEmployee.DOB = Convert.ToDateTime(HttpContext.Request.Form["newDOB"]);
+            }
+            else if(a == 2)
+            {
+                thisEmployee.Email = HttpContext.Request.Form["newEmail"];
+                thisEmployee.Phone = HttpContext.Request.Form["newPhone"];
+            }
+            else if (a == 3)
+            {
+                thisEmployee.Username = HttpContext.Request.Form["newUserName"];
+                thisEmployee.Password = HttpContext.Request.Form["newPassword"];
+            }
+            else
+            {
+                return View("EmployeeDetails");
+            }
 
-            EmployeeDetails(7);
+            thisEmployee.Save();
+            EmployeeDetails(id);
             return View("EmployeeDetails");
+        }
+        public ActionResult NewEmployee() 
+        {
+            return View();
+        }
+        public ActionResult AddEmployee()
+        {
+            Employee newEmployee = new(0);
+            newEmployee.FirstName = HttpContext.Request.Form["addFirstName"];
+            newEmployee.LastName = HttpContext.Request.Form["addLastName"];
+            newEmployee.RankID = Convert.ToInt32(HttpContext.Request.Form["addRank"]);
+            newEmployee.DOB = Convert.ToDateTime(HttpContext.Request.Form["addDOB"]);
+            newEmployee.Email = HttpContext.Request.Form["addEmail"];
+            newEmployee.Phone = HttpContext.Request.Form["addPhone"];
+            newEmployee.Username = HttpContext.Request.Form["addUserName"];
+            newEmployee.Password = HttpContext.Request.Form["addPassowrd"];
+            newEmployee.Save();
+            EmployeeDetails(newEmployee.ID);
+            return View("EmployeeDetails");
+        }
+        public IActionResult Delete(int id)
+        {
+            Models.Employee.Delete(id);
+            EditorIndex();
+            return View("EditorIndex");
         }
     }
 }

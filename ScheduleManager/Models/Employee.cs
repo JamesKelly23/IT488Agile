@@ -93,6 +93,24 @@
                 return message;
             }
         }
+        public static void Delete(int id)
+        {
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            SqlCommand theCommand = new("DELETE FROM Employee WHERE ID=" + id + ";", staticConnection);
+            staticConnection.Open();
+            try
+            {
+                theCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                String theMessage = ex.Message;
+            }
+            finally
+            {
+                staticConnection.Close();
+            }
+        }
         public static int ValidateLogin(string userName, string password)
         {
             SqlConnection staticConnection = new(ConnectionStrings.local);

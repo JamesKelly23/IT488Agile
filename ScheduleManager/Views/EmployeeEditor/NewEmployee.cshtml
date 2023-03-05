@@ -1,0 +1,84 @@
+﻿
+@{
+    @model ScheduleManager.Models.Employee
+    ViewData["Title"] = "Employee Details";
+
+    Employee newEmployee = ViewBag.currentDetails;
+}
+<div class="text-center">
+    <h2>Enter General Information</h2>
+    <br />
+</div>
+<form asp-action="AddEmployee">
+    <dl class="row">
+        <dt class="col-sm-2">
+            First Name
+        </dt>
+        <dd class="col-sm-10">
+            <input name="addFirstName" />
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Last Name
+        </dt>
+        <dd class="col-sm-10">
+            <input name="addLastName" />
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Rank
+        </dt>
+        <dd class="col-sm-10">
+            <input name="addRank" type="number" />
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Date of Birth
+        </dt>
+        <dd class="col-sm-10">
+            <input name="addDOB" type="datetime" />
+        </dd>
+    </dl>
+    <h2 class="text-center">Enter Contact Details</h2>
+    <br/>
+        <dl class="row">
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            <input name="addEmail" />
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Phone
+        </dt>
+        <dd class="col-sm-10">
+            <input name="addPhone" type="tel" />
+        </dd>
+    </dl>
+    <h2 class="text-center">Enter Account Details</h2>
+        <dl class="row">
+        <dt class="col-sm-2">
+            User Name
+        </dt>
+        <dd class="col-sm-10">
+            <input name="addUserName" />
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Password
+        </dt>
+        <dd class="col-sm-10">
+            <input name="addPassword" type="password" />
+        </dd>
+    </dl>
+    <input type="submit" />
+</Form>
+
+    <a asp-action="EditorIndex">Cancel</a>
+</div>
