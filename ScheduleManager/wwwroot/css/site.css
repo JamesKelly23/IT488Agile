@@ -19,6 +19,22 @@ div.item-box {
     box-shadow: 8px 8px 6px #bbbbbb;
     text-align: center;
 }
+div.container {
+    content: "";
+    clear: both;
+    display: table;
+}
+div.available-shift-box {
+    float: left;
+    width: 200px;
+    height: 250px;
+    margin: 10px;
+    padding: 5px;
+    border: 3pt double black;
+    border-radius: 15px;
+    box-shadow: 8px 8px 6px #bbbbbb;
+    text-align: center;
+}
 a.item-box{
     color: #000000;
 }

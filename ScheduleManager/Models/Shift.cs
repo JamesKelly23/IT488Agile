@@ -164,7 +164,7 @@
                 return null;
             }
         }
-        public static List<Shift> GetOpenShifts(int EmployeeID, DateTime shiftDate)
+        public static List<Shift> GetOpenShifts()
         {
             SqlConnection StaticConnection = new(ConnectionStrings.local);
             SqlCommand theCommand = new("SELECT ID FROM Shift WHERE IsOpen='TRUE' AND Date >= '" + DateTime.Today + "';", StaticConnection);

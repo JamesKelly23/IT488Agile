@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+    <div class="container">
+    <h2>Available Shifts</h2>
+    @{
+        foreach(Shift theShift in ViewBag.OpenShiftList)
+        {
+            <div class="available-shift-box">
+                @theShift.ShiftDate.ToString("D") <hr>
+                @theShift.StartTime.ToString("t") - @theShift.EndTime.ToString("t") <hr>
+                @theShift.Role<hr>
+                <form asp-route-id="@theShift.ID" asp-action="ShiftPickupRequest">
+                    <input type="hidden" name="EmployeeID" value="@Context.Session.GetInt32("_LoggedInEmployeeID")"> 
+                    <input type="Submit" value="Request Shift">
+                </form>
+            </div>
+        }
+    }
+    </div>
+    <hr>
+    <div class="container">
+    <h2>Requested Shifts</h2>
+    
+    @{
+        foreach(Shift theShift in ViewBag.RequestedShiftList)
+        {
+            <div class="available-shift-box">
+                @theShift.ShiftDate.ToString("D") <hr>
+                @theShift.StartTime.ToString("t") - @theShift.EndTime.ToString("t") <hr>
+                @theShift.Role<hr>
+                <form asp-action="DeleteRequest" asp-route-id="@theShift.ID">
+                    <input type="hidden" name="EmployeeID" value="@Context.Session.GetInt32("_LoggedInEmployeeID")">
+                    <input type="Submit" value="Cancel Request">
+                </form>
+            </div>
+        }
+        if(ViewBag.RequestedShiftList.Count == 0)
+        {
+            <div class="available-shift-box">
+            There are no available shifts to show.
+            </div>
+        }
+    }
+</div>

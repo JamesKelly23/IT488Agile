@@ -35,6 +35,22 @@
             staticConnection.Close();
             return list;
         }
+        public static bool Exists(int employeeID, int shiftID)
+        {
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            SqlCommand theCommand = new("SELECT * FROM PickupRequest WHERE EmployeeID=" + employeeID + " AND ShiftID=" + shiftID + ";", staticConnection);
+            staticConnection.Open();
+            SqlDataReader theReader = theCommand.ExecuteReader();
+            if( theReader.Read())
+            {
+                staticConnection.Close();
+                return true;
+            } else
+            {
+                staticConnection.Close();
+                return false;
+            }
+        }
         public Shift GetShift()
         {
             return new Shift(ShiftID);
@@ -58,6 +74,14 @@
             EmployeeID = employeeID;
             IsApproved = isApproved;
             ManagerID = managerID;
+        }
+        public String Delete()
+        {
+            SqlCommand theCommand = new("DELETE FROM PickupRequest WHERE EmployeeID=" + EmployeeID + " AND ShiftID = " + ShiftID + ";", theConnection);
+            theConnection.Open();
+            theCommand.ExecuteNonQuery();
+            theConnection.Close();
+            return "Success";
         }
         public String Save()
         {

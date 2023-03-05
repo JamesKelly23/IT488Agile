@@ -12,7 +12,6 @@ namespace ScheduleManager.Controllers
         {
             _logger = logger;
         }
-
         public IActionResult Index()
         {
             int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
