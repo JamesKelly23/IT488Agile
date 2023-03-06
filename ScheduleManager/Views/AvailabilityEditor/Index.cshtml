@@ -6,7 +6,7 @@
 
     <h1 class=display>
         Availibility Editor <br/>
-        Employee Name: Name;
+        Employee Name: @ViewBag.CurrentUser.FirstName
     </h1>
 
 
@@ -476,8 +476,71 @@
         <input type="submit" value="Update" >
     </form>
 
+    <br />
+    <p>Current availability</p>
+    @{
+        //will return the availability of a day in XX:XX XM - XX:XX XM format
+        string trimString(String start, String end)
+        {
+            String current = start;//will swtich between the start and end times
+            String final = "";//the final string we return
+            //trim down the unnesecary parts of the string
+            current = current.Remove(0, 9);
+            current = current.Remove(4, 3);
+            //update the final string
+            final+=current+" - ";
+            //repeat for leave time
+            current = end;
+            current = current.Remove(0, 9);
+            current = current.Remove(4, 3);
+            //update string and return it
+            final += current;
+            return final;
+        }
+       
+        String fullAvail = "";//will contain the current days availability
+        
+
+        //fill string with that days information. put the string in the view data variable
+        //display variable within a label (label over p for spacing reasons). Then add a br to start a new line
+        //rinse and repeat for all days
+        fullAvail = "Monday: " + trimString(ViewBag.CurrentAvailability.MondayStart.ToString(), ViewBag.CurrentAvailability.MondayEnd.ToString());
+        ViewData["Avail"] = fullAvail;
+        <label>@ViewData["Avail"] </label>
+        <br/>
+        fullAvail = "Tuesday: " + trimString(ViewBag.CurrentAvailability.TuesdayStart.ToString(), ViewBag.CurrentAvailability.TuesdayEnd.ToString());
+        ViewData["Avail"] = fullAvail;
+        <label>@ViewData["Avail"]</label>
+           <br/>
+        fullAvail = "Wednesday: " + trimString(ViewBag.CurrentAvailability.WednesdayStart.ToString(), ViewBag.CurrentAvailability.WednesdayEnd.ToString());
+        ViewData["Avail"] = fullAvail;
+        <label>@ViewData["Avail"]</label>
+           <br/>
+        fullAvail = "Thursday: " + trimString(ViewBag.CurrentAvailability.ThursdayStart.ToString(), ViewBag.CurrentAvailability.ThursdayEnd.ToString());
+          ViewData["Avail"] = fullAvail;
+        <label>@ViewData["Avail"]</label>
+           <br/>
+        fullAvail = "Friday: " + trimString(ViewBag.CurrentAvailability.FridayStart.ToString(), ViewBag.CurrentAvailability.FridayEnd.ToString());
+        ViewData["Avail"] = fullAvail;
+        <label>@ViewData["Avail"]</label>
+           <br/>
+        fullAvail = "Saturday: " + trimString(ViewBag.CurrentAvailability.SaturdayStart.ToString(), ViewBag.CurrentAvailability.SaturdayEnd.ToString());
+        ViewData["Avail"] = fullAvail;
+        <label>@ViewData["Avail"]</label>
+        <br />
+        fullAvail = "Sunday: " + trimString(ViewBag.CurrentAvailability.SundayStart.ToString(), ViewBag.CurrentAvailability.SundayEnd.ToString());
+        ViewData["Avail"] = fullAvail;
+        <label>@ViewData["Avail"]</label>
+
+      
+    }
+    
+
 </div>
 
-    @{
 
+
+
+    @{
+        
     }
