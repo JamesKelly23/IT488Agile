@@ -22,7 +22,39 @@ namespace ScheduleManager.Controllers
             ViewBag.CurrentUser = CurrentUser;
             ViewBag.TOList = TimeOffRequest.GetPending();
             ViewBag.PUList = PickupRequest.GetPending();
-            return View();
+            return View("Index");
+        }
+        public IActionResult TimeOffDetails(int id)
+        {
+            TimeOffRequest theRequest = new TimeOffRequest(id);
+            IEnumerable<TimeOffRequest> OverlapQuery = from theOverlappingRequest in TimeOffRequest.GetList()
+                                               where (((theOverlappingRequest.EndDate >= theRequest.StartDate
+                                               && theOverlappingRequest.EndDate <= theRequest.EndDate)
+                                               || (theOverlappingRequest.StartDate >= theRequest.StartDate
+                                               && theOverlappingRequest.StartDate <= theRequest.EndDate))
+                                               && theOverlappingRequest.ID != id)
+                                               select theOverlappingRequest;
+            List<TimeOffRequest> OverlapList = OverlapQuery.ToList();
+            OverlapList.Remove(theRequest);
+            ViewBag.OverlapList = OverlapList;
+            ViewData["DetailsTORID"] = id;
+            return Index();
+        }
+        public IActionResult PickupDetails(int empid, int shiftid)
+        {
+            ViewData["DetailsEmpID"] = empid;
+            ViewData["DetailsShiftID"] = shiftid;
+            PickupRequest theRequest = new PickupRequest(shiftid, empid);
+            int shiftLength = (theRequest.GetShift().EndTime - theRequest.GetShift().StartTime).Hours;
+            ViewData["NewShiftLength"] = shiftLength;
+            int previousHours = 0;
+            foreach(Shift theShift in Shift.GetScheduleByEmployee(theRequest.GetShift().ShiftDate,empid))
+            {
+                previousHours += (theShift.EndTime - theShift.StartTime).Hours;
+            }
+            ViewData["PreviousScheduledHours"] = previousHours;
+            ViewData["NewScheduledHours"] = previousHours + shiftLength;
+            return Index();
         }
     }
 }

@@ -21,10 +21,25 @@
                 <td class="cell2">@theRequest.GetShift().EndTime.ToString("t")</td>
                 <td class="cell2">@theRequest.GetShift().Role</td>
                 <td class="cell2">
-                    <a asp-action="ActionPickup" asp-route-approved="True" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID">Approve</a>
-                    <a asp-action="ActionPickup" asp-route-approved="False" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID">Deny</a>
+                    <a class="link-button" asp-action="ActionPickup" asp-route-approved="True" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID">Approve</a>
+                    <a class="link-button" asp-action="ActionPickup" asp-route-approved="False" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID">Deny</a>
+                    <a class="link-button" asp-action="PickupDetails" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID">Details</a>
                 </td>
             </tr>
+            if ((Convert.ToInt32(ViewData["DetailsEmpID"]) == theRequest.EmployeeID) && (Convert.ToInt32(ViewData["DetailsShiftID"]) == theRequest.ShiftID))
+            {
+                <tr>
+                    <td colspan="6">
+                        <div class="details">
+                            <h3>Details:</h3>
+                            <h4>Employee Schedule Data</h4>
+                            <p>Previously Scheduled Hours: @ViewData["PreviousScheduledHours"]</p>
+                            <p>Requested Shift Length: @ViewData["NewShiftLength"]</p>
+                            <p>New Scheduled Hours if Request is Approved: @ViewData["NewScheduledHours"]</p>
+                        </div>
+                    </td>
+                </tr>
+            }
         }
         if(ViewBag.PUList.Count == 0)
         {
@@ -50,10 +65,50 @@
                 <td class="cell2">@theRequest.EndDate.ToString("d")</td>
                 <td class="cell2">@theRequest.Notes</td>
                 <td class="cell2">
-                    <a asp-action="ActionTimeOff" asp-route-approved="True" asp-route-id="@theRequest.ID">Approve</a>
-                    <a asp-action="ActionTimeOff" asp-route-approved="False" asp-route-id="@theRequest.ID">Deny</a>
+                    <a class="link-button" asp-action="ActionTimeOff" asp-route-approved="True" asp-route-id="@theRequest.ID">Approve</a>
+                    <a class="link-button" asp-action="ActionTimeOff" asp-route-approved="False" asp-route-id="@theRequest.ID">Deny</a>
+                    <a class="link-button" asp-action="TimeOffDetails" asp-route-id="@theRequest.ID">Details</a>
                 </td>
             </tr>
+            if(Convert.ToInt32(ViewData["DetailsTORID"])==theRequest.ID)
+            {
+                <tr>
+                    <td class="cell2" colspan="6">
+                        <div class="details">
+                            <h3>Details:</h3>
+                            <h4>Overlapping Requests</h4>
+                            <table>
+                                <tr>
+                                    <th class="cell2">Employee</th>
+                                    <th class="cell2">Start Date</th>
+                                    <th class="cell2">End Date</th>
+                                    <th class="cell2">Notes</th>
+                                    <th class="cell2">Approved</th>
+                                    <th class="cell2">Actioning Manager</th>
+                                </tr>
+                                @{
+                                    foreach(TimeOffRequest theOverlap in ViewBag.OverlapList)
+                                    {
+                                        String ManagerName = (theOverlap.ManagerID == 0 ? "None" : theOverlap.GetManager().FullName());
+                                        <tr>
+                                            <td class="cell2">@theOverlap.GetEmployee().FullName()</td>
+                                            <td class="cell2">@theOverlap.StartDate.ToString("d")</td>
+                                            <td class="cell2">@theOverlap.EndDate.ToString("d")</td>
+                                            <td class="cell2">@theOverlap.Notes</td>
+                                            <td class="cell2">@theOverlap.IsApproved</td>
+                                            <td class="cell2">@ManagerName</td>
+                                        </tr>
+                                    }
+                                    if(ViewBag.OverlapList.Count==0)
+                                    {
+                                        <tr><td class="cell2" colspan="5"><center>No overlapping time off requests</center></td></tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            }
         }
         if (ViewBag.TOList.Count == 0)
         {
