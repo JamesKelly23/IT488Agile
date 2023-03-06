@@ -37,6 +37,19 @@
             }
             return list;
         }
+        public static List<TimeOffRequest> GetPending() //Returns all pending time off requests that exist in the future
+        {
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            List<TimeOffRequest> list = new();
+            SqlCommand theCommand = new("SELECT ID FROM TimeOffRequest WHERE ManagerID is NULL AND StartDate > '" + DateTime.Today + "';", staticConnection);
+            staticConnection.Open();
+            SqlDataReader theReader = theCommand.ExecuteReader();
+            while (theReader.Read())
+            {
+                list.Add(new TimeOffRequest(theReader.GetInt32(0)));
+            }
+            return list;
+        }
         public static List<TimeOffRequest> GetApprovedByDate(DateTime theDate) //Returns all approved time off requests that affect a certain day
         {
             SqlConnection staticConnection = new(ConnectionStrings.local);

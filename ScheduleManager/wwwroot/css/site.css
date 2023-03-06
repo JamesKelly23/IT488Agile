@@ -8,6 +8,22 @@ p.error {
     color: red;
     font-weight: bold;
 }
+ul.linklist {
+    list-style-type: none;
+    align-content:center;
+}
+li.linklist-item {
+    margin:20pt;
+    float:left;
+}
+a.link-button {
+    padding: 8px;
+    color: black;
+    border: 1pt solid black;
+    border-radius:10px;
+    text-decoration:none;
+    box-shadow:3px 3px 3px #888888;
+}
 div.item-box {
     float: left;
     width: 200px;
@@ -19,7 +35,27 @@ div.item-box {
     box-shadow: 8px 8px 6px #bbbbbb;
     text-align: center;
 }
-div.container {
+table.request-table {
+    border: 1pt solid black;
+    border-radius:10px;
+}
+tr.headerrow2 {
+    padding: 2pt;
+    border: 2pt solid black;
+    border-radius:10px;
+}
+tr.row2 {
+    padding: 2pt;
+    border: 1pt solid black;
+    border-radius:10px;
+}
+td.cell2, th.cell2 {
+    border: 1pt solid black;
+    padding: 13px;
+    margin: 3px;
+    border-radius:10px;
+}
+div.container2 {
     content: "";
     clear: both;
     display: table;

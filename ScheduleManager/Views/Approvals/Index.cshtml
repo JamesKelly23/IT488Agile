@@ -1,0 +1,63 @@
+﻿@{
+
+}
+<h2>Shift Pickup Requests</h2>
+<table class="request-table">
+    <tr class="headerrow2">
+        <th class="cell2">Employee Name</th>
+        <th class="cell2">Shift Date</th>
+        <th class="cell2">Start Time</th>
+        <th class="cell2">End Time</th>
+        <th class="cell2">Role</th>
+        <th class="cell2">Actions</th>
+    </tr>
+    @{
+        foreach(PickupRequest theRequest in ViewBag.PUList)
+        {
+            <tr class="row2">
+                <td class="cell2">@theRequest.GetEmployee().FullName()</td>
+                <td class="cell2">@theRequest.GetShift().ShiftDate.ToString("D")</td>
+                <td class="cell2">@theRequest.GetShift().StartTime.ToString("t")</td>
+                <td class="cell2">@theRequest.GetShift().EndTime.ToString("t")</td>
+                <td class="cell2">@theRequest.GetShift().Role</td>
+                <td class="cell2">
+                    <a asp-action="ActionPickup" asp-route-approved="True" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID">Approve</a>
+                    <a asp-action="ActionPickup" asp-route-approved="False" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID">Deny</a>
+                </td>
+            </tr>
+        }
+        if(ViewBag.PUList.Count == 0)
+        {
+            <tr><td class="cell2" colspan="6"><center>There are no shift pickup requests to show at this time.</center></td></tr>
+        }
+    }
+</table>
+<h2>Time Off Requests</h2>
+<table class="request-table">
+    <tr class="headerrow2">
+        <th class="cell2">Employee Name</th>
+        <th class="cell2">Start Date</th>
+        <th class="cell2">End Date</th>
+        <th class="cell2">Notes</th>
+        <th class="cell2">Actions</th>
+    </tr>
+    @{
+        foreach (TimeOffRequest theRequest in ViewBag.TOList)
+        {
+            <tr class="row2">
+                <td class="cell2">@theRequest.GetEmployee().FullName()</td>
+                <td class="cell2">@theRequest.StartDate.ToString("d")</td>
+                <td class="cell2">@theRequest.EndDate.ToString("d")</td>
+                <td class="cell2">@theRequest.Notes</td>
+                <td class="cell2">
+                    <a asp-action="ActionTimeOff" asp-route-approved="True" asp-route-id="@theRequest.ID">Approve</a>
+                    <a asp-action="ActionTimeOff" asp-route-approved="False" asp-route-id="@theRequest.ID">Deny</a>
+                </td>
+            </tr>
+        }
+        if (ViewBag.TOList.Count == 0)
+        {
+            <tr><td class="cell" colspan="5"><center>There are no time off requests to show at this time.</center></td></tr>
+        }
+    }
+</table>

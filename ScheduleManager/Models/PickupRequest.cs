@@ -35,6 +35,20 @@
             staticConnection.Close();
             return list;
         }
+        public static List<PickupRequest> GetPending()
+        {
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            SqlCommand theCommand = new("SELECT ShiftID, EmployeeID FROM PickupRequest WHERE ManagerID is NULL;", staticConnection);
+            List<PickupRequest> list = new();
+            staticConnection.Open();
+            SqlDataReader theReader = theCommand.ExecuteReader();
+            while (theReader.Read())
+            {
+                list.Add(new PickupRequest(theReader.GetInt32(0), theReader.GetInt32(1)));
+            }
+            staticConnection.Close();
+            return list;
+        }
         public static bool Exists(int employeeID, int shiftID)
         {
             SqlConnection staticConnection = new(ConnectionStrings.local);

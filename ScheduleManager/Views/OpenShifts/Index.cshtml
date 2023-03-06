@@ -1,7 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-    <div class="container">
+    <div class="container2">
     <h2>Available Shifts</h2>
     @{
         foreach(Shift theShift in ViewBag.OpenShiftList)
@@ -14,6 +14,12 @@
                     <input type="hidden" name="EmployeeID" value="@Context.Session.GetInt32("_LoggedInEmployeeID")"> 
                     <input type="Submit" value="Request Shift">
                 </form>
+            </div>
+        }
+        if (ViewBag.OpenShiftList.Count == 0)
+        {
+            <div class="available-shift-box">
+                There are no Available shifts to show at this time.
             </div>
         }
     }
@@ -38,7 +44,7 @@
         if(ViewBag.RequestedShiftList.Count == 0)
         {
             <div class="available-shift-box">
-            There are no available shifts to show.
+            There are no requested shifts to show at this time.
             </div>
         }
     }
