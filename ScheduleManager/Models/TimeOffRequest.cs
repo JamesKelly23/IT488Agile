@@ -41,7 +41,7 @@
         {
             SqlConnection staticConnection = new(ConnectionStrings.local);
             List<TimeOffRequest> list = new();
-            SqlCommand theCommand = new("SELECT ID FROM TimeOffRequest WHERE ManagerID is NULL AND StartDate > '" + DateTime.Today + "';", staticConnection);
+            SqlCommand theCommand = new("SELECT ID FROM TimeOffRequest WHERE ManagerID is NULL AND StartDate >= '" + DateTime.Today + "';", staticConnection);
             staticConnection.Open();
             SqlDataReader theReader = theCommand.ExecuteReader();
             while (theReader.Read())
@@ -114,14 +114,14 @@
             EndDate = endDate;
             IsApproved = false;
             ManagerID = 0;
-            Notes = "";
+            Notes = notes;
         }
         public String Save()
         {
             SqlCommand theCommand;
             if (ID == 0)
             {
-                theCommand = new SqlCommand("INSERT INTO TimeOffRequest (EmployeeID, StartDate, EndDate, IsApproved, ManagerID, Notes) OUTPUT INSERTED.ID VALUES (" + EmployeeID + ", '" + StartDate + "', '" + EndDate + "', '" + IsApproved + "', '" + (ManagerID==0 ? "NULL" : ManagerID) + "', '" + Notes + "');", theConnection);
+                theCommand = new SqlCommand("INSERT INTO TimeOffRequest (EmployeeID, StartDate, EndDate, IsApproved, ManagerID, Notes) OUTPUT INSERTED.ID VALUES (" + EmployeeID + ", '" + StartDate + "', '" + EndDate + "', '" + IsApproved + "', " + (ManagerID==0 ? "NULL" : ManagerID) + ", '" + Notes.Replace("'", "''").Replace(";", "") + "');", theConnection);
                 theConnection.Open();
                 ID = Convert.ToInt32(theCommand.ExecuteScalar());
                 theConnection.Close();
@@ -129,7 +129,7 @@
             }
             else
             {
-                theCommand = new SqlCommand("UPDATE TimeOffRequest SET EmployeeID=" + EmployeeID + ", StartDate='" + StartDate + "', EndDate='" + EndDate + "', IsApproved='" + IsApproved + "', ManagerID=" + (ManagerID == 0 ? "NULL" : ManagerID) + ", Notes='" + Notes + "'f WHERE ID=" + ID + ";", theConnection);
+                theCommand = new SqlCommand("UPDATE TimeOffRequest SET EmployeeID=" + EmployeeID + ", StartDate='" + StartDate + "', EndDate='" + EndDate + "', IsApproved='" + IsApproved + "', ManagerID=" + (ManagerID == 0 ? "NULL" : ManagerID) + ", Notes='" + Notes.Replace("'", "''").Replace(";", "") + "' WHERE ID=" + ID + ";", theConnection);
                 String message;
                 try
                 {

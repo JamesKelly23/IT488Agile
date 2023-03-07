@@ -36,7 +36,7 @@ namespace ScheduleManager.Controllers
             TimeOffRequest TheRequest = new(HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0, Convert.ToDateTime(HttpContext.Request.Form["start-date"]), Convert.ToDateTime(HttpContext.Request.Form["end-date"]), HttpContext.Request.Form["reason"]);
             TheRequest.Save();
             ViewBag.TORList = TimeOffRequest.GetAllByEmployee(HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0);
-            return View("Index");
+            return Index();
         } 
     }
 }
