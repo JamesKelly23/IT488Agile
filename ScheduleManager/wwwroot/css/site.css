@@ -1,6 +1,12 @@
 html {
   font-size: 14px;
 }
+.navbar, .evenrow {
+    background-color:#E0E0FF;
+}
+body {
+    background-color: #F3F3FF;
+}
 .bulletless {
     list-style-type: none;
 }
@@ -16,13 +22,34 @@ li.linklist-item {
     margin:20pt;
     float:left;
 }
+a.nav-link {
+    font-weight: bold;
+}
+a.approve {
+    background-color: palegreen;
+}
+td.detailscell {
+    padding: 0pt 13pt 13pt 13pt;
+}
+a.deny {
+    background-color: lightcoral;
+}
+a.details {
+    background-color: palegoldenrod;
+}
+div.details {
+    background-color: palegoldenrod;
+    padding: 8pt;
+    border: 2pt solid goldenrod;
+}
 a.link-button {
     padding: 8px;
     color: black;
     border: 1pt solid black;
-    border-radius:10px;
-    text-decoration:none;
-    box-shadow:3px 3px 3px #888888;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #888888;
 }
 div.item-box {
     float: left;
