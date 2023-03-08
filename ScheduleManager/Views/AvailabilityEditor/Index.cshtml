@@ -22,7 +22,7 @@
         <tr><td></td><td>Open?</td><td>Start</td><td>End</td><td>Close?</td><td>Not availible?</td></tr>
         <tr>
             <td>Monday</td>
-            <td><input type="checkbox" name="m_OP" value="no"></td>
+            <td><input type="checkbox" name="m_OP" value="false"> </td>
             
             <td>
                 <select name="m_start">
@@ -66,94 +66,130 @@
                 }
             </select>
             </td>
-            <td><input type="checkbox" value="MondayCl"></td>
-            <td><input type="checkbox" value="MondayNA"></td>
+            <td><input type="checkbox" name="MondayCl" value="false"></td>
+            <td><input type="checkbox" name="MondayNA" value="false"></td>
         </tr>
         <tr>
             <td>Tuesday</td>
-            <td><input type="checkbox" name="tu_OP" value="no"></td>
+            <td><input type="checkbox" name="tu_OP" value="false"></td>
             <td>
                 <select name="tu_start">
-                @{
-                    theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                    for (int i = 0; i < 24; i++)
-                    {
-                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                        theDate = theDate.AddHours(1);
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.TuesdayStart.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            theDate = theDate.AddHours(1);
                     }
                 }
                 </select>
             </td>
             <td>
                 <select name="tu_end">
-                @{
-                    theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                    for (int i = 0; i < 24; i++)
-                    {
-                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                        theDate = theDate.AddHours(1);
-                    }
-                }
-                </select>
-            </td>
-            <td><input type="checkbox" value="TuesdayCl"></td>
-            <td><input type="checkbox" value="TuesdayNA"></td>
-        </tr>
-        <tr>
-            <td>Wednesday</td>
-            <td><input type="checkbox" name="w_OP" value="no"></td>
-            <td>
-                <select name="w_start">
-                @{
-                    theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                    for (int i = 0; i < 24; i++)
-                    {
-                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                        theDate = theDate.AddHours(1);
-                    }
-                }
-                </select>
-            </td>
-            <td>
-                <select name="w_end">
                     @{
-                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
-                            <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.TuesdayEnd.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
                             theDate = theDate.AddHours(1);
                         }
                     }
                 </select>
             </td>
-            <td><input type="checkbox" value="WednesdayCl"></td>
-            <td><input type="checkbox" value="WednesdayNA"></td>
+            <td><input type="checkbox" name="TuesdayCl" value="false"></td>
+            <td><input type="checkbox" name="TuesdayNA" value="false"></td>
+        </tr>
+        <tr>
+            <td>Wednesday</td>
+            <td><input type="checkbox" name="w_OP" value="false"></td>
+            <td>
+                <select name="w_start">
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.WednesdayStart.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            theDate = theDate.AddHours(1);
+                        }
+                    }
+                </select>
+            </td>
+            <td>
+                <select name="w_end">
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.WednesdayEnd.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            theDate = theDate.AddHours(1);
+                        }
+                    }
+                </select>
+            </td>
+            <td><input type="checkbox" name="WednesdayCl" value="false"></td>
+            <td><input type="checkbox" name="WednesdayNA" value="false"></td>
         </tr>
         <tr>
             <td>Thursday</td>
             <td><input type="checkbox" name="th_OP" value="no"></td>
             <td>
                 <select name="th_start">
-                @{
-                    theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                    for (int i = 0; i < 24; i++)
-                    {
-                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                        theDate = theDate.AddHours(1);
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.ThursdayStart.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            theDate = theDate.AddHours(1);
+                        }
                     }
-                }
                 </select>
             </td>
             <td>
                 <select name="th_end">
-                @{
-                    theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                    for (int i = 0; i < 24; i++)
-                    {
-                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                        theDate = theDate.AddHours(1);
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.ThursdayEnd.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            theDate = theDate.AddHours(1);
+                        }
                     }
-                }
                 </select>
             </td>
             <td><input type="checkbox" value="ThursdayCl"></td>
@@ -164,26 +200,38 @@
             <td><input type="checkbox" name="f_OP" value="no"></td>
             <td>
                 <select name="f_start">
-                @{
-                    theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                    for (int i = 0; i < 24; i++)
-                    {
-                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                        theDate = theDate.AddHours(1);
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.FridayStart.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            theDate = theDate.AddHours(1);
+                        }
                     }
-                }
                 </select>
             </td>
             <td>
                 <select name="f_end">
-                @{
-                    theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                    for (int i = 0; i < 24; i++)
-                    {
-                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                        theDate = theDate.AddHours(1);
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.FridayEnd.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            theDate = theDate.AddHours(1);
+                        }
                     }
-                }
                 </select>
             </td>
             <td><input type="checkbox" value="FridayCl"></td>
@@ -194,26 +242,38 @@
             <td><input type="checkbox" name="sa_OP" value="no"></td>
             <td>
                 <select name="sa_start">
-                @{
-                    theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                    for (int i = 0; i < 24; i++)
-                    {
-                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                        theDate = theDate.AddHours(1);
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.SaturdayStart.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            theDate = theDate.AddHours(1);
+                        }
                     }
-                }
                 </select>
             </td>
             <td>
                 <select name="sa_end">
-                @{
-                    theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                    for (int i = 0; i < 24; i++)
-                    {
-                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                        theDate = theDate.AddHours(1);
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.SaturdayEnd.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            theDate = theDate.AddHours(1);
+                        }
                     }
-                }
                 </select>
             </td>
             <td><input type="checkbox" value="SaturdayCl"></td>
@@ -224,26 +284,38 @@
             <td><input type="checkbox" name="su_OP" value="no"></td>
             <td>
                 <select name="su_start">
-                @{
-                    theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                    for (int i = 0; i < 24; i++)
-                    {
-                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                        theDate = theDate.AddHours(1);
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.SundayStart.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            theDate = theDate.AddHours(1);
+                        }
                     }
-                }
                 </select>
             </td>
             <td>
                 <select name="su_end">
-                @{
-                    theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                    for (int i = 0; i < 24; i++)
-                    {
-                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                        theDate = theDate.AddHours(1);
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.SundayEnd.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            theDate = theDate.AddHours(1);
+                        }
                     }
-                }
                 </select>
             </td>
             <td><input type="checkbox" value="SundayCl"></td>

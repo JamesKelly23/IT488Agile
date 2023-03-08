@@ -52,6 +52,8 @@ namespace ScheduleManager.Controllers
             ViewBag.CurrentAvailability = new Availability(loggedInEmployee);
 
             // ViewBag.CurrentAvailability.MondayEnd = "1/1/2001 14:00:00";
+
+
              DateTime theTime = Convert.ToDateTime("1/1/2001 19:00:00");
             theTime = Convert.ToDateTime(HttpContext.Request.Form["m_end"]);
 
@@ -67,9 +69,30 @@ namespace ScheduleManager.Controllers
 
             //  ViewBag.CurrentAvailability =theAvail;
 
-            ViewData["Message"] = "Update Complete!";
+            // ViewData["Message"] = "Update Complete!";
 
+
+            if (HttpContext.Request.Form["m_op"]==true)
+            {
+                ViewData["Message"] = "mondya open is checked !";
+            }
+            else
+            {
+                ViewData["Message"] = "monday open isn't checked";
+            }
             /*
+            if(Convert.ToDateTime(HttpContext.Request.Form["m_start"])> Convert.ToDateTime(HttpContext.Request.Form["m_end"]))
+            {
+                ViewData["Message"] = "Start is after close!";
+            }
+            else if(Convert.ToDateTime(HttpContext.Request.Form["m_start"]) < Convert.ToDateTime(HttpContext.Request.Form["m_end"]))
+            {
+                ViewData["Message"] = "Start is before close";
+            }
+            else {
+                ViewData["Message"] = "Equal";
+            }
+            
 
             //The problem is that I can't read from the view
             ViewData["Message"] = Convert.ToDateTime(HttpContext.Request.Form["m_end"]); 
