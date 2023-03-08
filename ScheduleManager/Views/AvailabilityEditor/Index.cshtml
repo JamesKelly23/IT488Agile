@@ -30,7 +30,15 @@
                         DateTime theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
-                            <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            if(theDate.ToString("t") == ViewBag.CurrentAvailability.MondayStart.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            
                             theDate = theDate.AddHours(1);
                         }
                        // @(theDate.ToString("t") == ViewBag.CurrentAvailability.MondayStart.ToString("t") ? "selected" : "")
@@ -45,7 +53,14 @@
                     theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                     for (int i = 0; i < 24; i++)
                     {
-                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.MondayEnd.ToString("t"))
+                            {
+                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
+                            else
+                            {
+                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                            }
                         theDate = theDate.AddHours(1);
                     }
                 }
