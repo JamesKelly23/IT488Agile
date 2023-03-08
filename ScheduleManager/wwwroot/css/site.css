@@ -50,6 +50,8 @@ a.link-button {
     text-decoration: none;
     font-weight: bold;
     box-shadow: 3px 3px 3px #888888;
+    margin: 5px;
+    float: right;
 }
 div.item-box {
     float: left;
