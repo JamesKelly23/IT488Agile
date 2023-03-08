@@ -37,6 +37,7 @@
                             <p>Previously Scheduled Hours: @ViewData["PreviousScheduledHours"]</p>
                             <p>Requested Shift Length: @ViewData["NewShiftLength"]</p>
                             <p>New Scheduled Hours if Request is Approved: @ViewData["NewScheduledHours"]</p>
+                            <a asp-action="Approvals" class="link-button details">Hide</a>
                         </div>
                     </td>
                 </tr>
@@ -110,6 +111,7 @@
                                         <tr><td class="cell2" colspan="6"><center>No overlapping time off requests</center></td></tr>
                                     }
                                 }
+                                <a asp-action="Approvals" class="link-button details">Hide</a>
                             </table>
                         </div>
                     </td>
