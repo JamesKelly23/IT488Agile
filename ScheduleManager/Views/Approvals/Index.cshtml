@@ -1,0 +1,124 @@
+﻿@{
+
+}
+<h2>Shift Pickup Requests</h2>
+<table class="request-table">
+    <tr class="headerrow2">
+        <th class="cell2">Employee Name</th>
+        <th class="cell2">Shift Date</th>
+        <th class="cell2">Start Time</th>
+        <th class="cell2">End Time</th>
+        <th class="cell2">Role</th>
+        <th class="cell2">Actions</th>
+    </tr>
+    @{
+        int i = 0;
+        foreach(PickupRequest theRequest in ViewBag.PUList)
+        {
+            <tr class="row2 @(i++ % 2 ==0 ? "evenrow " : "")">
+                <td class="cell2">@theRequest.GetEmployee().FullName()</td>
+                <td class="cell2">@theRequest.GetShift().ShiftDate.ToString("D")</td>
+                <td class="cell2">@theRequest.GetShift().StartTime.ToString("t")</td>
+                <td class="cell2">@theRequest.GetShift().EndTime.ToString("t")</td>
+                <td class="cell2">@theRequest.GetShift().Role</td>
+                <td class="cell2">
+                    <a class="link-button approve" asp-action="ActionPickup" asp-route-approved="True" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID">Approve</a>
+                    <a class="link-button deny" asp-action="ActionPickup" asp-route-approved="False" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID">Deny</a>
+                    <a class="link-button details" asp-action="PickupDetails" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID">Details</a>
+                </td>
+            </tr>
+            if ((Convert.ToInt32(ViewData["DetailsEmpID"]) == theRequest.EmployeeID) && (Convert.ToInt32(ViewData["DetailsShiftID"]) == theRequest.ShiftID))
+            {
+                <tr>
+                    <td class="detailscell" colspan="6">
+                        <div class="details">
+                            <h3>Details:</h3>
+                            <h4>Employee Schedule Data</h4>
+                            <p>Previously Scheduled Hours: @ViewData["PreviousScheduledHours"]</p>
+                            <p>Requested Shift Length: @ViewData["NewShiftLength"]</p>
+                            <p>New Scheduled Hours if Request is Approved: @ViewData["NewScheduledHours"]</p>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        if(ViewBag.PUList.Count == 0)
+        {
+            <tr><td class="cell2" colspan="6"><center>There are no shift pickup requests to show at this time.</center></td></tr>
+        }
+    }
+</table>
+<br />
+<hr />
+<br />
+<h2>Time Off Requests</h2>
+<table class="request-table">
+    <tr class="headerrow2">
+        <th class="cell2">Employee Name</th>
+        <th class="cell2">Start Date</th>
+        <th class="cell2">End Date</th>
+        <th class="cell2">Notes</th>
+        <th class="cell2">Actions</th>
+    </tr>
+    @{
+        i = 0;
+        foreach (TimeOffRequest theRequest in ViewBag.TOList)
+        {
+            <tr class="row2 @(i++ % 2 ==0 ? "evenrow " : "")">
+                <td class="cell2">@theRequest.GetEmployee().FullName()</td>
+                <td class="cell2">@theRequest.StartDate.ToString("d")</td>
+                <td class="cell2">@theRequest.EndDate.ToString("d")</td>
+                <td class="cell2">@theRequest.Notes</td>
+                <td class="cell2">
+                    <a class="link-button approve" asp-action="ActionTimeOff" asp-route-approved="True" asp-route-id="@theRequest.ID">Approve</a>
+                    <a class="link-button deny" asp-action="ActionTimeOff" asp-route-approved="False" asp-route-id="@theRequest.ID">Deny</a>
+                    <a class="link-button details" asp-action="TimeOffDetails" asp-route-id="@theRequest.ID">Details</a>
+                </td>
+            </tr>
+            if(Convert.ToInt32(ViewData["DetailsTORID"])==theRequest.ID)
+            {
+                <tr>
+                    <td class="detailscell" colspan="6">
+                        <div class="details">
+                            <h3>Details:</h3>
+                            <h4>Overlapping Requests</h4>
+                            <table>
+                                <tr class="row2">
+                                    <th class="cell2">Employee</th>
+                                    <th class="cell2">Start Date</th>
+                                    <th class="cell2">End Date</th>
+                                    <th class="cell2">Notes</th>
+                                    <th class="cell2">Approved</th>
+                                    <th class="cell2">Actioning Manager</th>
+                                </tr>
+                                @{
+                                    i = 0;
+                                    foreach(TimeOffRequest theOverlap in ViewBag.OverlapList)
+                                    {
+                                        String ManagerName = (theOverlap.ManagerID == 0 ? "None" : theOverlap.GetManager().FullName());
+                                        <tr class="row2">
+                                            <td class="cell2">@theOverlap.GetEmployee().FullName()</td>
+                                            <td class="cell2">@theOverlap.StartDate.ToString("d")</td>
+                                            <td class="cell2">@theOverlap.EndDate.ToString("d")</td>
+                                            <td class="cell2">@theOverlap.Notes</td>
+                                            <td class="cell2">@theOverlap.IsApproved</td>
+                                            <td class="cell2">@ManagerName</td>
+                                        </tr>
+                                    }
+                                    if(ViewBag.OverlapList.Count==0)
+                                    {
+                                        <tr><td class="cell2" colspan="6"><center>No overlapping time off requests</center></td></tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        if (ViewBag.TOList.Count == 0)
+        {
+            <tr><td class="cell" colspan="5"><center>There are no time off requests to show at this time.</center></td></tr>
+        }
+    }
+</table>

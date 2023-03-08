@@ -1,12 +1,55 @@
 html {
   font-size: 14px;
 }
+.navbar, .evenrow {
+    background-color:#E0E0FF;
+}
+body {
+    background-color: #F3F3FF;
+}
 .bulletless {
     list-style-type: none;
 }
 p.error {
     color: red;
     font-weight: bold;
+}
+ul.linklist {
+    list-style-type: none;
+    align-content:center;
+}
+li.linklist-item {
+    margin:20pt;
+    float:left;
+}
+a.nav-link {
+    font-weight: bold;
+}
+a.approve {
+    background-color: palegreen;
+}
+td.detailscell {
+    padding: 0pt 13pt 13pt 13pt;
+}
+a.deny {
+    background-color: lightcoral;
+}
+a.details {
+    background-color: palegoldenrod;
+}
+div.details {
+    background-color: palegoldenrod;
+    padding: 8pt;
+    border: 2pt solid goldenrod;
+}
+a.link-button {
+    padding: 8px;
+    color: black;
+    border: 1pt solid black;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #888888;
 }
 div.item-box {
     float: left;
@@ -16,10 +59,27 @@ div.item-box {
     padding: 5px;
     border: 3pt double black;
     border-radius: 15px;
-    box-shadow: 8px 8px 6px #bbbbbb;
+    box-shadow: 8px 8px 6px #888888;
     text-align: center;
 }
-div.container {
+table.request-table {
+    border: 1pt solid black;
+}
+tr.headerrow2 {
+    padding: 2pt;
+    border: 2pt solid black;
+    background-color: #aaaaff;
+}
+tr.row2 {
+    padding: 2pt;
+    border: 1pt solid black;
+}
+td.cell2, th.cell2 {
+    border: 1pt solid black;
+    padding: 13px;
+    margin: 3px;
+}
+div.container2 {
     content: "";
     clear: both;
     display: table;
@@ -32,7 +92,7 @@ div.available-shift-box {
     padding: 5px;
     border: 3pt double black;
     border-radius: 15px;
-    box-shadow: 8px 8px 6px #bbbbbb;
+    box-shadow: 8px 8px 6px #aaaaaa;
     text-align: center;
 }
 a.item-box{
@@ -45,7 +105,7 @@ a.item-box{
     padding: 20px;
     border: 2px solid black;
     border-radius: 15px;
-    box-shadow: 5px 5px 3px #888888;
+    box-shadow: 5px 5px 3px #aaaaaa;
     list-style-position: inside;
 }
 @media (min-width: 768px) {

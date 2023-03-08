@@ -117,9 +117,13 @@
         }
         public static List<Shift> GetScheduleByEmployee(DateTime WeekStartDate, int EmployeeID)
         {
+            while (WeekStartDate.DayOfWeek != DayOfWeek.Monday)
+            {
+                WeekStartDate = WeekStartDate.AddDays(-1);
+            }
             SqlConnection StaticConnection = new(ConnectionStrings.local);
             List<Shift> list = new();
-            SqlCommand theCommand = new("SELECT ID FROM Shift WHERE Date BETWEEN '" + WeekStartDate + "' AND '" + WeekStartDate.AddDays(7) + "' AND EmployeeID=" + EmployeeID + ";", StaticConnection);
+            SqlCommand theCommand = new("SELECT ID FROM Shift WHERE Date BETWEEN '" + WeekStartDate + "' AND '" + WeekStartDate.AddDays(6) + "' AND EmployeeID=" + EmployeeID + ";", StaticConnection);
             StaticConnection.Open();
             SqlDataReader theReader = theCommand.ExecuteReader();
             while (theReader.Read())
@@ -134,11 +138,11 @@
             DateTime WeekStartDate = DateTime.Today;
             while(WeekStartDate.DayOfWeek != DayOfWeek.Monday)
             {
-                WeekStartDate.AddDays(-1);
+                WeekStartDate = WeekStartDate.AddDays(-1);
             }
             SqlConnection StaticConnection = new(ConnectionStrings.local);
             List<Shift> list = new();
-            SqlCommand theCommand = new("SELECT ID FROM Shift WHERE Date BETWEEN '" + WeekStartDate + "' AND '" + WeekStartDate.AddDays(7) + "' AND EmployeeID=" + EmployeeID + ";", StaticConnection);
+            SqlCommand theCommand = new("SELECT ID FROM Shift WHERE Date BETWEEN '" + WeekStartDate + "' AND '" + WeekStartDate.AddDays(6) + "' AND EmployeeID=" + EmployeeID + ";", StaticConnection);
             StaticConnection.Open();
             SqlDataReader theReader = theCommand.ExecuteReader();
             while (theReader.Read())

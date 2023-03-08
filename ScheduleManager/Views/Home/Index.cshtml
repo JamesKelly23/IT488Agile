@@ -11,7 +11,7 @@
                     <input type="text" placeholder="Enter Username" name="Username" required><br>
                     <!--input type="text" name="UserName"-->
                     <label>Password:</label>
-                    <input type="text" placeholder="Enter Password" name="Password" required><br>
+                    <input type="password" placeholder="Enter Password" name="Password" required><br>
                     <!--input type="text" name="Password"-->
                     <input type="submit" value="LogIn"><br>
                     <input type="checkbox" checked="checked"> Remember me<br>
@@ -19,7 +19,7 @@
                 </form>
             </p>
             <p>Sample Logins:</p>
-            <ul>
+            <ul class="bulletless">
             <li>General Manager Level: Username GM Password GM</li>
             <li>Manager Level: Username M Password M</li>
             <li>4 Team Members. William Max James and Kent. Username and Password are both the first name.</li>
@@ -28,7 +28,23 @@
         if (Convert.ToInt32(ViewData["LoggedIn"]) == 1)
         {
             <p>Welcome @ViewBag.CurrentUser.FirstName</p>
-            <p>This page should eventually contain a dashboard that shows some common items or maybe defaulting to the user's schedule.</p>
+            <p>What would you like to do today? Here are some suggestions:</p>
+            <ul class="container2 linklist">
+                <li class="linklist-item">
+                <a class="link-button" asp-controller="OpenShifts" asp-action="Index">View Available Shifts</a>
+                </li>
+                <li class="linklist-item">
+                <a class="link-button" asp-controller="EmployeeEditor" asp-action="EmployeeDetails" asp-route-id="@ViewBag.CurrentUser.ID">Edit My Information</a>
+                </li>
+                @{
+                    if (ViewBag.CurrentUser.RankID > 1)
+                    {
+                        <li class="linklist-item">
+                        <a class="link-button" asp-controller="Approvals" asp-action="Index">View Manager Approvals</a>
+                        </li>
+                    }
+                }
+            </ul>
         }
     }
 </div>
