@@ -35,6 +35,7 @@
             {
                 list.Add(new TimeOffRequest(theReader.GetInt32(0)));
             }
+            staticConnection.Close();
             return list;
         }
         public static List<TimeOffRequest> GetPending() //Returns all pending time off requests that exist in the future
