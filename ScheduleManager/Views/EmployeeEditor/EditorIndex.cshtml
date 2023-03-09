@@ -4,11 +4,13 @@
 }
 
 <h2 class="text-center">Employee List</h2>
-
 <br />
+
 <a asp-action="SearchEmply">Search</a>
 <br/>
-<a asp-action="NewEmployee">New Employee</a>
+<a  asp-action="NewEmployee">New Employee</a>
+<br/>
+<br/>
 <dl class="row">
     <dt class="col">
         ID
@@ -44,7 +46,7 @@
                 @theEmployee.DOB
             </dd>
             <dd class="col">
-                <a asp-action="EmployeeDetails" asp-route-id="@theEmployee.ID">Details</a>
+                <a asp-action="EmployeeDetails" asp-route-id="@theEmployee.ID" class="link-button">Details</a>
             </dd>
         </dl>
     }

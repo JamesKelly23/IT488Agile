@@ -8,7 +8,7 @@
 }
 
 <div>
-    <a asp-action="EditorIndex" class="text-lg-start">Back to List</a>
+    <a asp-action="EditorIndex" class="link-button">Back to List</a>
     <br/>
 
     <h1 class="text-center">Employee Information</h1>
@@ -78,7 +78,7 @@
                 </dd>
             </dl>
             <input type="submit" name="Save"><br/>
-            <a asp-action="EmployeeDetails" asp-route-id=@currentDetails.ID>Cancel</a> 
+            <button asp-action="EmployeeDetails" asp-route-id=@currentDetails.ID>Cancel</button>
         </form>
     }
     else if (Convert.ToInt32(ViewData["EmployeeEditContact"]) == currentDetails.ID)
@@ -114,7 +114,7 @@
                 </dd>
             </dl>
             <input type="submit"><br />
-            <a asp-action="EmployeeDetails" asp-route-id=@currentDetails.ID>Cancel</a>
+            <button asp-action="EmployeeDetails" asp-route-id=@currentDetails.ID>Cancel</button>
         </form>
     }
     else if (Convert.ToInt32(ViewData["EmployeeEditAccount"]) == currentDetails.ID)
@@ -152,7 +152,7 @@
                 </dd>
             </dl>
             <input type="Submit"><br />
-            <a asp-action="EmployeeDetails" asp-route-id=@currentDetails.ID>Cancel</a>
+            <button asp-action="EmployeeDetails" asp-route-id=@currentDetails.ID>Cancel</button>
         </form>
     }
     else
@@ -241,6 +241,6 @@
             <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a="3">Edit</a>
         </div>
         <hr/>
-        <a asp-action="Delete" asp-route-id=@currentDetails.ID>Delete</a>
+        <a class="link-button" asp-action="Delete" asp-route-id=@currentDetails.ID>Delete</a>
     }
 }
