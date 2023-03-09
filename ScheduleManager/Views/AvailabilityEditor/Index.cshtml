@@ -4,8 +4,8 @@
 <form asp-action=Update>
 <div class="text-center">
     <p>@ViewData["Message"]</p>
-    <p>@ViewBag.CurrentAvailability.TuesdayStart</p>
-    <p>@ViewBag.CurrentAvailability.TuesdayEnd</p>
+    <p>@ViewBag.CurrentAvailability.MondayStart</p>
+    <p>@ViewBag.CurrentAvailability.MondayEnd</p>
     <h1 class=display>
         Availibility Editor <br/>
         Employee Name: @ViewBag.CurrentUser.FirstName
@@ -120,6 +120,7 @@
             <td>
                 <select name="w_start" id="we_s">
                     @{
+                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
                             if (theDate.ToString("t") == ViewBag.CurrentAvailability.WednesdayStart.ToString("t"))
@@ -138,6 +139,7 @@
             <td>
                 <select name="w_end" id="we_e">
                     @{
+                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
                             if (theDate.ToString("t") == ViewBag.CurrentAvailability.WednesdayEnd.ToString("t"))
@@ -162,6 +164,7 @@
             <td>
                 <select name="th_start" id="th_s">
                     @{
+                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
                             if (theDate.ToString("t") == ViewBag.CurrentAvailability.ThursdayStart.ToString("t"))
@@ -180,6 +183,7 @@
             <td>
                 <select name="th_end" id="th_e">
                     @{
+                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
                             if (theDate.ToString("t") == ViewBag.CurrentAvailability.ThursdayEnd.ToString("t"))
@@ -204,6 +208,7 @@
             <td>
                 <select name="f_start" id="fr_s">
                     @{
+                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
                             if (theDate.ToString("t") == ViewBag.CurrentAvailability.FridayStart.ToString("t"))
@@ -222,8 +227,10 @@
             <td>
                 <select name="f_end" id="fr_e">
                     @{
+                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
+
                             if (theDate.ToString("t") == ViewBag.CurrentAvailability.FridayEnd.ToString("t"))
                             {
                                 <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
@@ -246,6 +253,7 @@
             <td>
                 <select name="sa_start" id="sa_s">
                     @{
+                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
                             if (theDate.ToString("t") == ViewBag.CurrentAvailability.SaturdayStart.ToString("t"))
@@ -264,6 +272,7 @@
             <td>
                 <select name="sa_end" id="sa_e">
                     @{
+                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
                             if (theDate.ToString("t") == ViewBag.CurrentAvailability.SaturdayEnd.ToString("t"))
@@ -288,6 +297,7 @@
             <td>
                 <select name="su_start" id="su_s">
                     @{
+                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
                             if (theDate.ToString("t") == ViewBag.CurrentAvailability.SundayStart.ToString("t"))
@@ -306,6 +316,7 @@
             <td>
                 <select name="su_end" id="su_e">
                     @{
+                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
                             if (theDate.ToString("t") == ViewBag.CurrentAvailability.SundayEnd.ToString("t"))
@@ -392,32 +403,32 @@
             }
             if (ViewBag.CurrentAvailability.TuesdayStart == ViewBag.CurrentAvailability.TuesdayEnd)
             {
-                <label>Not available monday</label>
+                <label>Not available tuesday</label>
                 <br />
             }
             if (ViewBag.CurrentAvailability.WednesdayStart == ViewBag.CurrentAvailability.WednesdayEnd)
             {
-                <label>Not available monday</label>
+                <label>Not available wednesday</label>
                 <br />
             }
             if (ViewBag.CurrentAvailability.ThursdayStart == ViewBag.CurrentAvailability.ThursdayEnd)
             {
-                <label>Not available monday</label>
+                <label>Not available thursday</label>
                 <br />
             }
             if (ViewBag.CurrentAvailability.FridayStart == ViewBag.CurrentAvailability.FridayEnd)
             {
-                <label>Not available monday</label>
+                <label>Not available friday</label>
                 <br />
             }
             if (ViewBag.CurrentAvailability.SaturdayStart == ViewBag.CurrentAvailability.SaturdayEnd)
             {
-                <label>Not available monday</label>
+                <label>Not available saturday</label>
                 <br />
             }
             if (ViewBag.CurrentAvailability.SundayStart == ViewBag.CurrentAvailability.SundayEnd)
             {
-                <label>Not available monday</label>
+                <label>Not available sunday</label>
                 <br />
             }
         /*
