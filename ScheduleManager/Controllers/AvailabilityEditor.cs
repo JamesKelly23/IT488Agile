@@ -64,10 +64,55 @@ namespace ScheduleManager.Controllers
 
 
              DateTime theTime = Convert.ToDateTime("1/1/2001 19:00:00");
-            theTime = Convert.ToDateTime(HttpContext.Request.Form["m_end"]);
+            DateTime timeStart = Convert.ToDateTime("1/1/2001 19:00:00");
+            DateTime timeEnd = Convert.ToDateTime("1/1/2001 19:00:00");
+            timeStart = Convert.ToDateTime(HttpContext.Request.Form["m_start"]);
+            timeEnd = Convert.ToDateTime(HttpContext.Request.Form["m_end"]);
+
+            if (timeStart == timeEnd && timeEnd!= Convert.ToDateTime(HttpContext.Request.Form["Fake"]))
+            {//this means they entered the same time for entering and leaving (and didn't click "not available") (this is bad data)
+                ViewData["Message"] = "Unless its 12AM for not available, start time cannot be end time. Error on monday.";
+                return View("Index");
+            }  
+           else if (Convert.ToDateTime(HttpContext.Request.Form["m_start"]) == Convert.ToDateTime(HttpContext.Request.Form["m_end"]) && Convert.ToDateTime(HttpContext.Request.Form["m_end"]) == Convert.ToDateTime(HttpContext.Request.Form["Fake"]))
+            {//this means they are not available that day. 
+                ViewData["Message"] = "Not Available.";
+                theTime = Convert.ToDateTime("1/13/2001 00:00:00");
+                ViewBag.CurrentAvailability.MondayStart = theTime;
+                ViewBag.CurrentAvailability.MondayEnd = theTime;
+            }
+            else if(Convert.ToDateTime(HttpContext.Request.Form["m_end"]) == Convert.ToDateTime(HttpContext.Request.Form["Fake"]))
+            {//this means they can close, but do not open
+                ViewData["Message"] = "Close, not open.";
+                ViewBag.CurrentAvailability.MondayStart = Convert.ToDateTime(HttpContext.Request.Form["m_start"]);
+                theTime = Convert.ToDateTime("1/13/2001 23:00:00");
+                ViewBag.CurrentAvailability.MondayEnd = theTime;
+            }
+            else if (Convert.ToDateTime(HttpContext.Request.Form["m_start"]) == Convert.ToDateTime(HttpContext.Request.Form["Fake"]))
+            {//this means they can open, but do not close
+                ViewData["Message"] = "Open, not close.";
+                ViewBag.CurrentAvailability.MondayEnd = Convert.ToDateTime(HttpContext.Request.Form["m_end"]);
+                theTime = Convert.ToDateTime("1/13/2001 00:00:00");
+                ViewBag.CurrentAvailability.MondayStart = theTime;
+            }
+            else if (timeStart > timeEnd)
+            {//this means the start time is before the end time. This is bad data
+                ViewData["Message"] = "Start time cannot be before end time. Error on monday.";
+                return View("Index");
+            }
+            else
+            {//this means they start and end at neither open or close
+                ViewData["Message"] = "Neither open or close.";
+                theTime = Convert.ToDateTime(HttpContext.Request.Form["m_start"]);
+                ViewBag.CurrentAvailability.MondayStart = theTime;
+               theTime= Convert.ToDateTime(HttpContext.Request.Form["m_end"]);
+                ViewBag.CurrentAvailability.MondayEnd = theTime;
+            }
+
+            // theTime = Convert.ToDateTime(HttpContext.Request.Form["m_start"]);
 
 
-            ViewBag.CurrentAvailability.MondayEnd = theTime;
+           // ViewBag.CurrentAvailability.MondayEnd = theTime;
 
 
 
