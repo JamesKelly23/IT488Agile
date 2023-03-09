@@ -18,6 +18,29 @@
 
         <input type="submit" value="Submit" />
         </form>
+        <table class="request-table">
+            <tr class="row2">
+                <td class="cell2"> Start Date</td>
+                <td class="cell2">End Date</td>
+                <td class="cell2">Notes</td>
+                <td class="cell2">Approved</td>
+                <td class="cell2">Manager</td>
+            </tr>
+        @{
+            foreach(TimeOffRequest TheRequest in ViewBag.TORList)
+            {
+                <tr class ="row2">
+                <td class="cell2">@TheRequest.StartDate.ToString("D")</td>
+                    <td class="cell2">@TheRequest.EndDate.ToString("D")</td>
+                    <td class="cell2">@TheRequest.Notes</td>
+                    <td class="cell2">@TheRequest.IsApproved</td>
+                    <td class="cell2">@(TheRequest.ManagerID == 0 ? "None" : TheRequest.GetManager().FullName())</td>
+
+
+                </tr>
+            }
+        }
+        </table>
     </center>
    
        
