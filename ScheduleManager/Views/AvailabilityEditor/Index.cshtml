@@ -4,8 +4,8 @@
 <form asp-action=Update>
 <div class="text-center">
     <p>@ViewData["Message"]</p>
-    <p>@ViewBag.CurrentAvailability.MondayStart</p>
-    <p>@ViewBag.CurrentAvailability.MondayEnd</p>
+    <p>@ViewBag.CurrentAvailability.TuesdayStart</p>
+    <p>@ViewBag.CurrentAvailability.TuesdayEnd</p>
     <h1 class=display>
         Availibility Editor <br/>
         Employee Name: @ViewBag.CurrentUser.FirstName
@@ -76,6 +76,7 @@
             <td>
                 <select name="tu_start" id="tu_s">
                     @{
+                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
                             if (theDate.ToString("t") == ViewBag.CurrentAvailability.TuesdayStart.ToString("t"))
@@ -94,6 +95,7 @@
             <td>
                 <select name="tu_end" id="tu_e">
                     @{
+                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
                         {
                             if (theDate.ToString("t") == ViewBag.CurrentAvailability.TuesdayEnd.ToString("t"))
@@ -361,29 +363,64 @@
 
     <br />
     <p>Current availability</p>
-    @{
-        //will return the availability of a day in XX:XX XM - XX:XX XM format
-        string trimString(String start, String end)
-        {
-            String current = start;//will swtich between the start and end times
-            String final = "";//the final string we return
-            //trim down the unnesecary parts of the string
-            current = current.Remove(0, 9);
-            current = current.Remove(4, 3);
-            //update the final string
-            final+=current+" - ";
-            //repeat for leave time
-            current = end;
-            current = current.Remove(0, 9);
-            current = current.Remove(4, 3);
-            //update string and return it
-            final += current;
-            return final;
-        }
-       
-        String fullAvail = "";//will contain the current days availability
-        
+        @{
+            //will return the availability of a day in XX:XX XM - XX:XX XM format
+            string trimString(String start, String end)
+            {
+                String current = start;//will swtich between the start and end times
+                String final = "";//the final string we return
+                                  //trim down the unnesecary parts of the string
+                current = current.Remove(0, 9);
+                current = current.Remove(4, 3);
+                //update the final string
+                final+=current+" - ";
+                //repeat for leave time
+                current = end;
+                current = current.Remove(0, 9);
+                current = current.Remove(4, 3);
+                //update string and return it
+                final += current;
+                return final;
+            }
 
+            // String fullAvail = "";//will contain the current days availability
+
+            if (ViewBag.CurrentAvailability.MondayStart == ViewBag.CurrentAvailability.MondayEnd)
+            {
+                <label>Not available monday</label>
+                <br />
+            }
+            if (ViewBag.CurrentAvailability.TuesdayStart == ViewBag.CurrentAvailability.TuesdayEnd)
+            {
+                <label>Not available monday</label>
+                <br />
+            }
+            if (ViewBag.CurrentAvailability.WednesdayStart == ViewBag.CurrentAvailability.WednesdayEnd)
+            {
+                <label>Not available monday</label>
+                <br />
+            }
+            if (ViewBag.CurrentAvailability.ThursdayStart == ViewBag.CurrentAvailability.ThursdayEnd)
+            {
+                <label>Not available monday</label>
+                <br />
+            }
+            if (ViewBag.CurrentAvailability.FridayStart == ViewBag.CurrentAvailability.FridayEnd)
+            {
+                <label>Not available monday</label>
+                <br />
+            }
+            if (ViewBag.CurrentAvailability.SaturdayStart == ViewBag.CurrentAvailability.SaturdayEnd)
+            {
+                <label>Not available monday</label>
+                <br />
+            }
+            if (ViewBag.CurrentAvailability.SundayStart == ViewBag.CurrentAvailability.SundayEnd)
+            {
+                <label>Not available monday</label>
+                <br />
+            }
+        /*
         //fill string with that days information. put the string in the view data variable
         //display variable within a label (label over p for spacing reasons). Then add a br to start a new line
         //rinse and repeat for all days
@@ -413,7 +450,8 @@
         <br />
         fullAvail = "Sunday: " + trimString(ViewBag.CurrentAvailability.SundayStart.ToString(), ViewBag.CurrentAvailability.SundayEnd.ToString());
         ViewData["Avail"] = fullAvail;
-        <label>@ViewData["Avail"]</label>
+        */
+       // <label>@ViewData["Avail"]</label>
 
     
 
