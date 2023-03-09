@@ -56,5 +56,28 @@ namespace ScheduleManager.Controllers
             ViewData["NewScheduledHours"] = previousHours + shiftLength;
             return Index();
         }
+        public IActionResult ActionPickup(int empid, int shiftid, bool approved)
+        {
+            Shift theShift = new Shift(shiftid);
+            PickupRequest theRequest = new PickupRequest(shiftid, empid);
+            if(approved==true)
+            {
+                theShift.EmployeeID = empid;
+                theShift.IsOpen = false;
+                theShift.Save();
+            }
+            theRequest.IsApproved = approved;
+            theRequest.ManagerID = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
+            theRequest.Save();
+            return Index();
+        }
+        public IActionResult ActionTimeOff(int id, bool approved)
+        {
+            TimeOffRequest theRequest = new(id);
+            theRequest.IsApproved = approved;
+            theRequest.ManagerID = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
+            theRequest.Save();
+            return Index();
+        }
     }
 }

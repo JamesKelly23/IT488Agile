@@ -184,5 +184,13 @@
             staticConnection.Close();
             return list;
         }
+        public Availability GetCurrentAvailability()
+        {
+            SqlCommand theCommand = new("SELECT ID FROM Availability WHERE EmployeeID=" + ID + " ORDER BY EffectiveDate DESC;");
+            theConnection.Open();
+            Availability theResult = new Availability(Convert.ToInt32(theCommand.ExecuteScalar()));
+            theConnection.Close();
+            return theResult;
+        }
     }
 }

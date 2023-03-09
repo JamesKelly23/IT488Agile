@@ -26,19 +26,26 @@ namespace ScheduleManager.Controllers
                     AvailableShifts.Add(theShift);
                 }
             }
+            List<Shift> shiftList = Shift.GetScheduleByEmployee(loggedInID);
+            List<String> dateList = new();
+            foreach(Shift theShift in shiftList)
+            {
+                dateList.Add(theShift.ShiftDate.ToString("d"));
+            }
+            ViewBag.ConflictingDates = dateList;
             ViewBag.OpenShiftList = AvailableShifts;
             ViewBag.RequestedShiftList = RequestedShifts;
             return View("Index");
         }
-        public IActionResult ShiftPickupRequest(int id)
+        public IActionResult ShiftPickupRequest(int id, int empid)
         {
-            PickupRequest theRequest = new(id, Convert.ToInt32(HttpContext.Request.Form["EmployeeID"]),false,0);
+            PickupRequest theRequest = new(id, empid, false, 0);
             theRequest.Save();
             return Index();
         }
-        public IActionResult DeleteRequest(int id)
+        public IActionResult DeleteRequest(int id, int empid)
         {
-            PickupRequest theRequest = new(id, Convert.ToInt32(HttpContext.Request.Form["EmployeeID"]));
+            PickupRequest theRequest = new(id, empid);
             theRequest.Delete();
             return Index();
         }

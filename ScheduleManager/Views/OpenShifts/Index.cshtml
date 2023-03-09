@@ -6,15 +6,27 @@
     @{
         foreach(Shift theShift in ViewBag.OpenShiftList)
         {
-            <div class="available-shift-box">
-                @theShift.ShiftDate.ToString("D") <hr>
-                @theShift.StartTime.ToString("t") - @theShift.EndTime.ToString("t") <hr>
-                @theShift.Role<hr>
-                <form asp-route-id="@theShift.ID" asp-action="ShiftPickupRequest">
-                    <input type="hidden" name="EmployeeID" value="@Context.Session.GetInt32("_LoggedInEmployeeID")"> 
-                    <input type="Submit" value="Request Shift">
-                </form>
-            </div>
+            if(ViewBag.ConflictingDates.Contains(theShift.ShiftDate.ToString("d")))
+            {
+                <div class="conflicting-shift-box">
+                    @theShift.ShiftDate.ToString("D") <hr>
+                    @theShift.StartTime.ToString("t") - @theShift.EndTime.ToString("t") <hr>
+                    @theShift.Role<hr>
+                    <p class="link-button-nofloat" asp-route-id="@theShift.ID" asp-route-empid="@Context.Session.GetInt32("_LoggedInEmployeeID")" asp-action="ShiftPickupRequest">
+                        Ineligible: Conflict
+                    </p>
+                </div>
+            } else
+            {
+                <div class="available-shift-box">
+                    @theShift.ShiftDate.ToString("D") <hr>
+                    @theShift.StartTime.ToString("t") - @theShift.EndTime.ToString("t") <hr>
+                    @theShift.Role<hr>
+                    <a class="link-button-nofloat" asp-route-id="@theShift.ID" asp-route-empid="@Context.Session.GetInt32("_LoggedInEmployeeID")" asp-action="ShiftPickupRequest">
+                        Request Shift
+                    </a>
+                </div>
+            }
         }
         if (ViewBag.OpenShiftList.Count == 0)
         {
@@ -35,10 +47,9 @@
                 @theShift.ShiftDate.ToString("D") <hr>
                 @theShift.StartTime.ToString("t") - @theShift.EndTime.ToString("t") <hr>
                 @theShift.Role<hr>
-                <form asp-action="DeleteRequest" asp-route-id="@theShift.ID">
-                    <input type="hidden" name="EmployeeID" value="@Context.Session.GetInt32("_LoggedInEmployeeID")">
-                    <input type="Submit" value="Cancel Request">
-                </form>
+                <a class="link-button-nofloat" asp-action="DeleteRequest" asp-route-id="@theShift.ID" asp-route-empid="@Context.Session.GetInt32("_LoggedInEmployeeID")">
+                    Delete Request
+                </a>
             </div>
         }
         if(ViewBag.RequestedShiftList.Count == 0)

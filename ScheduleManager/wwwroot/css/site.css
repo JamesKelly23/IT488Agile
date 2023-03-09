@@ -42,7 +42,18 @@ div.details {
     padding: 8pt;
     border: 2pt solid goldenrod;
 }
-a.link-button {
+.link-button-nofloat {
+    padding: 8px;
+    color: black;
+    border: 1pt solid black;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #888888;
+    margin: 5px;
+    float: none;
+}
+.link-button {
     padding: 8px;
     color: black;
     border: 1pt solid black;
@@ -97,10 +108,20 @@ div.available-shift-box {
     box-shadow: 8px 8px 6px #aaaaaa;
     text-align: center;
 }
+div.conflicting-shift-box {
+    float: left;
+    width: 200px;
+    height: 250px;
+    margin: 10px;
+    padding: 5px;
+    border: 3pt double red;
+    border-radius: 15px;
+    box-shadow: 8px 8px 6px #aaaaaa;
+    text-align: center;
+}
 a.item-box{
     color: #000000;
 }
-
 .list {
     float: left;
     margin: 10px;
@@ -115,17 +136,13 @@ a.item-box{
     font-size: 16px;
   }
 }
-
 html {
   position: relative;
   min-height: 100%;
 }
-
 body {
     margin-bottom: 60px;
 }
-
-
 table.center {
     margin-left: auto;
     margin-right: auto;
