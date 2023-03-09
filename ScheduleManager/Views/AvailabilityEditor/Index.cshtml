@@ -421,6 +421,136 @@
 
 
      <script>
+         //monday
+            document.getElementById('mondayA').onchange = function () {
+                document.getElementById('mo_e').disabled = this.checked;
+                document.getElementById('mo_s').disabled = this.checked;
+                document.getElementById('mondayC').disabled = this.checked;
+                document.getElementById('mondayO').disabled = this.checked;
+            };
+            document.getElementById('mondayC').onchange = function () {
+                if (document.getElementById('mo_s').disabled != true) {
+                    document.getElementById('mondayA').disabled = this.checked;
+                }
+                document.getElementById('mo_e').disabled = this.checked;
+             //   document.getElementById('mondayA').disabled = this.checked;
+            };
+            document.getElementById('mondayO').onchange = function () {
+                if (document.getElementById('mo_e').disabled != true) {
+                    document.getElementById('mondayA').disabled = this.checked;
+                }
+                document.getElementById('mo_s').disabled = this.checked;
+                //document.getElementById('mondayA').disabled = this.checked;
+            };
+            //tuesday
+            document.getElementById('tuesdayA').onchange = function () {
+                document.getElementById('tu_e').disabled = this.checked;
+                document.getElementById('tu_s').disabled = this.checked;
+                document.getElementById('tuesdayC').disabled = this.checked;
+                document.getElementById('tuesdayO').disabled = this.checked;
+            };
+            document.getElementById('tuesdayC').onchange = function () {
+                if (document.getElementById('tu_s').disabled != true) {
+                    document.getElementById('tuesdayA').disabled = this.checked;
+                }
+                document.getElementById('tu_e').disabled = this.checked;
+              ///  document.getElementById('tuesdayA').disabled = this.checked;
+            };
+            document.getElementById('tuesdayO').onchange = function () {
+                if (document.getElementById('tu_e').disabled != true) {
+                    document.getElementById('tuesdayA').disabled = this.checked;
+                }
+                document.getElementById('tu_s').disabled = this.checked;
+               // document.getElementById('tuesdayA').disabled = this.checked;
+            };
+            //wednesday
+            document.getElementById('wednesdayA').onchange = function () {
+                document.getElementById('we_e').disabled = this.checked;
+                document.getElementById('we_s').disabled = this.checked;
+                document.getElementById('wednesdayC').disabled = this.checked;
+                document.getElementById('wednesdayO').disabled = this.checked;
+            };
+            document.getElementById('wednesdayC').onchange = function () {
+                if (document.getElementById('we_s').disabled != true) {
+                    document.getElementById('wednesdayA').disabled = this.checked;
+                }
+                document.getElementById('we_e').disabled = this.checked;
+                //document.getElementById('wednesdayA').disabled = this.checked;
+            };
+            document.getElementById('wednesdayO').onchange = function () {
+                if (document.getElementById('we_e').disabled != true) {
+                    document.getElementById('wednesdayA').disabled = this.checked;
+                }
+                document.getElementById('we_s').disabled = this.checked;
+                //document.getElementById('wendayA').disabled = this.checked;
+            };
+            //thursday
+            document.getElementById('thursdayA').onchange = function () {
+                document.getElementById('th_e').disabled = this.checked;
+                document.getElementById('th_s').disabled = this.checked;
+                document.getElementById('thursdayC').disabled = this.checked;
+                document.getElementById('thursdayO').disabled = this.checked;
+            };
+            document.getElementById('thursdayO').onchange = function () {
+                if (document.getElementById('th_e').disabled != true) {
+                    document.getElementById('thursdayA').disabled = this.checked;
+                }
+                document.getElementById('th_s').disabled = this.checked;
+                //document.getElementById('thursdayA').disabled = this.checked;
+            };
+            document.getElementById('thursdayC').onchange = function () {
+                if (document.getElementById('th_s').disabled != true) {
+                    document.getElementById('thursdayA').disabled = this.checked;
+                }
+                document.getElementById('th_e').disabled = this.checked;
+               // document.getElementById('thursdayA').disabled = this.checked;
+            };
+            //friday
+            document.getElementById('fridayA').onchange = function () {
+                document.getElementById('fr_e').disabled = this.checked;
+                document.getElementById('fr_s').disabled = this.checked;
+                document.getElementById('fridayC').disabled = this.checked;
+                document.getElementById('fridayO').disabled = this.checked;
+            };
+            document.getElementById('fridayC').onchange = function () {
+                if (document.getElementById('fr_s').disabled != true) {
+                    document.getElementById('fridayA').disabled = this.checked;
+                }
+                document.getElementById('fr_e').disabled = this.checked;
+                //  document.getElementById('saturdayA').disabled = this.checked;
+            };
+            document.getElementById('fridayO').onchange = function () {
+                if (document.getElementById('fr_e').disabled != true) {
+                    document.getElementById('fridayA').disabled = this.checked;
+                }
+                document.getElementById('fr_s').disabled = this.checked;
+               // document.getElementById('fridayA').disabled = this.checked;
+            };
+
+
+            //saturdya
+            document.getElementById('saturdayA').onchange = function () {
+                document.getElementById('sa_e').disabled = this.checked;
+                document.getElementById('sa_s').disabled = this.checked;
+                document.getElementById('saturdayC').disabled = this.checked;
+                document.getElementById('saturdayO').disabled = this.checked;
+            };
+            document.getElementById('saturdayC').onchange = function () {
+                if (document.getElementById('sa_s').disabled != true) {
+                    document.getElementById('saturdayA').disabled = this.checked;
+                }
+                document.getElementById('sa_e').disabled = this.checked;
+              //  document.getElementById('saturdayA').disabled = this.checked;
+            };
+            document.getElementById('saturdayO').onchange = function () {
+                if (document.getElementById('sa_e').disabled != true) {
+                    document.getElementById('saturdayA').disabled = this.checked;
+                }
+                document.getElementById('sa_s').disabled = this.checked;
+               // document.getElementById('saturdayA').disabled = this.checked;
+            };
+
+         //Sunday
         document.getElementById('sundayA').onchange = function () {
            // document.getElementById('')
             document.getElementById('su_e').disabled = this.checked;
@@ -430,9 +560,19 @@
             document.getElementById('sundayO').disabled = this.checked;
         };
         document.getElementById('sundayC').onchange = function () {
+                if (document.getElementById('su_s').disabled!=true){
+                    document.getElementById('sundayA').disabled = this.checked;
+                }
                 document.getElementById('su_e').disabled = this.checked;
-                document.getElementById('sundayA').disabled = this.checked;
+                
         };
+            document.getElementById('sundayO').onchange = function () {
+                if (document.getElementById('su_e').disabled != true) {
+                    document.getElementById('sundayA').disabled = this.checked;
+                }
+                document.getElementById('su_s').disabled = this.checked;
+             //   document.getElementById('sundayA').disabled = this.checked;
+            };
       
 
        
