@@ -4,7 +4,7 @@
 <form asp-action=Update>
 <div class="text-center">
     <p>@ViewData["Message"]</p>
-
+    <p>@ViewBag.CurrentAvailability.SundayEnd</p>
     <h1 class=display>
         Availibility Editor <br/>
         Employee Name: @ViewBag.CurrentUser.FirstName
@@ -22,10 +22,10 @@
         <tr><td></td><td>Open?</td><td>Start</td><td>End</td><td>Close?</td><td>Not availible?</td></tr>
         <tr>
             <td>Monday</td>
-            <td><input type="checkbox" name="m_OP" value="false"> </td>
+            <td><input type="checkbox" id="mondayO"name="open" value="monday"> </td>
             
             <td>
-                <select name="m_start">
+                <select name="m_start" id="mo_s">
                     @{
                         DateTime theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                         for (int i = 0; i < 24; i++)
@@ -48,7 +48,7 @@
             </td>
             
             <td>
-            <select name="m_end">
+            <select name="m_end" id="mo_e">
                 @{
                     theDate = Convert.ToDateTime("1/1/2001 00:00:00");
                     for (int i = 0; i < 24; i++)
@@ -66,14 +66,14 @@
                 }
             </select>
             </td>
-            <td><input type="checkbox" name="MondayCl" value="false"></td>
-            <td><input type="checkbox" name="MondayNA" value="false"></td>
+            <td><input type="checkbox" id="mondayC" name="close" value="monday"></td>
+            <td><input type="checkbox" id="mondayA" name="available" value="monday"></td>
         </tr>
         <tr>
             <td>Tuesday</td>
-            <td><input type="checkbox" name="tu_OP" value="false"></td>
+            <td><input type="checkbox" id="tuesdayO" name="tu_OP" value="false"></td>
             <td>
-                <select name="tu_start">
+                <select name="tu_start" id="tu_s">
                     @{
                         for (int i = 0; i < 24; i++)
                         {
@@ -91,7 +91,7 @@
                 </select>
             </td>
             <td>
-                <select name="tu_end">
+                <select name="tu_end" id="tu_e">
                     @{
                         for (int i = 0; i < 24; i++)
                         {
@@ -108,14 +108,14 @@
                     }
                 </select>
             </td>
-            <td><input type="checkbox" name="TuesdayCl" value="false"></td>
-            <td><input type="checkbox" name="TuesdayNA" value="false"></td>
+            <td><input type="checkbox" id="tuesdayC"name="TuesdayCl" value="false"></td>
+            <td><input type="checkbox" id="tuesdayA"name="TuesdayNA" value="false"></td>
         </tr>
         <tr>
             <td>Wednesday</td>
-            <td><input type="checkbox" name="w_OP" value="false"></td>
+            <td><input type="checkbox" id="wednesdayO"name="w_OP" value="false"></td>
             <td>
-                <select name="w_start">
+                <select name="w_start" id="we_s">
                     @{
                         for (int i = 0; i < 24; i++)
                         {
@@ -133,7 +133,7 @@
                 </select>
             </td>
             <td>
-                <select name="w_end">
+                <select name="w_end" id="we_e">
                     @{
                         for (int i = 0; i < 24; i++)
                         {
@@ -150,14 +150,14 @@
                     }
                 </select>
             </td>
-            <td><input type="checkbox" name="WednesdayCl" value="false"></td>
-            <td><input type="checkbox" name="WednesdayNA" value="false"></td>
+            <td><input type="checkbox" id="wednesdayC"name="WednesdayCl" value="false"></td>
+            <td><input type="checkbox" id="wednesdayA" name="WednesdayNA" value="false"></td>
         </tr>
         <tr>
             <td>Thursday</td>
-            <td><input type="checkbox" name="th_OP" value="no"></td>
+            <td><input type="checkbox" id="thursdayO"name="th_OP" value="no"></td>
             <td>
-                <select name="th_start">
+                <select name="th_start" id="th_s">
                     @{
                         for (int i = 0; i < 24; i++)
                         {
@@ -175,7 +175,7 @@
                 </select>
             </td>
             <td>
-                <select name="th_end">
+                <select name="th_end" id="th_e">
                     @{
                         for (int i = 0; i < 24; i++)
                         {
@@ -192,14 +192,14 @@
                     }
                 </select>
             </td>
-            <td><input type="checkbox" value="ThursdayCl"></td>
-            <td><input type="checkbox" value="ThursdayNA"></td>
+            <td><input type="checkbox" id="thursdayC"value="ThursdayCl"></td>
+            <td><input type="checkbox" id="thursdayA" value="ThursdayNA"></td>
         </tr>
         <tr>
             <td>Friday</td>
-            <td><input type="checkbox" name="f_OP" value="no"></td>
+            <td><input type="checkbox" id="fridayO" name="f_OP" value="no"></td>
             <td>
-                <select name="f_start">
+                <select name="f_start" id="fr_s">
                     @{
                         for (int i = 0; i < 24; i++)
                         {
@@ -217,7 +217,7 @@
                 </select>
             </td>
             <td>
-                <select name="f_end">
+                <select name="f_end" id="fr_e">
                     @{
                         for (int i = 0; i < 24; i++)
                         {
@@ -234,14 +234,14 @@
                     }
                 </select>
             </td>
-            <td><input type="checkbox" value="FridayCl"></td>
-            <td><input type="checkbox" value="FridayNA"></td>
+            <td><input type="checkbox" id="fridayC"value="FridayCl"></td>
+            <td><input type="checkbox" id="fridayA" value="FridayNA"></td>
         </tr>
         <tr>
             <td>Saturday</td>
-            <td><input type="checkbox" name="sa_OP" value="no"></td>
+            <td><input type="checkbox" id="saturdayO" name="sa_OP" value="no"></td>
             <td>
-                <select name="sa_start">
+                <select name="sa_start" id="sa_s">
                     @{
                         for (int i = 0; i < 24; i++)
                         {
@@ -259,7 +259,7 @@
                 </select>
             </td>
             <td>
-                <select name="sa_end">
+                <select name="sa_end" id="sa_e">
                     @{
                         for (int i = 0; i < 24; i++)
                         {
@@ -276,14 +276,14 @@
                     }
                 </select>
             </td>
-            <td><input type="checkbox" value="SaturdayCl"></td>
-            <td><input type="checkbox" value="SaturdayNA"></td>
+            <td><input type="checkbox" id="saturdayC" value="SaturdayCl"></td>
+            <td><input type="checkbox"id="saturdayA" value="SaturdayNA"></td>
         </tr>
         <tr>
             <td>Sunday</td>
-            <td><input type="checkbox" name="su_OP" value="no"></td>
+            <td><input type="checkbox" id="sundayO" name="su_OP" value="no"></td>
             <td>
-                <select name="su_start">
+                <select name="su_start" id="su_s">
                     @{
                         for (int i = 0; i < 24; i++)
                         {
@@ -301,7 +301,7 @@
                 </select>
             </td>
             <td>
-                <select name="su_end">
+                <select name="su_end" id="su_e">
                     @{
                         for (int i = 0; i < 24; i++)
                         {
@@ -318,12 +318,16 @@
                     }
                 </select>
             </td>
-            <td><input type="checkbox" value="SundayCl"></td>
-            <td><input type="checkbox" value="SundayNA"></td>
+            <td><input type="checkbox" id="sundayC" value="SundayCl" ></td>
+            <td><input type="checkbox" id = "sundayA"value="SundayNA"></td>
         </tr>
     </table>
 
+   
+
 @{
+
+
 
     /*
     theDate=theDate.AddHours(1);
@@ -345,7 +349,7 @@
     <br/>
 
     <form asp-action="Reset">
-        <input type="reset" value="Reset">
+        <input type="reset" id="reset "value="Reset">
    </form>
  
    <br />
@@ -410,8 +414,30 @@
         ViewData["Avail"] = fullAvail;
         <label>@ViewData["Avail"]</label>
 
+    
+
       
     }
+
+
+     <script>
+        document.getElementById('sundayA').onchange = function () {
+           // document.getElementById('')
+            document.getElementById('su_e').disabled = this.checked;
+            document.getElementById('su_s').disabled = this.checked;
+            //document.getElementById('sundayO').checke
+             document.getElementById('sundayC').disabled = this.checked;
+            document.getElementById('sundayO').disabled = this.checked;
+        };
+        document.getElementById('sundayC').onchange = function () {
+                document.getElementById('su_e').disabled = this.checked;
+                document.getElementById('sundayA').disabled = this.checked;
+        };
+      
+
+       
+    </script>
+
      </form>
 
 </div>

@@ -13,9 +13,18 @@ namespace ScheduleManager.Controllers
             ViewBag.CurrentUser = new Employee(loggedInEmployee);
             ViewBag.CurrentAvailability =  new Availability(loggedInEmployee);
 
+            /*
+            if (Convert.ToDateTime(HttpContext.Request.Form["fake"]) == ViewBag.CurrentAvailability.SundayEnd)
+            {
+                ViewData["Message"] = "The Same";
+            }
+            else
+            {
+                ViewData["Message"] = "Not the Same!";
+            }
             //@ViewBag.CurrentAvailability.mondayStart
             ///ViewData["Name"]=ViewBag.CurrentUser.Name;
-
+            */
             return View();
         }
 
@@ -59,19 +68,40 @@ namespace ScheduleManager.Controllers
 
 
             ViewBag.CurrentAvailability.MondayEnd = theTime;
-          //  Availability theAvail = new(loggedInEmployee);
+
+
+
+            //This works
+            theTime = Convert.ToDateTime(HttpContext.Request.Form["su_end"]);
+            if(theTime== Convert.ToDateTime(HttpContext.Request.Form["Fake"]))
+            {
+                theTime = Convert.ToDateTime("1/13/2001 00:00:00");
+            }
+
+            ViewBag.CurrentAvailability.SundayEnd = theTime;
+            //  Availability theAvail = new(loggedInEmployee);
             //ViewBag.CurrentAvailability.MondayEnd = Convert.ToDateTime(HttpContext.Request.Form["m_start"]);
-          //  theAvail.MondayEnd = Convert.ToDateTime(HttpContext.Request.Form["m_start"]);
+            //  theAvail.MondayEnd = Convert.ToDateTime(HttpContext.Request.Form["m_start"]);
 
             //theAvail.Save();
             ViewBag.CurrentAvailability.Save();
 
 
+            /*
+             * ViewData["Message"] = ViewBag.CurrentAvailability.SundayEnd;
+             *  ViewData["Message"] = Convert.ToDateTime(HttpContext.Request.Form["su_end"]);
+            if(Convert.ToDateTime(HttpContext.Request.Form["fake"])==Convert.ToDateTime(HttpContext.Request.Form["su_end"])){
+                 ViewData["Message"] = "True";
+            }
+            else
+            {
+                ViewData["Message"] = "False!";
+            }
             //  ViewBag.CurrentAvailability =theAvail;
 
             // ViewData["Message"] = "Update Complete!";
 
-
+            
             if (HttpContext.Request.Form["m_op"]==true)
             {
                 ViewData["Message"] = "mondya open is checked !";
@@ -80,7 +110,7 @@ namespace ScheduleManager.Controllers
             {
                 ViewData["Message"] = "monday open isn't checked";
             }
-            /*
+            
             if(Convert.ToDateTime(HttpContext.Request.Form["m_start"])> Convert.ToDateTime(HttpContext.Request.Form["m_end"]))
             {
                 ViewData["Message"] = "Start is after close!";
