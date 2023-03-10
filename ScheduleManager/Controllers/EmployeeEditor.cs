@@ -45,7 +45,17 @@ namespace ScheduleManager.Controllers
 
         public IActionResult EmployeeDetails(int id)
         {
-            
+
+            int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
+            if (loggedInEmployee == 0)
+            {
+
+            }
+            else
+            {
+                ViewData["LoggedIn"] = 1;
+                ViewBag.CurrentUser = new Employee(loggedInEmployee);
+            }
             ViewBag.currentDetails = new Models.Employee(id);
             return View("EmployeeDetails");
         }

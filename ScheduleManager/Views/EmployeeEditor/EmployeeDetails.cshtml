@@ -241,6 +241,11 @@
             <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a="3">Edit</a>
         </div>
         <hr/>
-        <a class="link-button" asp-action="Delete" asp-route-id=@currentDetails.ID>Delete</a>
+
+        if(ViewBag.CurrentUser.RankID>1)
+        {
+            <a class="link-button" asp-action="Delete" asp-route-id=@currentDetails.ID>Delete</a>
+        }
+
     }
 }
