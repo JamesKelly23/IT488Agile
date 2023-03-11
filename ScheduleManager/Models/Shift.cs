@@ -165,7 +165,8 @@
             } catch (Exception ex)
             {
                 StaticConnection.Close();
-                return null;
+                Console.WriteLine(ex.Message);
+                throw (new Exception("There was an error retrieving the shift details from the SQL Server: " + ex.Message));
             }
         }
         public static List<Shift> GetOpenShifts()

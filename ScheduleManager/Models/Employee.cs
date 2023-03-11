@@ -186,7 +186,7 @@
         }
         public Availability GetCurrentAvailability()
         {
-            SqlCommand theCommand = new("SELECT ID FROM Availability WHERE EmployeeID=" + ID + " ORDER BY EffectiveDate DESC;");
+            SqlCommand theCommand = new("SELECT ID FROM Availability WHERE EmployeeID=" + ID + " ORDER BY EffectiveDate DESC;", theConnection);
             theConnection.Open();
             Availability theResult = new Availability(Convert.ToInt32(theCommand.ExecuteScalar()));
             theConnection.Close();

@@ -92,6 +92,11 @@ td.cell2, th.cell2 {
     padding: 13px;
     margin: 3px;
 }
+td.cell3, th.cell3 {
+    border: 1pt solid black;
+    padding: 0;
+    margin: 3px;
+}
 div.container2 {
     content: "";
     clear: both;

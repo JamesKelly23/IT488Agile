@@ -43,6 +43,68 @@
             SundayStart = sundayStart;
             SundayEnd = sundayEnd;
         }   
+        public string GetDayString(DayOfWeek theDay)
+        {
+            return GetStart(theDay).ToString("t") + " - " + GetEnd(theDay).ToString("t");
+        }
+        public Boolean IsAvailable(DayOfWeek theDay)
+        {
+            return (!(GetStart(theDay) == GetEnd(theDay)));
+        }
+        public DateTime GetStart(DayOfWeek theDay)
+        {
+            switch(theDay)
+            {
+                case DayOfWeek.Monday: return MondayStart;
+                case DayOfWeek.Tuesday: return TuesdayStart;
+                case DayOfWeek.Wednesday: return WednesdayStart;
+                case DayOfWeek.Thursday: return ThursdayStart;
+                case DayOfWeek.Friday: return FridayStart;
+                case DayOfWeek.Saturday: return SaturdayStart;
+                case DayOfWeek.Sunday: return SundayStart;
+                default: return new DateTime();
+            }
+        }
+        public DateTime GetEnd(DayOfWeek theDay)
+        {
+            switch(theDay)
+            {
+                case DayOfWeek.Monday: return MondayEnd;
+                case DayOfWeek.Tuesday: return TuesdayEnd;
+                case DayOfWeek.Wednesday: return WednesdayEnd;
+                case DayOfWeek.Thursday: return ThursdayEnd;
+                case DayOfWeek.Friday: return FridayEnd;
+                case DayOfWeek.Saturday:return SaturdayEnd;
+                case DayOfWeek.Sunday: return SundayEnd;
+                default: return new DateTime();
+            }
+        }
+        public void SetStart(DayOfWeek theDay, DateTime startDate)
+        {
+            switch(theDay)
+            {
+                case DayOfWeek.Monday: MondayStart = startDate; break;
+                case DayOfWeek.Tuesday: TuesdayStart = startDate; break;
+                case DayOfWeek.Wednesday: WednesdayStart = startDate; break;
+                case DayOfWeek.Thursday: ThursdayStart = startDate; break;
+                case DayOfWeek.Friday: FridayStart = startDate; break;
+                case DayOfWeek.Saturday: SaturdayStart = startDate; break;
+                case DayOfWeek.Sunday: SundayStart = startDate; break;
+            }
+        }
+        public void SetEnd(DayOfWeek theDay, DateTime endDate)
+        {
+            switch (theDay)
+            {
+                case DayOfWeek.Monday: MondayEnd = endDate; break;
+                case DayOfWeek.Tuesday: TuesdayEnd = endDate; break;
+                case DayOfWeek.Wednesday: WednesdayEnd = endDate; break;
+                case DayOfWeek.Thursday: ThursdayEnd = endDate; break;
+                case DayOfWeek.Friday: FridayEnd = endDate; break;
+                case DayOfWeek.Saturday: SaturdayEnd = endDate; break;
+                case DayOfWeek.Sunday: SundayEnd = endDate; break;
+            }
+        }
         public Availability (int theID)
         {
             ID = theID;
@@ -67,6 +129,32 @@
             SaturdayEnd = theReader.GetDateTime(14);
             SundayStart = theReader.GetDateTime(15);
             SundayEnd = theReader.GetDateTime(16);
+        }
+        public static String DayString(DayOfWeek dayOfWeek)
+        {
+            return dayOfWeek switch
+            {
+                DayOfWeek.Monday => "Monday",
+                DayOfWeek.Tuesday => "Tuesday",
+                DayOfWeek.Wednesday => "Wednesday",
+                DayOfWeek.Thursday => "Thursday",
+                DayOfWeek.Friday => "Friday",
+                DayOfWeek.Saturday => "Saturday",
+                DayOfWeek.Sunday => "Sunday",
+                _ => "",
+            };
+        }
+        public static List<DayOfWeek> GetDaysOfWeek()
+        {
+            List<DayOfWeek> dayList = new();
+            dayList.Add(DayOfWeek.Monday);
+            dayList.Add(DayOfWeek.Tuesday);
+            dayList.Add(DayOfWeek.Wednesday);
+            dayList.Add(DayOfWeek.Thursday);
+            dayList.Add(DayOfWeek.Friday);
+            dayList.Add(DayOfWeek.Saturday);
+            dayList.Add(DayOfWeek.Sunday);
+            return dayList;
         }
         public static List<Availability> GetList()
         {
