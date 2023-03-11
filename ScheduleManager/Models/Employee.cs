@@ -1,4 +1,6 @@
-﻿namespace ScheduleManager.Models
+﻿using MessagePack.Formatters;
+
+namespace ScheduleManager.Models
 {
     public class ConnectionStrings
     {
@@ -94,6 +96,8 @@
                 theConnection.Open();
                 ID = Convert.ToInt32(theCommand.ExecuteScalar());
                 theConnection.Close();
+                Availability newAvailability = new(ID, DateTime.Today);
+                newAvailability.Save();
                 return "Success, the ID of the new record is " + ID;
             }
             else

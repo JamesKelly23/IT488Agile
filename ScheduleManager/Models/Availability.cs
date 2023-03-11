@@ -51,6 +51,18 @@
         {
             return (!(GetStart(theDay) == GetEnd(theDay)));
         }
+        public Availability(int employeeiD, DateTime effectiveDate)
+        {
+            ID = 0;
+            EmployeeID= employeeiD;
+            EffectiveDate = effectiveDate;
+            DateTime midnight = Convert.ToDateTime("1/1/2001 00:00:00");
+            foreach (DayOfWeek theDay in GetDaysOfWeek())
+            {
+                SetStart(theDay, midnight);
+                SetEnd(theDay, midnight);
+            }
+        }
         public DateTime GetStart(DayOfWeek theDay)
         {
             switch(theDay)
