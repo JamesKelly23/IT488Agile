@@ -10,7 +10,7 @@
 </div>
 <form asp-action=Update onreset="setTimeout(EnforceChangeOnNotAvailable,100)">
     <table class="center">
-        <tr class="headerrow2"><th colspan="6">Enter availibility below</th></tr>
+        <tr class="headerrow2"><th colspan="6">Enter availability below</th></tr>
         
         <tr class="headerrow2">
             <td class="cell3">Day</td>
@@ -23,7 +23,7 @@
         @{
             int rownum = 0;
             DateTime theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-            foreach (DayOfWeek theDay in Availability.GetDaysOfWeek())
+            foreach (DayOfWeek theDay in Availability.GetDaysOfWeek()) //Loop through each of the seven days of the week.
             {
                 rownum++;
                 <tr class="row2 @(rownum%2==0?"evenrow":"")">
@@ -88,7 +88,6 @@
     document.onload=setTimeout(EnforceChangeOnNotAvailable, 1);
     function EnforceChangeOnOpenOrClose() {
         const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-        console.log("Entering EnforceChangeOnOpenOrClose()");
         for (let i = 0; i < days.length; i++) {
             if(document.getElementById("NotAvailable" + days[i]).checked == false) {
                 document.getElementById(days[i] + "Start").disabled = document.getElementById("CanOpen" + days[i]).checked;
