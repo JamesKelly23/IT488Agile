@@ -45,7 +45,7 @@
         }   
         public string GetDayString(DayOfWeek theDay)
         {
-            if (GetStart(theDay).ToString("t") == GetEnd(theDay).ToString("t"))
+            if (!IsAvailable(theDay))
             {
                 return "Not Available";
             }
@@ -53,7 +53,7 @@
         }
         public Boolean IsAvailable(DayOfWeek theDay)
         {
-            return (!(GetStart(theDay) == GetEnd(theDay)));
+            return (!(GetStart(theDay).ToString("t") == GetEnd(theDay).ToString("t")));
         }
         public Availability(int employeeiD, DateTime effectiveDate)
         {
