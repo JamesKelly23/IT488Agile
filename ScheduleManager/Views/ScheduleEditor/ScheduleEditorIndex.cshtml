@@ -2,23 +2,15 @@
 <hr />
 @{
     ViewData["Title"] = "Schedule Editor";
-    Employee currentEmployee = ViewBag.LoggedInEmployee;
 
-    if(currentEmployee.RankID == 3)
-    {
-        <h3 class="text-center">Welcome @currentEmployee.FirstName. What would you like to do?</h3>
+
+
+        <h3 class="text-center">What would you like to do?</h3>
         <br />
         <a asp-action="ViewShifts" class="link-button">View Schedules</a>
         <br />
         <a asp-action ="AddShift" class="link-button">Add New Schedule</a>
-    }
-    else if(0< currentEmployee.RankID & currentEmployee.RankID <3)
-    {
-        <h3>Not Authorized</h3>
-    }
-    else
-    {
-        <h2>Please Sign In</h2>
+
     }
 }
 
