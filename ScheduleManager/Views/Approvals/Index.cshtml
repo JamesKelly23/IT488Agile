@@ -104,7 +104,7 @@
                                             <td class="cell2">@theOverlap.StartDate.ToString("d")</td>
                                             <td class="cell2">@theOverlap.EndDate.ToString("d")</td>
                                             <td class="cell2">@theOverlap.Notes</td>
-                                            <td class="cell2">@theOverlap.IsApproved</td>
+                                            <td class="cell2 @(theOverlap.IsApproved ? "approve" : "deny")">@theOverlap.IsApproved</td>
                                             <td class="cell2">@ManagerName</td>
                                         </tr>
                                     }

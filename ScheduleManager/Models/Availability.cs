@@ -45,6 +45,10 @@
         }   
         public string GetDayString(DayOfWeek theDay)
         {
+            if (GetStart(theDay).ToString("t") == GetEnd(theDay).ToString("t"))
+            {
+                return "Not Available";
+            }
             return GetStart(theDay).ToString("t") + " - " + GetEnd(theDay).ToString("t");
         }
         public Boolean IsAvailable(DayOfWeek theDay)

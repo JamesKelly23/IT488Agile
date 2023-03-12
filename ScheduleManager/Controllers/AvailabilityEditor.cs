@@ -52,7 +52,11 @@ namespace ScheduleManager.Controllers
             }
             if(success) //Only save the availability if it passes all validation checks.
             {
+                ViewData["SuccessMessage"] = "Availability Successfully Updated.";
                 theAvail.Save();
+            } else
+            {
+                ViewData["Message"] = "Save Unsuccessful: Resolve errors listed below.<br>" + ViewData["Message"];
             }
             return Index();
         }

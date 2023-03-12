@@ -7,6 +7,10 @@ html {
 body {
     background-color: #F3F3FF;
 }
+.success {
+    font-weight: bold;
+    color:green;
+}
 .bulletless {
     list-style-type: none;
 }
@@ -25,16 +29,16 @@ li.linklist-item {
 a.nav-link {
     font-weight: bold;
 }
-a.approve {
+.approve {
     background-color: palegreen;
 }
 td.detailscell {
     padding: 0pt 13pt 13pt 13pt;
 }
-a.deny {
+.deny {
     background-color: lightcoral;
 }
-a.details {
+.details {
     background-color: palegoldenrod;
 }
 div.details {
