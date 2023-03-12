@@ -1,640 +1,112 @@
 ﻿@{
-    ViewData["Title"] = "Availibility Editor";
+    ViewData["Title"] = "Availability Editor";
 }
-<form asp-action=Update>
 <div class="text-center">
-    <p>@ViewData["Message"]</p>
-    <p>@ViewBag.CurrentAvailability.MondayStart</p>
-    <p>@ViewBag.CurrentAvailability.MondayEnd</p>
+    <p class="error">@Html.Raw(ViewData["Message"])</p>
+    <p class="success">@ViewData["SuccessMessage"]</p>
     <h1 class=display>
         Availibility Editor <br/>
         Employee Name: @ViewBag.CurrentUser.FirstName
     </h1>
-
-
- 
-
 </div>
-
-
-
+<form asp-action=Update onreset="setTimeout(EnforceChangeOnNotAvailable,100)">
     <table class="center">
-        <tr id="table-title"><th colspan="6">Enter availibility below</th></tr>
-        <tr><td></td><td>Open?</td><td>Start</td><td>End</td><td>Close?</td><td>Not availible?</td></tr>
-        <tr>
-            <td>Monday</td>
-            <td><input type="checkbox" id="mondayO"name="open" value="monday"> </td>
-            
-            <td>
-                <select name="m_start" id="mo_s">
-                    @{
-                        DateTime theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                        for (int i = 0; i < 24; i++)
-                        {
-                            if(theDate.ToString("t") == ViewBag.CurrentAvailability.MondayStart.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            
-                            theDate = theDate.AddHours(1);
-                        }
-                       // @(theDate.ToString("t") == ViewBag.CurrentAvailability.MondayStart.ToString("t") ? "selected" : "")
-
-                    }
-                </select>
-            </td>
-            
-            <td>
-            <select name="m_end" id="mo_e">
-                @{
-                    theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                    for (int i = 0; i < 24; i++)
-                    {
-                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.MondayEnd.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                        theDate = theDate.AddHours(1);
-                    }
-                }
-            </select>
-            </td>
-            <td><input type="checkbox" id="mondayC" name="close" value="monday"></td>
-            <td><input type="checkbox" id="mondayA" name="available" value="monday"></td>
-        </tr>
-        <tr>
-            <td>Tuesday</td>
-            <td><input type="checkbox" id="tuesdayO" name="tu_OP" value="false"></td>
-            <td>
-                <select name="tu_start" id="tu_s">
-                    @{
-                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                        for (int i = 0; i < 24; i++)
-                        {
-                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.TuesdayStart.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            theDate = theDate.AddHours(1);
-                    }
-                }
-                </select>
-            </td>
-            <td>
-                <select name="tu_end" id="tu_e">
-                    @{
-                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                        for (int i = 0; i < 24; i++)
-                        {
-                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.TuesdayEnd.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            theDate = theDate.AddHours(1);
-                        }
-                    }
-                </select>
-            </td>
-            <td><input type="checkbox" id="tuesdayC"name="TuesdayCl" value="false"></td>
-            <td><input type="checkbox" id="tuesdayA"name="TuesdayNA" value="false"></td>
-        </tr>
-        <tr>
-            <td>Wednesday</td>
-            <td><input type="checkbox" id="wednesdayO"name="w_OP" value="false"></td>
-            <td>
-                <select name="w_start" id="we_s">
-                    @{
-                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                        for (int i = 0; i < 24; i++)
-                        {
-                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.WednesdayStart.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            theDate = theDate.AddHours(1);
-                        }
-                    }
-                </select>
-            </td>
-            <td>
-                <select name="w_end" id="we_e">
-                    @{
-                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                        for (int i = 0; i < 24; i++)
-                        {
-                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.WednesdayEnd.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            theDate = theDate.AddHours(1);
-                        }
-                    }
-                </select>
-            </td>
-            <td><input type="checkbox" id="wednesdayC"name="WednesdayCl" value="false"></td>
-            <td><input type="checkbox" id="wednesdayA" name="WednesdayNA" value="false"></td>
-        </tr>
-        <tr>
-            <td>Thursday</td>
-            <td><input type="checkbox" id="thursdayO"name="th_OP" value="no"></td>
-            <td>
-                <select name="th_start" id="th_s">
-                    @{
-                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                        for (int i = 0; i < 24; i++)
-                        {
-                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.ThursdayStart.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            theDate = theDate.AddHours(1);
-                        }
-                    }
-                </select>
-            </td>
-            <td>
-                <select name="th_end" id="th_e">
-                    @{
-                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                        for (int i = 0; i < 24; i++)
-                        {
-                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.ThursdayEnd.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            theDate = theDate.AddHours(1);
-                        }
-                    }
-                </select>
-            </td>
-            <td><input type="checkbox" id="thursdayC"value="ThursdayCl"></td>
-            <td><input type="checkbox" id="thursdayA" value="ThursdayNA"></td>
-        </tr>
-        <tr>
-            <td>Friday</td>
-            <td><input type="checkbox" id="fridayO" name="f_OP" value="no"></td>
-            <td>
-                <select name="f_start" id="fr_s">
-                    @{
-                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                        for (int i = 0; i < 24; i++)
-                        {
-                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.FridayStart.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            theDate = theDate.AddHours(1);
-                        }
-                    }
-                </select>
-            </td>
-            <td>
-                <select name="f_end" id="fr_e">
-                    @{
-                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                        for (int i = 0; i < 24; i++)
-                        {
-
-                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.FridayEnd.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            theDate = theDate.AddHours(1);
-                        }
-                    }
-                </select>
-            </td>
-            <td><input type="checkbox" id="fridayC"value="FridayCl"></td>
-            <td><input type="checkbox" id="fridayA" value="FridayNA"></td>
-        </tr>
-        <tr>
-            <td>Saturday</td>
-            <td><input type="checkbox" id="saturdayO" name="sa_OP" value="no"></td>
-            <td>
-                <select name="sa_start" id="sa_s">
-                    @{
-                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                        for (int i = 0; i < 24; i++)
-                        {
-                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.SaturdayStart.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            theDate = theDate.AddHours(1);
-                        }
-                    }
-                </select>
-            </td>
-            <td>
-                <select name="sa_end" id="sa_e">
-                    @{
-                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                        for (int i = 0; i < 24; i++)
-                        {
-                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.SaturdayEnd.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            theDate = theDate.AddHours(1);
-                        }
-                    }
-                </select>
-            </td>
-            <td><input type="checkbox" id="saturdayC" value="SaturdayCl"></td>
-            <td><input type="checkbox"id="saturdayA" value="SaturdayNA"></td>
-        </tr>
-        <tr>
-            <td>Sunday</td>
-            <td><input type="checkbox" id="sundayO" name="su_OP" value="no"></td>
-            <td>
-                <select name="su_start" id="su_s">
-                    @{
-                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                        for (int i = 0; i < 24; i++)
-                        {
-                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.SundayStart.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            theDate = theDate.AddHours(1);
-                        }
-                    }
-                </select>
-            </td>
-            <td>
-                <select name="su_end" id="su_e">
-                    @{
-                        theDate = Convert.ToDateTime("1/1/2001 00:00:00");
-                        for (int i = 0; i < 24; i++)
-                        {
-                            if (theDate.ToString("t") == ViewBag.CurrentAvailability.SundayEnd.ToString("t"))
-                            {
-                                <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            else
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                            }
-                            theDate = theDate.AddHours(1);
-                        }
-                    }
-                </select>
-            </td>
-            <td><input type="checkbox" id="sundayC" value="SundayCl" ></td>
-            <td><input type="checkbox" id = "sundayA"value="SundayNA"></td>
-        </tr>
-    </table>
-
-   
-
-@{
-
-
-
-    /*
-    theDate=theDate.AddHours(1);
-    theDate = Convert.ToDateTime(su_end);
-    <p>@theDate</p>
-    */
-    }
-
-    
- 
-<div class="text-center">
-    <br />
-   
-    <label>Effective Date:</label>
-    <input type="date" name="EffectDate" required>
-  
-    <br/>
-    
-    <br/>
-
-    <form asp-action="Reset">
-        <input type="reset" id="reset "value="Reset">
-   </form>
- 
-   <br />
-
-  
-        <input type="submit" value="Update" >
-    
-
-    <br />
-    <p>Current availability</p>
-        @{
-            //will return the availability of a day in XX:XX XM - XX:XX XM format
-            string trimString(String start, String end)
-            {
-                String current = start;//will swtich between the start and end times
-                String final = "";//the final string we return
-                                  //trim down the unnesecary parts of the string
-                current = current.Remove(0, 9);
-                current = current.Remove(4, 3);
-                //update the final string
-                final+=current+" - ";
-                //repeat for leave time
-                current = end;
-                current = current.Remove(0, 9);
-                current = current.Remove(4, 3);
-                //update string and return it
-                final += current;
-                return final;
-            }
-
-            // String fullAvail = "";//will contain the current days availability
-
-            if (ViewBag.CurrentAvailability.MondayStart == ViewBag.CurrentAvailability.MondayEnd)
-            {
-                <label>Not available monday</label>
-                <br />
-            }
-            if (ViewBag.CurrentAvailability.TuesdayStart == ViewBag.CurrentAvailability.TuesdayEnd)
-            {
-                <label>Not available tuesday</label>
-                <br />
-            }
-            if (ViewBag.CurrentAvailability.WednesdayStart == ViewBag.CurrentAvailability.WednesdayEnd)
-            {
-                <label>Not available wednesday</label>
-                <br />
-            }
-            if (ViewBag.CurrentAvailability.ThursdayStart == ViewBag.CurrentAvailability.ThursdayEnd)
-            {
-                <label>Not available thursday</label>
-                <br />
-            }
-            if (ViewBag.CurrentAvailability.FridayStart == ViewBag.CurrentAvailability.FridayEnd)
-            {
-                <label>Not available friday</label>
-                <br />
-            }
-            if (ViewBag.CurrentAvailability.SaturdayStart == ViewBag.CurrentAvailability.SaturdayEnd)
-            {
-                <label>Not available saturday</label>
-                <br />
-            }
-            if (ViewBag.CurrentAvailability.SundayStart == ViewBag.CurrentAvailability.SundayEnd)
-            {
-                <label>Not available sunday</label>
-                <br />
-            }
-        /*
-        //fill string with that days information. put the string in the view data variable
-        //display variable within a label (label over p for spacing reasons). Then add a br to start a new line
-        //rinse and repeat for all days
-        fullAvail = "Monday: " + trimString(ViewBag.CurrentAvailability.MondayStart.ToString(), ViewBag.CurrentAvailability.MondayEnd.ToString());
-        ViewData["Avail"] = fullAvail;
-        <label>@ViewData["Avail"] </label>
-        <br/>
-        fullAvail = "Tuesday: " + trimString(ViewBag.CurrentAvailability.TuesdayStart.ToString(), ViewBag.CurrentAvailability.TuesdayEnd.ToString());
-        ViewData["Avail"] = fullAvail;
-        <label>@ViewData["Avail"]</label>
-           <br/>
-        fullAvail = "Wednesday: " + trimString(ViewBag.CurrentAvailability.WednesdayStart.ToString(), ViewBag.CurrentAvailability.WednesdayEnd.ToString());
-        ViewData["Avail"] = fullAvail;
-        <label>@ViewData["Avail"]</label>
-           <br/>
-        fullAvail = "Thursday: " + trimString(ViewBag.CurrentAvailability.ThursdayStart.ToString(), ViewBag.CurrentAvailability.ThursdayEnd.ToString());
-          ViewData["Avail"] = fullAvail;
-        <label>@ViewData["Avail"]</label>
-           <br/>
-        fullAvail = "Friday: " + trimString(ViewBag.CurrentAvailability.FridayStart.ToString(), ViewBag.CurrentAvailability.FridayEnd.ToString());
-        ViewData["Avail"] = fullAvail;
-        <label>@ViewData["Avail"]</label>
-           <br/>
-        fullAvail = "Saturday: " + trimString(ViewBag.CurrentAvailability.SaturdayStart.ToString(), ViewBag.CurrentAvailability.SaturdayEnd.ToString());
-        ViewData["Avail"] = fullAvail;
-        <label>@ViewData["Avail"]</label>
-        <br />
-        fullAvail = "Sunday: " + trimString(ViewBag.CurrentAvailability.SundayStart.ToString(), ViewBag.CurrentAvailability.SundayEnd.ToString());
-        ViewData["Avail"] = fullAvail;
-        */
-       // <label>@ViewData["Avail"]</label>
-
-    
-
-      
-    }
-
-
-     <script>
-         //monday
-            document.getElementById('mondayA').onchange = function () {
-                document.getElementById('mo_e').disabled = this.checked;
-                document.getElementById('mo_s').disabled = this.checked;
-                document.getElementById('mondayC').disabled = this.checked;
-                document.getElementById('mondayO').disabled = this.checked;
-            };
-            document.getElementById('mondayC').onchange = function () {
-                if (document.getElementById('mo_s').disabled != true) {
-                    document.getElementById('mondayA').disabled = this.checked;
-                }
-                document.getElementById('mo_e').disabled = this.checked;
-             //   document.getElementById('mondayA').disabled = this.checked;
-            };
-            document.getElementById('mondayO').onchange = function () {
-                if (document.getElementById('mo_e').disabled != true) {
-                    document.getElementById('mondayA').disabled = this.checked;
-                }
-                document.getElementById('mo_s').disabled = this.checked;
-                //document.getElementById('mondayA').disabled = this.checked;
-            };
-            //tuesday
-            document.getElementById('tuesdayA').onchange = function () {
-                document.getElementById('tu_e').disabled = this.checked;
-                document.getElementById('tu_s').disabled = this.checked;
-                document.getElementById('tuesdayC').disabled = this.checked;
-                document.getElementById('tuesdayO').disabled = this.checked;
-            };
-            document.getElementById('tuesdayC').onchange = function () {
-                if (document.getElementById('tu_s').disabled != true) {
-                    document.getElementById('tuesdayA').disabled = this.checked;
-                }
-                document.getElementById('tu_e').disabled = this.checked;
-              ///  document.getElementById('tuesdayA').disabled = this.checked;
-            };
-            document.getElementById('tuesdayO').onchange = function () {
-                if (document.getElementById('tu_e').disabled != true) {
-                    document.getElementById('tuesdayA').disabled = this.checked;
-                }
-                document.getElementById('tu_s').disabled = this.checked;
-               // document.getElementById('tuesdayA').disabled = this.checked;
-            };
-            //wednesday
-            document.getElementById('wednesdayA').onchange = function () {
-                document.getElementById('we_e').disabled = this.checked;
-                document.getElementById('we_s').disabled = this.checked;
-                document.getElementById('wednesdayC').disabled = this.checked;
-                document.getElementById('wednesdayO').disabled = this.checked;
-            };
-            document.getElementById('wednesdayC').onchange = function () {
-                if (document.getElementById('we_s').disabled != true) {
-                    document.getElementById('wednesdayA').disabled = this.checked;
-                }
-                document.getElementById('we_e').disabled = this.checked;
-                //document.getElementById('wednesdayA').disabled = this.checked;
-            };
-            document.getElementById('wednesdayO').onchange = function () {
-                if (document.getElementById('we_e').disabled != true) {
-                    document.getElementById('wednesdayA').disabled = this.checked;
-                }
-                document.getElementById('we_s').disabled = this.checked;
-                //document.getElementById('wendayA').disabled = this.checked;
-            };
-            //thursday
-            document.getElementById('thursdayA').onchange = function () {
-                document.getElementById('th_e').disabled = this.checked;
-                document.getElementById('th_s').disabled = this.checked;
-                document.getElementById('thursdayC').disabled = this.checked;
-                document.getElementById('thursdayO').disabled = this.checked;
-            };
-            document.getElementById('thursdayO').onchange = function () {
-                if (document.getElementById('th_e').disabled != true) {
-                    document.getElementById('thursdayA').disabled = this.checked;
-                }
-                document.getElementById('th_s').disabled = this.checked;
-                //document.getElementById('thursdayA').disabled = this.checked;
-            };
-            document.getElementById('thursdayC').onchange = function () {
-                if (document.getElementById('th_s').disabled != true) {
-                    document.getElementById('thursdayA').disabled = this.checked;
-                }
-                document.getElementById('th_e').disabled = this.checked;
-               // document.getElementById('thursdayA').disabled = this.checked;
-            };
-            //friday
-            document.getElementById('fridayA').onchange = function () {
-                document.getElementById('fr_e').disabled = this.checked;
-                document.getElementById('fr_s').disabled = this.checked;
-                document.getElementById('fridayC').disabled = this.checked;
-                document.getElementById('fridayO').disabled = this.checked;
-            };
-            document.getElementById('fridayC').onchange = function () {
-                if (document.getElementById('fr_s').disabled != true) {
-                    document.getElementById('fridayA').disabled = this.checked;
-                }
-                document.getElementById('fr_e').disabled = this.checked;
-                //  document.getElementById('saturdayA').disabled = this.checked;
-            };
-            document.getElementById('fridayO').onchange = function () {
-                if (document.getElementById('fr_e').disabled != true) {
-                    document.getElementById('fridayA').disabled = this.checked;
-                }
-                document.getElementById('fr_s').disabled = this.checked;
-               // document.getElementById('fridayA').disabled = this.checked;
-            };
-
-
-            //saturdya
-            document.getElementById('saturdayA').onchange = function () {
-                document.getElementById('sa_e').disabled = this.checked;
-                document.getElementById('sa_s').disabled = this.checked;
-                document.getElementById('saturdayC').disabled = this.checked;
-                document.getElementById('saturdayO').disabled = this.checked;
-            };
-            document.getElementById('saturdayC').onchange = function () {
-                if (document.getElementById('sa_s').disabled != true) {
-                    document.getElementById('saturdayA').disabled = this.checked;
-                }
-                document.getElementById('sa_e').disabled = this.checked;
-              //  document.getElementById('saturdayA').disabled = this.checked;
-            };
-            document.getElementById('saturdayO').onchange = function () {
-                if (document.getElementById('sa_e').disabled != true) {
-                    document.getElementById('saturdayA').disabled = this.checked;
-                }
-                document.getElementById('sa_s').disabled = this.checked;
-               // document.getElementById('saturdayA').disabled = this.checked;
-            };
-
-         //Sunday
-        document.getElementById('sundayA').onchange = function () {
-           // document.getElementById('')
-            document.getElementById('su_e').disabled = this.checked;
-            document.getElementById('su_s').disabled = this.checked;
-            //document.getElementById('sundayO').checke
-             document.getElementById('sundayC').disabled = this.checked;
-            document.getElementById('sundayO').disabled = this.checked;
-        };
-        document.getElementById('sundayC').onchange = function () {
-                if (document.getElementById('su_s').disabled!=true){
-                    document.getElementById('sundayA').disabled = this.checked;
-                }
-                document.getElementById('su_e').disabled = this.checked;
-                
-        };
-            document.getElementById('sundayO').onchange = function () {
-                if (document.getElementById('su_e').disabled != true) {
-                    document.getElementById('sundayA').disabled = this.checked;
-                }
-                document.getElementById('su_s').disabled = this.checked;
-             //   document.getElementById('sundayA').disabled = this.checked;
-            };
-      
-
-       
-    </script>
-
-     </form>
-
-</div>
-
-
-
-
-    @{
+        <tr class="headerrow2"><th colspan="6">Enter availability below</th></tr>
         
+        <tr class="headerrow2">
+            <td class="cell3">Day</td>
+            <td class="cell3">Open?</td>
+            <td class="cell3">Start</td>
+            <td class="cell3">End</td>
+            <td class="cell3">Close?</td>
+            <td class="cell3">Not availible?</td>
+        </tr>
+        @{
+            int rownum = 0;
+            DateTime theDate = Convert.ToDateTime("1/1/2001 00:00:00");
+            foreach (DayOfWeek theDay in Availability.GetDaysOfWeek()) //Loop through each of the seven days of the week.
+            {
+                rownum++;
+                <tr class="row2 @(rownum%2==0?"evenrow":"")">
+                    <td class="cell3">@Availability.DayString(theDay)</td>
+                    <td class="cell3"><input @(ViewBag.CurrentAvailability.GetStart(theDay).ToString("t") == "12:00 AM" ? "checked" : "") type="checkbox" id="@("CanOpen" + Availability.DayString(theDay))" name="CanOpen" value="@Availability.DayString(theDay)" onchange="EnforceChangeOnOpenOrClose()"> </td>
+                    <td class="cell3">
+                        <select name="@(Availability.DayString(theDay)+"Start")" id="@(Availability.DayString(theDay)+"Start")">
+                            @{
+                                for (int i = 0; i < 24; i++)
+                                {
+                                    if (theDate.ToString("t") == ViewBag.CurrentAvailability.GetStart(theDay).ToString("t"))
+                                    {
+                                        <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                                    }
+                                    theDate = theDate.AddHours(1);
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td class="cell3">
+                        <select name="@(Availability.DayString(theDay)+"End")" id="@(Availability.DayString(theDay)+"End")">
+                            @{
+                                theDate = Convert.ToDateTime("1/1/2001 00:00:00");
+                                for (int i = 0; i < 24; i++)
+                                {
+                                    if (theDate.ToString("t") == ViewBag.CurrentAvailability.GetEnd(theDay).ToString("t"))
+                                    {
+                                        <option selected value="@theDate.ToString()">@theDate.ToString("t")</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@theDate.ToString()">@theDate.ToString("t")</option>
+                                    }
+                                    theDate = theDate.AddHours(1);
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td class="cell3"><input @(ViewBag.CurrentAvailability.GetEnd(theDay).ToString("t") == "11:00 PM" ? "checked" : "") type="checkbox" id="@("CanClose" + Availability.DayString(theDay))" name="CanClose" value="@Availability.DayString(theDay)" onchange="EnforceChangeOnOpenOrClose()"></td>
+                    <td class="cell3"><input @(ViewBag.CurrentAvailability.GetEnd(theDay).ToString("t") == ViewBag.CurrentAvailability.GetStart(theDay).ToString("t") ? "checked" : "") type="checkbox" id="@("NotAvailable" + Availability.DayString(theDay))" name="NotAvailable" value="@Availability.DayString(theDay)" onchange="EnforceChangeOnNotAvailable()"></td>
+                </tr>
+            }
+        }
+    </table>
+    <div class="text-center">
+        <br />
+        <label>Effective Date:</label>
+        <input type="date" name="EffectDate" Value="@DateTime.Today.ToString("yyyy-MM-dd")" required>
+        <br/> 
+        <br/>
+        <input type="reset" id="reset "value="Reset" />
+        <br />
+        <input type="submit" value="Update" >
+        <br />
+    </div>
+</form>
+<script type="text/javascript">
+    document.onload=setTimeout(EnforceChangeOnNotAvailable, 1);
+    function EnforceChangeOnOpenOrClose() {
+        const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        for (let i = 0; i < days.length; i++) {
+            if(document.getElementById("NotAvailable" + days[i]).checked == false) {
+                document.getElementById(days[i] + "Start").disabled = document.getElementById("CanOpen" + days[i]).checked;
+                document.getElementById(days[i] + "End").disabled = document.getElementById("CanClose" + days[i]).checked;
+            }
+        }
     }
+    function EnforceChangeOnNotAvailable() {
+        const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        for (let i = 0; i < days.length; i++) {
+            document.getElementById("CanOpen" + days[i]).disabled = document.getElementById("NotAvailable" + days[i]).checked;
+            document.getElementById("CanClose" + days[i]).disabled = document.getElementById("NotAvailable" + days[i]).checked;
+            document.getElementById(days[i] + "Start").disabled = document.getElementById("NotAvailable" + days[i]).checked;
+            document.getElementById(days[i] + "End").disabled = document.getElementById("NotAvailable" + days[i]).checked;
+        }
+        EnforceChangeOnOpenOrClose();
+    }
+</script>
+@{
+        
+}

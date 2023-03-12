@@ -49,6 +49,7 @@ namespace ScheduleManager.Controllers
         public IActionResult LogOut()
         {
             HttpContext.Session.SetInt32("_LoggedInEmployeeID",0);
+            HttpContext.Session.SetInt32("_LoggedInRank", 0);
             ViewData["Message"] = "Successfully Logged Out.";
             return Index();
         }
