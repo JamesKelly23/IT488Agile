@@ -22,6 +22,32 @@ ul.linklist {
     list-style-type: none;
     align-content:center;
 }
+div.sv-shift-box {
+    float: left;
+    width: 230px;
+    height: 350px;
+    margin: 10px;
+    padding: 5px;
+    border: 3pt double #AAAAFF;
+    background-color: #E0E0FF;
+    border-radius: 15px;
+    box-shadow: 8px 8px 6px #888888;
+    text-align: center;
+}
+div.sv-shift-hours-bubble {
+    border: 1pt solid goldenrod;
+    background-color: palegoldenrod;
+    border-radius: 20px;
+    margin: 10px;
+    padding: 10px;
+}
+div.sv-availability-bubble {
+    border: 1pt solid green;
+    background-color: palegreen;
+    border-radius: 20px;
+    margin: 10px;
+    padding: 10px;
+}
 li.linklist-item {
     margin:20pt;
     float:left;

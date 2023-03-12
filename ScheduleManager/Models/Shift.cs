@@ -11,6 +11,10 @@
         public DateTime EndTime { get; set; }
         public String Role { get; set; }
         public String Notes { get; set; }
+        public override String ToString()
+        {
+            return StartTime.ToString("t") + " - " + EndTime.ToString("t");
+        }
         public Shift(int theID)
         {
             ID = theID;

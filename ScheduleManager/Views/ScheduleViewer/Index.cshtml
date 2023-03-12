@@ -1,94 +1,48 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>Employee Schedule View</title>
-</head>
-<body>
-    <h1>Employee Schedule View</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Week 1</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>Shift 1</th>
-                <td>8:00 AM - 4:00 PM</td>
-                <td>8:00 AM - 4:00 PM</td>
-                <td>8:00 AM - 4:00 PM</td>
-                <td>8:00 AM - 4:00 PM</td>
-                <td>8:00 AM - 4:00 PM</td>
-            </tr>
-            <tr>
-                <th>Shift 2</th>
-                <td>12:00 PM - 8:00 PM</td>
-                <td>12:00 PM - 8:00 PM</td>
-                <td>12:00 PM - 8:00 PM</td>
-                <td>12:00 PM - 8:00 PM</td>
-                <td>12:00 PM - 8:00 PM</td>
-            </tr>
-            <tr>
-                <th>Shift 3</th>
-                <td>8:00 PM - 4:00 AM</td>
-                <td>8:00 PM - 4:00 AM</td>
-                <td>8:00 PM - 4:00 AM</td>
-                <td>8:00 PM - 4:00 AM</td>
-                <td>8:00 PM - 4:00 AM</td>
-            </tr>
-            <tr>
-                <th>OFF</th>
-                <td>OFF</td>
-                <td>OFF</td>
-                <td>OFF</td>
-                <td>OFF</td>
-                <td>OFF</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h1>Week 2</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>8:00 AM - 4:00 PM</td>
-                <td>8:00 AM - 4:00 PM</td>
-                <td>8:00 AM - 4:00 PM</td>
-                <td>8:00 AM - 4:00 PM</td>
-                <td>8:00 AM - 4:00 PM</td>
-            </tr>
-            <tr>
-                <td>12:00 PM - 8:00 PM</td>
-                <td>12:00 PM - 8:00 PM</td>
-                <td>12:00 PM - 8:00 PM</td>
-                <td>12:00 PM - 8:00 PM</td>
-                <td>12:00 PM - 8:00 PM</td>
-             </tr>
-        </tbody>
-    </table>
-    <br />
-    <input type="checkbox" id="alter" name="alter" />
-    <label for="alter">Alter</label>
-    <br />
-    <button type="submit">Submit</button>
-</body>
-</html>
+﻿@{
+    ViewData["Title"] = "Schedule View";
+}
+<center><h1>Employee Schedule View</h1>
+<div style="width:100%;">
+<a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier - 1)">Previous Week</a>
+<a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier + 1)">Next Week</a>
+</div>
+</center>
+@{
+    foreach(DayOfWeek theDay in Availability.GetDaysOfWeek())
+    {
+        List<Shift> theShiftList = ViewBag.ShiftList;
+        IEnumerable<Shift> dayQuery = from theShift in theShiftList
+                                      where theShift.ShiftDate.DayOfWeek == theDay
+                                      select theShift;
+        List<Shift> theMatchingList = dayQuery.ToList();
+        <div class="sv-shift-box">
+            <h3>@Availability.DayString(theDay)</h3>
+            @{
+                foreach (Shift theShift in theMatchingList)
+                {
+                    <div class="sv-shift-hours-bubble">
+                        <p>
+                            Work Hours<br>
+                            @theShift.ShiftDate.ToString("d") <br>
+                            @theShift.ToString()<br>
+                            <a class="link-button-nofloat @(theShift.IsOpen ? "deny":"approve")" asp-route-modifier="@ViewBag.Modifier" asp-action="UpdateShift" type="button" asp-route-id="@theShift.ID" asp-route-isopen="@(theShift.IsOpen ? "false" : "true")">@(theShift.IsOpen ? "Close This Shift" : "Open This Shift")</a>
+                        </p>
+                    </div>
+                }
+                if(theMatchingList.Count==0)
+                {
+                    <div class="sv-shift-hours-bubble">
+                        <p>Not Scheduled</p>
+                    </div>
+                }
+                <div class="sv-availability-bubble">
+                    <p>Availability <br>
+                    @ViewBag.CurrentAvailability.GetDayString(theDay)</p>
+                </div>
+            }
+        </div>
+    }
+}
 
 
 @*
