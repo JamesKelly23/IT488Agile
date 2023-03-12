@@ -9,7 +9,7 @@ using ScheduleManager.Models;
 
 namespace ScheduleManager.Controllers
 {
-    public class ScheduleViewer : Controller
+	public class ScheduleViewer : Controller
 	{
 		public class ScheduleViewerController
 		{
@@ -43,8 +43,8 @@ namespace ScheduleManager.Controllers
 							schedule.Date = (DateTime)reader["Date"];
 							schedule.StartTime = (DateTime)reader["StartTime"];
 							schedule.EndTime = (DateTime)reader["EndTime"];
-							schedule.Role = reader["Role"].ToString();
-							schedule.Notes = reader["Notes"].ToString();
+							//schedule.Role = reader["Role"].ToString();
+							//schedule.Notes = reader["Notes"].ToString();
 
 							schedules.Add(schedule);
 						}
@@ -79,7 +79,7 @@ namespace ScheduleManager.Controllers
 						cmd.Parameters.AddWithValue("@StartTime", schedule.StartTime);
 						cmd.Parameters.AddWithValue("@EndTime", schedule.EndTime);
 						cmd.Parameters.AddWithValue("@Role", schedule.Role);
-						cmd.Parameters.AddWithValue("@Notes", schedule.Notes);
+						//cmd.Parameters.AddWithValue("@Notes", schedule.Notes);
 
 						cmd.ExecuteNonQuery();
 					}
@@ -112,7 +112,7 @@ namespace ScheduleManager.Controllers
 						cmd.Parameters.AddWithValue("@StartTime", schedule.StartTime);
 						cmd.Parameters.AddWithValue("@EndTime", schedule.EndTime);
 						cmd.Parameters.AddWithValue("@Role", schedule.Role);
-						cmd.Parameters.AddWithValue("@Notes", schedule.Notes);
+						//cmd.Parameters.AddWithValue("@Notes", schedule.Notes);
 
 						cmd.ExecuteNonQuery();
 					}
@@ -162,6 +162,8 @@ namespace ScheduleManager.Controllers
 			public DateTime StartTime { get; set; }
 			public DateTime EndTime { get; set; }
 			public String Role { get; set; }
-			public String Notes { get; set; }
+			//public String Notes { get; set; }
 		}
+	}
+}
 			
