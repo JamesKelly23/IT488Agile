@@ -27,7 +27,18 @@ namespace ScheduleManager.Controllers
 		}
 		public IActionResult UpdateShift(int id, bool isOpen, int modifier)
 		{
-			Shift theShift = new Shift(id);
+            int loggedInID = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
+			if (loggedInID == 0)
+			{
+				ViewData["Message"] = "You are not logged in. In order to view this page, you must be logged in and privileged.";
+				return View("Error");
+			}
+            Shift theShift = new Shift(id);
+			if (theShift.EmployeeID != loggedInID)
+			{
+				ViewData["Message"] = "You are attempting to modifying the open/closed status of a shift that does not belong to you.";
+				return View("Error");
+			}
 			theShift.IsOpen = isOpen;
 			theShift.Save();
 			return Index(modifier);
