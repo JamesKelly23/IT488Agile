@@ -2,15 +2,26 @@
 <hr />
 @{
     ViewData["Title"] = "Schedule Editor";
+    
 
+    <center>
+    <div>
+        <a asp-action="ViewShifts" class="link-button-nofloat">View Schedules</a>
+        <a asp-action ="AddShift" class="link-button-nofloat">Add New Shift</a>
+    </div>
+    </center>
 
-
-        <h3 class="text-center">What would you like to do?</h3>
-        <br />
-        <a asp-action="ViewShifts" class="link-button">View Schedules</a>
-        <br />
-        <a asp-action ="AddShift" class="link-button">Add New Schedule</a>
-
+    if(ViewBag.SL== null)
+    {
+        <p>There are no Shifts</p>
     }
+    else
+    {
+        foreach (Shift shift in ViewBag.SL)
+        {
+            <p>This is a shift: @shift.ID</p>
+        }
+    }
+
 }
 

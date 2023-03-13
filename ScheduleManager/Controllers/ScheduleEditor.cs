@@ -36,7 +36,14 @@ namespace ScheduleManager.Controllers
         }
         public IActionResult ViewShifts()
         {
+            List<Shift> shifts = Models.Shift.GetList();
+            ViewBag.SL = shifts;
             return View();
+        }
+        public IActionResult CreateShift()
+        {
+            ScheduleEditorIndex();
+            return View("ScheduleEditorIndex");
         }
     }
 }
