@@ -46,7 +46,7 @@
             SqlCommand theCommand;
             if (ID == 0)
             {
-                theCommand = new SqlCommand("INSERT INTO Shift (IsOpen, EmployeeID, Date, StartTime, EndTime, Role, Notes)" + " OUTPUT INSERTED.ID VALUES ('" + IsOpen.ToString() + "', " + EmployeeID + ", '" + ShiftDate + "', '" + StartTime + "', '" + EndTime + "', '" + Role + "', '" + Notes + "');", theConnection);
+                theCommand = new SqlCommand("INSERT INTO Shift (IsOpen, EmployeeID, Date, StartTime, EndTime, Role, Notes)" + " OUTPUT INSERTED.ID VALUES ('" + IsOpen.ToString() + "', " + EmployeeID + ", '" + ShiftDate + "', '" + StartTime + "', '" + EndTime + "', '" + Role + "', '" + Notes.Replace("'","").Replace(";","") + "');", theConnection);
                 theConnection.Open();
                 ID = Convert.ToInt32(theCommand.ExecuteScalar());
                 theConnection.Close();
@@ -54,7 +54,7 @@
             }
             else
             {
-                theCommand = new SqlCommand("UPDATE Shift SET IsOpen='" + IsOpen + "', EmployeeID=" + EmployeeID + ", Date='" + ShiftDate + "', StartTime='" + StartTime + "', EndTime='" + EndTime + "', Role='" + Role + "', Notes='" + Notes + "' WHERE ID=" + ID + ";", theConnection);
+                theCommand = new SqlCommand("UPDATE Shift SET IsOpen='" + IsOpen + "', EmployeeID=" + EmployeeID + ", Date='" + ShiftDate + "', StartTime='" + StartTime + "', EndTime='" + EndTime + "', Role='" + Role + "', Notes='" + Notes.Replace("'", "").Replace(";", "") + "' WHERE ID=" + ID + ";", theConnection);
                 String message;
                 try
                 {
@@ -95,7 +95,7 @@
         {
             SqlConnection StaticConnection = new(ConnectionStrings.local);
             List<Shift> list = new();
-            SqlCommand theCommand = new("SELECT ID FROM Shift WHERE ShiftDate BETWEEN '" + beginDate + "' AND '" + endDate + "';", StaticConnection);
+            SqlCommand theCommand = new("SELECT ID FROM Shift WHERE Date BETWEEN '" + beginDate + "' AND '" + endDate + "';", StaticConnection);
             StaticConnection.Open();
             SqlDataReader theReader = theCommand.ExecuteReader();
             while (theReader.Read())

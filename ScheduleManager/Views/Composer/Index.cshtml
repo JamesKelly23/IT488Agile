@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<center>
+    <h1>Schedule Creator - Week View</h1>
+    <h2>Dates: @ViewData["DateRange"]</h2>
+    <div style="width:100%;">
+        <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier - 1)">Previous Week</a>
+        <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier + 1)">Next Week</a>
+    </div>
+    <p>Click on a day below to zoom to that day.</p>
+</center>
+<table>
+    <tr class="headerrow2">
+        <td></td>
+        <td class="cell2">Monday</td>
+        <td class="cell2">Tuesday</td>
+        <td class="cell2">Wednesday</td>
+        <td class="cell2">Thursday</td>
+        <td class="cell2">Friday</td>
+        <td class="cell2">Saturday</td>
+        <td class="cell2">Sunday</td>
+    </tr>
+    <tr class="headerrow2">
+        <td class="cell2">Employee</td>
+        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.ToString("d")">@ViewBag.StartDate.ToString("d")</a></td>
+        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(1).ToString("d")">@ViewBag.StartDate.AddDays(1).ToString("d")</a></td>
+        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(2).ToString("d")">@ViewBag.StartDate.AddDays(2).ToString("d")</a></td>
+        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(3).ToString("d")">@ViewBag.StartDate.AddDays(3).ToString("d")</a></td>
+        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(4).ToString("d")">@ViewBag.StartDate.AddDays(4).ToString("d")</a></td>
+        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(5).ToString("d")">@ViewBag.StartDate.AddDays(5).ToString("d")</a></td>
+        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(6).ToString("d")">@ViewBag.StartDate.AddDays(6).ToString("d")</a></td>
+    </tr>
+    @{
+        int i = 0;
+        foreach(Employee theEmployee in ViewBag.EmployeeList)
+        {
+            <tr class="row2 @(i++%2==0 ? "evenrow" : "")">
+                <td class="cell2">@theEmployee.FullName()</td>
+                @{
+                    foreach (DayOfWeek theDay in Availability.GetDaysOfWeek())
+                    {   
+                        List<Shift> theShiftList = ViewBag.ShiftList;
+                        IEnumerable<Shift> dayQuery = from theShift in theShiftList
+                                                where (theShift.ShiftDate.DayOfWeek == theDay)
+                                                && (theShift.EmployeeID==theEmployee.ID)
+                                                select theShift;
+                        List<Shift> theMatchingList = dayQuery.ToList();
+                        <td class="cell2">
+                            <p>
+                                @{  
+                                    foreach (Shift theShift in theMatchingList)
+                                    {
+                                        @theShift.ToString()<br>
+                                    }
+                                    if (theMatchingList.Count == 0)
+                                    {
+                                        @("Not Scheduled")<br />
+                                    } 
+                                }
+                                Availability<br />
+                                @theEmployee.GetCurrentAvailability().GetDayString(theDay)
+                            </p>
+                        </td>
+                    }
+                }
+            </tr>
+        }
+    }
+</table>

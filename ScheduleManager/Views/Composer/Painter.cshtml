@@ -1,0 +1,93 @@
+﻿@{
+    DateTime dateCursor = ViewBag.TargetDate;
+    DateTime currentMonday = DateTime.Today;
+    while (dateCursor.DayOfWeek != DayOfWeek.Monday)
+    {
+        dateCursor = dateCursor.AddDays(-1);
+    }
+    while(currentMonday.DayOfWeek != DayOfWeek.Monday)
+    {
+        currentMonday = currentMonday.AddDays(-1);
+    }
+    int mod = ((dateCursor - DateTime.Today).Days) / 7;
+}
+<a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@mod">Back to Week View</a>
+<h1>@ViewBag.TargetDate.ToString("D")</h1>
+<p>Click a time slot to start a shift, then click the end time to finalize.</p>
+<table>
+    <tr class="headerrow2">
+        <td class="cell2">Employee</td>
+        @{
+            DateTime theCursor = ViewBag.TargetDate.AddHours(6);
+            for (int i = 6; i < 24; i++)
+            {
+                <td class="cell2">@theCursor.ToString("htt")</td>
+                theCursor = theCursor.AddHours(1);
+            }
+        }
+    </tr>
+    @{
+        List<Shift> theList = ViewBag.ShiftList;
+        int rownum = 0;
+        foreach (Employee theEmployee in ViewBag.EmployeeList)
+        {
+
+            IEnumerable<Shift> theQuery = from Shift theShift in theList
+                                          where theShift.EmployeeID == theEmployee.ID
+                                          select theShift;
+            List<Shift> theShifts = theQuery.ToList();
+            if (theShifts.Count > 0)
+            {
+                Shift theShift = theShifts.ElementAt(0);
+                <tr class="row2">
+                    <td class="cell2">@theEmployee.FullName()</td>
+                    @{
+                        int startHour = (theShift.StartTime - ViewBag.TargetDate).Hours;
+                        int shiftLength = (theShift.EndTime - theShift.StartTime).Hours;
+                        for(int i=6; i<24; i++)
+                        {
+                            if((i<startHour)||(i>startHour+shiftLength))
+                            {
+                                <td class="cell2"></td>
+                            } else
+                            {
+                                <td colspan="@shiftLength"><p class="shift">@theShift.ToString()<a class="link-button-nofloat" asp-action="EditShift" asp-route-id="@theShift.ID">Edit</a></p></td>
+                                i += shiftLength;
+                            }
+                        }
+                    }
+                </tr>
+            }
+            else
+            {
+                <tr class="row2 @(rownum++%2==0?"evenrow":"")">
+                    <td class="cell2">@theEmployee.FullName()</td>
+                    @{
+                        for (int i = 6; i < 24; i++)
+                        {
+                            if ((@ViewBag.EmployeeID ?? 0) == 0)
+                            {
+                                <td class="cell2"><a asp-action="Painter" asp-route-date="@ViewBag.TargetDate.ToString("d")" asp-route-empid="@theEmployee.ID" asp-route-starttime="@ViewBag.TargetDate.AddHours(i).ToString("g")" class="link-button-nofloat">+</a></td>
+                            } else if ((ViewBag.EmployeeID == theEmployee.ID))
+                            {
+                                if((ViewBag.StartTime - ViewBag.TargetDate).Hours == i)
+                                {
+                                    <td><p class="link-button shift">Start</p></td>
+                                } else if (i<(ViewBag.StartTime - ViewBag.TargetDate).Hours)
+                                {
+                                    <td class="cell2"></td>
+                                } else
+                                {
+                                    <td class="cell2"><a asp-action="Confirm" asp-route-date="@ViewBag.TargetDate.ToString("d")" asp-route-empid="@theEmployee.ID" asp-route-endtime="@ViewBag.TargetDate.AddHours(i).ToString("g")" asp-route-starttime="@ViewBag.StartTime.ToString("g")" class="link-button-nofloat">+</a></td>
+                                }
+                            } else
+                            {
+                                <td class="cell2"></td>
+                            }
+                        }
+                    }
+                </tr>
+            }
+        }
+    }
+</table>
