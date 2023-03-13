@@ -145,6 +145,7 @@
             SaturdayEnd = theReader.GetDateTime(14);
             SundayStart = theReader.GetDateTime(15);
             SundayEnd = theReader.GetDateTime(16);
+            theConnection.Close();
         }
         public static String DayString(DayOfWeek dayOfWeek)
         {
