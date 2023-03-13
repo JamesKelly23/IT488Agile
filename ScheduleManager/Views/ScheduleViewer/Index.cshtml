@@ -7,43 +7,48 @@
 <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier + 1)">Next Week</a>
 </div>
 </center>
-@{
-    foreach(DayOfWeek theDay in Availability.GetDaysOfWeek())
-    {
-        List<Shift> theShiftList = ViewBag.ShiftList;
-        IEnumerable<Shift> dayQuery = from theShift in theShiftList
-                                      where theShift.ShiftDate.DayOfWeek == theDay
-                                      select theShift;
-        List<Shift> theMatchingList = dayQuery.ToList();
-        <div class="sv-shift-box">
-            <h3>@Availability.DayString(theDay)</h3>
-            @{
-                foreach (Shift theShift in theMatchingList)
-                {
-                    <div class="sv-shift-hours-bubble">
-                        <p>
-                            Work Hours<br>
-                            @theShift.ShiftDate.ToString("d") <br>
-                            @theShift.ToString()<br>
-                            <a class="link-button-nofloat @(theShift.IsOpen ? "deny":"approve")" asp-route-modifier="@ViewBag.Modifier" asp-action="UpdateShift" type="button" asp-route-id="@theShift.ID" asp-route-isopen="@(theShift.IsOpen ? "false" : "true")">@(theShift.IsOpen ? "Close This Shift" : "Open This Shift")</a>
-                        </p>
-                    </div>
-                }
-                if(theMatchingList.Count==0)
-                {
-                    <div class="sv-shift-hours-bubble">
-                        <p>Not Scheduled</p>
-                    </div>
-                }
-                <div class="sv-availability-bubble">
-                    <p>Availability <br>
-                    @ViewBag.CurrentAvailability.GetDayString(theDay)</p>
+<div style="width:100%; overflow:scroll;">
+    <div style="width: 1750px;">
+        @{
+            foreach (DayOfWeek theDay in Availability.GetDaysOfWeek())
+            {
+                List<Shift> theShiftList = ViewBag.ShiftList;
+                IEnumerable<Shift> dayQuery = from theShift in theShiftList
+                                              where theShift.ShiftDate.DayOfWeek == theDay
+                                              select theShift;
+                List<Shift> theMatchingList = dayQuery.ToList();
+                <div class="sv-shift-box">
+                    <h3>@Availability.DayString(theDay)</h3>
+                    @{
+                        foreach (Shift theShift in theMatchingList)
+                        {
+                            <div class="sv-shift-hours-bubble">
+                                <p>
+                                    Work Hours<br>
+                                    @theShift.ShiftDate.ToString("d") <br>
+                                    @theShift.ToString()<br>
+                                    <a class="link-button-nofloat @(theShift.IsOpen ? "deny":"approve")" asp-route-modifier="@ViewBag.Modifier" asp-action="UpdateShift" type="button" asp-route-id="@theShift.ID" asp-route-isopen="@(theShift.IsOpen ? "false" : "true")">@(theShift.IsOpen ? "Close This Shift" : "Open This Shift")</a>
+                                </p>
+                            </div>
+                        }
+                        if (theMatchingList.Count == 0)
+                        {
+                            <div class="sv-shift-hours-bubble">
+                                <p>Not Scheduled</p>
+                            </div>
+                        }
+                        <div class="sv-availability-bubble">
+                            <p>
+                                Availability <br>
+                                @ViewBag.CurrentAvailability.GetDayString(theDay)
+                            </p>
+                        </div>
+                    }
                 </div>
             }
-        </div>
-    }
-}
-
+        }
+    </div>
+</div>
 
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
