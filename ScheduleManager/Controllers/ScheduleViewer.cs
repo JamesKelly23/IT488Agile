@@ -43,6 +43,8 @@ namespace ScheduleManager.Controllers
 			theShift.Save();
 			return Index(modifier);
 		}
-	}
-}
-			
+
+
+
+
+
