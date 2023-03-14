@@ -12,7 +12,7 @@ namespace ScheduleManager.Controllers
             DateTime theDate = DateTime.Today.AddDays((modifier ?? 0) * 7); //Add weeks based on the passed modifier argument
             while (theDate.DayOfWeek != DayOfWeek.Monday) //Roll backwards to the previous Monday
             {
-                theDate.AddDays(-1);
+               theDate = theDate.AddDays(-1);
             }
             ViewData["DateRange"] = theDate.ToString("d") + " - " + theDate.AddDays(6).ToString("d");
             ViewBag.StartDate = theDate;
