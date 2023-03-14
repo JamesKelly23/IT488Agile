@@ -5,15 +5,13 @@
 
     <form asp-action="CreateShift">
 
-    <dl>
-        <dt>
-        Role: <input>
-        </dt>
-    </dl>
-    <p class="fw-bold">Date:<input type="date" /></p>
+
+    <p class="fw-bold">Role: <input name="ShiftRole" /></p>
+    <p class="fw-bold">Date:<input name= "ShiftDate" type="date" /></p>
     <p class="fw-bold">From: <input name="ShiftStart"type="time"/></p>
     <p class="fw-bold">To: <input name="ShiftEnd" type="time" /></p>
     <p class="fw-bold">Notes:</p>
+    
     <textarea name="ShiftNotes" rows="20" cols="100" style="resize:none"></textarea>
     <hr/>
     <input type="submit">

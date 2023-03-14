@@ -42,6 +42,19 @@ namespace ScheduleManager.Controllers
         }
         public IActionResult CreateShift()
         {
+            Shift newShift = new(false, 1,Convert.ToDateTime(HttpContext.Request.Form["ShiftDate"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftStart"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftEnd"]),HttpContext.Request.Form["ShiftRole"],HttpContext.Request.Form["ShiftNotes"]);
+            /*
+            newShift.IsOpen = true;
+            newShift.Role = HttpContext.Request.Form["ShiftRole"];
+            newShift.ShiftDate = Convert.ToDateTime(HttpContext.Request.Form["ShiftDate"]);
+            newShift.StartTime = Convert.ToDateTime(HttpContext.Request.Form["ShiftStart"]);
+            newShift.EndTime = Convert.ToDateTime(HttpContext.Request.Form["ShiftEnd"]);
+            newShift.Notes = HttpContext.Request.Form["ShiftNotes"];
+            
+            newShift.EmployeeID = 0;
+            */
+            newShift.Save();
+            
             ScheduleEditorIndex();
             return View("ScheduleEditorIndex");
         }
