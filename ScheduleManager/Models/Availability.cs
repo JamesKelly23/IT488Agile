@@ -108,6 +108,15 @@
                 case DayOfWeek.Sunday: SundayStart = startDate; break;
             }
         }
+        public Boolean IsAvailableAt(DayOfWeek theDay, int theHour)
+        {
+            DateTime theTime = Convert.ToDateTime("1/1/2001 " + theHour + ":00:00");
+            if((theTime >= GetStart(theDay)) && (theTime <= GetEnd(theDay)))
+            {
+                return true;
+            }
+            return false;
+        }
         public void SetEnd(DayOfWeek theDay, DateTime endDate)
         {
             switch (theDay)

@@ -116,5 +116,12 @@ namespace ScheduleManager.Controllers
             theShift.Save();
             return Painter(theDate, null, null);
         }
+        public IActionResult DeleteShift(int id)
+        {
+            Shift theShift = new Shift(id);
+            DateTime theDate = theShift.ShiftDate;
+            theShift.Delete();
+            return Painter(theDate, null, null);
+        }
     }
 }

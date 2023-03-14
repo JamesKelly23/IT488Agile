@@ -187,5 +187,15 @@
             StaticConnection.Close();
             return list;
         }
+        public void Delete()
+        {
+            if (ID != 0)
+            {
+                SqlCommand theCommand = new("DELETE FROM Shift WHERE ID=" + ID + ";", theConnection);
+                theConnection.Open();
+                theCommand.ExecuteNonQuery();
+                theConnection.Close();
+            }
+        }
     }
 }

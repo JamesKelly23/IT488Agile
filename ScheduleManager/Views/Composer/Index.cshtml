@@ -34,33 +34,38 @@
     </tr>
     @{
         int i = 0;
-        foreach(Employee theEmployee in ViewBag.EmployeeList)
+        foreach (Employee theEmployee in ViewBag.EmployeeList)
         {
             <tr class="row2 @(i++%2==0 ? "evenrow" : "")">
                 <td class="cell2">@theEmployee.FullName()</td>
                 @{
                     foreach (DayOfWeek theDay in Availability.GetDaysOfWeek())
-                    {   
+                    {
                         List<Shift> theShiftList = ViewBag.ShiftList;
                         IEnumerable<Shift> dayQuery = from theShift in theShiftList
-                                                where (theShift.ShiftDate.DayOfWeek == theDay)
-                                                && (theShift.EmployeeID==theEmployee.ID)
-                                                select theShift;
+                                                      where (theShift.ShiftDate.DayOfWeek == theDay)
+                                                      && (theShift.EmployeeID == theEmployee.ID)
+                                                      select theShift;
                         List<Shift> theMatchingList = dayQuery.ToList();
                         <td class="cell2">
-                            <p>
-                                @{  
+                            <p class="sv-shift-hours-bubble">
+                                @{
                                     foreach (Shift theShift in theMatchingList)
                                     {
-                                        @theShift.ToString()<br>
+                                        @theShift.ToString()
+
+                                        <br>
                                     }
                                     if (theMatchingList.Count == 0)
                                     {
-                                        @("Not Scheduled")<br />
-                                    } 
+                                        @("Not Scheduled")
+                                        <br />
+                                    }
                                 }
-                                Availability<br />
-                                @theEmployee.GetCurrentAvailability().GetDayString(theDay)
+                            </p>
+                            <p class="sv-availability-bubble">
+                            Availability<br />
+                            @theEmployee.GetCurrentAvailability().GetDayString(theDay)
                             </p>
                         </td>
                     }
