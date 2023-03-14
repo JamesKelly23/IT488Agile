@@ -46,6 +46,12 @@
                         <a class="link-button" asp-controller="ScheduleEditor" asp-action="ScheduleEditorIndex">Manage Schedules</a>
                         </li>
                     }
+                    if(ViewBag.CurrentUser.RankID>2)
+                    {
+                        <li class="linklist-item">
+                            <a class="link-button" asp-controller="Composer" asp-action="Composer">Schedule Composer - GM Only</a>
+                        </li>
+                    }
                 }
             </ul>
         }
