@@ -1,0 +1,19 @@
+﻿<h2 class="text-center"> Shift Details</h2>
+<hr />
+
+@{
+    ViewData["Title"]= "View Shift Details";
+    Shift thisShift = ViewBag.ThisShift;
+
+    <p class="fw-bold">ID: @thisShift.ID</p>
+    <p class="fw-bold">Is Open: @thisShift.IsOpen</p>
+    <p class="fw-bold">Role: @thisShift.Role</p>
+    <p class="fw-bold">Date:@thisShift.ShiftDate</p>
+    <p class="fw-bold">From: @thisShift.StartTime</p>
+    <p class="fw-bold">To: @thisShift.EndTime</p>
+    <p class="fw-bold">Notes: @thisShift.Notes</p>
+
+    <hr/>
+    <a asp-action="ScheduleEditorIndex" class="link-button-nofloat">Back</a> <a class="link-button-nofloat">Edit</a><a asp-action="deleteShift" asp-route-id="@thisShift.ID" class="link-button-nofloat">Delete</a>
+
+}

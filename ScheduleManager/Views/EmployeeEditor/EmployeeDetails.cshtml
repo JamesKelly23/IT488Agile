@@ -194,7 +194,9 @@
                     @currentDetails.DOB
                 </dd>
             </dl>
-            <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a ="1">Edit</a>
+            <div>
+            <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a ="1" class="link-button-nofloat">Edit</a>
+            </div><br />
         </div>
         <div class="text-center">
             <h2>Contact Information</h2>
@@ -216,7 +218,9 @@
                     @currentDetails.Phone
                 </dd>
             </dl>
-            <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a ="2">Edit</a>
+            <div>
+            <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a ="2" class="link-button-nofloat">Edit</a>
+            </div><br />
         </div>
         <div class="text-center">
             <h2>Account Info</h2>
@@ -238,7 +242,9 @@
                     ############
                 </dd>
             </dl>
-            <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a="3">Edit</a>
+            <div>
+            <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a="3" class="link-button-nofloat">Edit</a>
+            </div><br/>
         </div>
         <hr/>
 
