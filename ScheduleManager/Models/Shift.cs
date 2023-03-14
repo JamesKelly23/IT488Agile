@@ -1,5 +1,6 @@
 ﻿namespace ScheduleManager.Models
 {
+
     public class Shift
     {
         private SqlConnection theConnection = new(ConnectionStrings.local);
@@ -18,7 +19,7 @@
         public Shift(int theID)
         {
             ID = theID;
-            SqlCommand theCommand = new("SELECT * FROM Shift WHERE ID=" + theID + ";", theConnection);
+            SqlCommand theCommand = new("SELECT * FROM Shift WHERE ID = " + theID + ";", theConnection);
             theConnection.Open();
             SqlDataReader theReader = theCommand.ExecuteReader();
             theReader.Read();
@@ -81,7 +82,7 @@
         {
             SqlConnection StaticConnection = new(ConnectionStrings.local);
             List<Shift> list = new();
-            SqlCommand theCommand = new("SELECT ID FROM Shift", StaticConnection);
+            SqlCommand theCommand = new("SELECT ID FROM Shift;", StaticConnection);
             StaticConnection.Open();
             SqlDataReader theReader = theCommand.ExecuteReader();
             while (theReader.Read())

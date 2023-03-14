@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using ScheduleManager.Models;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 namespace ScheduleManager.Controllers
 {
@@ -16,6 +20,9 @@ namespace ScheduleManager.Controllers
         {
             int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
             ViewBag.LoggedInEmployee = new Employee(loggedInEmployee);
+            List<Shift> shiftList = Models.Shift.GetList();
+
+            ViewBag.ShiftList = shiftList;
             return View();
         }
         public IActionResult AddShift()
@@ -36,13 +43,12 @@ namespace ScheduleManager.Controllers
         }
         public IActionResult ViewShifts()
         {
-            List<Shift> shifts = Models.Shift.GetList();
-            ViewBag.SL = shifts;
+
             return View();
         }
         public IActionResult CreateShift()
         {
-            Shift newShift = new(false, 1,Convert.ToDateTime(HttpContext.Request.Form["ShiftDate"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftStart"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftEnd"]),HttpContext.Request.Form["ShiftRole"],HttpContext.Request.Form["ShiftNotes"]);
+            Shift newShift = new(true, 1,Convert.ToDateTime(HttpContext.Request.Form["ShiftDate"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftStart"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftEnd"]),HttpContext.Request.Form["ShiftRole"],HttpContext.Request.Form["ShiftNotes"]);
             /*
             newShift.IsOpen = true;
             newShift.Role = HttpContext.Request.Form["ShiftRole"];
@@ -55,6 +61,19 @@ namespace ScheduleManager.Controllers
             */
             newShift.Save();
             
+            ScheduleEditorIndex();
+            return View("ScheduleEditorIndex");
+        }
+        public IActionResult ViewDetails(int ID)
+        {
+            Shift thisShift = new Models.Shift(ID);
+            ViewBag.ThisShift = thisShift;
+            return View();
+        }
+        public IActionResult DeleteShift(int id)
+        {
+            Shift thisShift = new(id);
+            thisShift.Delete();
             ScheduleEditorIndex();
             return View("ScheduleEditorIndex");
         }
