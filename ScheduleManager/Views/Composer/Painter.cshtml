@@ -31,7 +31,7 @@
         int rownum = 0;
         foreach (Employee theEmployee in ViewBag.EmployeeList)
         {
-
+            Availability theAvailability = theEmployee.GetCurrentAvailability();
             IEnumerable<Shift> theQuery = from Shift theShift in theList
                                           where theShift.EmployeeID == theEmployee.ID
                                           select theShift;
@@ -46,13 +46,13 @@
                         int shiftLength = (theShift.EndTime - theShift.StartTime).Hours;
                         for(int i=6; i<24; i++)
                         {
-                            if((i<startHour)||(i>startHour+shiftLength))
+                            if((i<startHour)||(i>(startHour+shiftLength-1)))
                             {
-                                <td class="cell2"></td>
+                                <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "cell2": "unavailable"))"></td>
                             } else
                             {
-                                <td colspan="@shiftLength"><p class="shift">@theShift.ToString()<a class="link-button-nofloat" asp-action="EditShift" asp-route-id="@theShift.ID">Edit</a></p></td>
-                                i += shiftLength;
+                                <td colspan="@shiftLength"><p class="shift">@theShift.ToString() - @theShift.Role<a class="link-button deny" asp-action="DeleteShift" asp-route-id="@theShift.ID">Delete</a></p></td>
+                                i += shiftLength - 1;
                             }
                         }
                     }
@@ -65,9 +65,9 @@
                     @{
                         for (int i = 6; i < 24; i++)
                         {
-                            if ((@ViewBag.EmployeeID ?? 0) == 0)
+                            if (((@ViewBag.EmployeeID ?? 0) == 0) && i<23)
                             {
-                                <td class="cell2"><a asp-action="Painter" asp-route-date="@ViewBag.TargetDate.ToString("d")" asp-route-empid="@theEmployee.ID" asp-route-starttime="@ViewBag.TargetDate.AddHours(i).ToString("g")" class="link-button-nofloat">+</a></td>
+                                <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "cell2": "unavailable"))"><a asp-action="Painter" asp-route-date="@ViewBag.TargetDate.ToString("d")" asp-route-empid="@theEmployee.ID" asp-route-starttime="@ViewBag.TargetDate.AddHours(i).ToString("g")" class="link-button-nofloat">+</a></td>
                             } else if ((ViewBag.EmployeeID == theEmployee.ID))
                             {
                                 if((ViewBag.StartTime - ViewBag.TargetDate).Hours == i)
@@ -75,14 +75,14 @@
                                     <td><p class="link-button shift">Start</p></td>
                                 } else if (i<(ViewBag.StartTime - ViewBag.TargetDate).Hours)
                                 {
-                                    <td class="cell2"></td>
+                                    <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "cell2": "unavailable"))"></td>
                                 } else
                                 {
-                                    <td class="cell2"><a asp-action="Confirm" asp-route-date="@ViewBag.TargetDate.ToString("d")" asp-route-empid="@theEmployee.ID" asp-route-endtime="@ViewBag.TargetDate.AddHours(i).ToString("g")" asp-route-starttime="@ViewBag.StartTime.ToString("g")" class="link-button-nofloat">+</a></td>
+                                    <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "cell2": "unavailable"))"><a asp-action="Confirm" asp-route-date="@ViewBag.TargetDate.ToString("d")" asp-route-empid="@theEmployee.ID" asp-route-endtime="@ViewBag.TargetDate.AddHours(i).ToString("g")" asp-route-starttime="@ViewBag.StartTime.ToString("g")" class="link-button-nofloat">+</a></td>
                                 }
                             } else
                             {
-                                <td class="cell2"></td>
+                                <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "cell2": "unavailable"))"></td>
                             }
                         }
                     }

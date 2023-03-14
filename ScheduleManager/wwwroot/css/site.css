@@ -43,14 +43,14 @@ div.sv-shift-box {
     box-shadow: 8px 8px 6px #888888;
     text-align: center;
 }
-div.sv-shift-hours-bubble {
+.sv-shift-hours-bubble {
     border: 1pt solid goldenrod;
     background-color: palegoldenrod;
     border-radius: 20px;
     margin: 10px;
     padding: 10px;
 }
-div.sv-availability-bubble {
+.sv-availability-bubble {
     border: 1pt solid green;
     background-color: palegreen;
     border-radius: 20px;
@@ -60,6 +60,11 @@ div.sv-availability-bubble {
 li.linklist-item {
     margin:20pt;
     float:left;
+}
+.unavailable {
+    background-color:palevioletred;
+    border: 1pt solid black;
+    text-align:center;
 }
 a.nav-link {
     font-weight: bold;
@@ -91,6 +96,17 @@ div.details {
     box-shadow: 3px 3px 3px #888888;
     margin: 5px;
     float: none;
+}
+.confirm-box {
+    padding: 40px;
+    width: 600px;
+    border: 1pt double black;
+    box-shadow: 3px 3px 3px #888888;
+    border-radius:20px;
+}
+.form-label {
+    text-align: right;
+    font-weight: bold;
 }
 .link-button {
     padding: 8px;

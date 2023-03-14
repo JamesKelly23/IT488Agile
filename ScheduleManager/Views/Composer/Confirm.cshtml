@@ -2,26 +2,56 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    <form asp-action="AddShift">
-    <label>Employee:</label><label>@ViewBag.TheEmployee.FullName()</label><br>
-    <input type="hidden" name="EmployeeID" value="@ViewBag.EmployeeID">
-    <label>Date:</label><label>@ViewBag.TargetDate.ToString("D")</label><br>
-    <input type="hidden" name="TargetDate" value="@ViewBag.TargetDate.ToString("d")">
-    <label>Start Time:</label><label>@ViewBag.StartTime.ToString("t")</label><br>
-    <input type="hidden" name="StartTime" value="@ViewBag.StartTime.ToString("g")">
-    <label>End Time:</label><label>@ViewBag.EndTime.ToString("t")</label><br>
-    <input type="hidden" name="EndTime" value="@ViewBag.EndTime.ToString("g")">
-    <label>Role:</label>
-    <select name="RoleSelector">
-            @{
-                foreach(Role theRole in Role.GetList())
-                {
-                    <option value="@theRole.Name">@theRole.Name</option>
-                }
-            }
-    </select><br>
-    <label>Custom Role (optional):</label><input type="text" name="RoleTextBox"><br>
-    <label>Notes:</label><br><textarea rows="4" cols="10" name="Notes"></textarea>
-    <input type="submit" value="Save"><input type="button" asp-action="Painter" asp-route-date="@ViewBag.TargetDate.ToString("d")" value="Cancel">
-    </form>
+    <div class="confirm-box">
+        <form asp-action="AddShift">
+            <table>
+                <tr>
+                    <td class="form-label">Employee:</td>
+                    <td>@ViewBag.TheEmployee.FullName()</td>
+                </tr>
+                <tr>
+                    <td class="form-label">Date:</td>
+                    <td>@ViewBag.TargetDate.ToString("D")</td>
+                </tr>
+                <tr>
+                    <td class="form-label">Start Time: </td>
+                    <td>@ViewBag.StartTime.ToString("t")</td>
+                </tr>
+                <tr>
+                    <td class="form-label">End Time: </td>
+                    <td>@ViewBag.EndTime.ToString("t")</td>
+                </tr>
+                <tr>
+                    <td class="form-label">Role: </td>
+                    <td>
+                        <select name="RoleSelector">
+                            <option value="Unspecified"></option>
+                            @{
+                                foreach (Role theRole in Role.GetList())
+                                {
+                                    <option value="@theRole.Name">@theRole.Name</option>
+                                }
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label">Custom Role (optional):</td>
+                    <td><input type="text" name="RoleTextBox"></td>
+                </tr>
+                <tr>
+                    <td class="form-label">Notes:</td>
+                    <td><textarea rows="4" cols="40" name="Notes"></textarea></td>
+                </tr>
+                <tr>
+                    <td class="form-label"><input class="link-button-nofloat" type="submit" value="Save"></td>
+                    <td><input class="link-button-nofloat" type="button" asp-action="Painter" asp-route-date="@ViewBag.TargetDate.ToString("d")" value="Cancel"></td>
+                </tr>
+            </table>
+            <input type="hidden" name="EmployeeID" value="@ViewBag.EmployeeID">
+            <input type="hidden" name="TargetDate" value="@ViewBag.TargetDate.ToString("d")">
+            <input type="hidden" name="StartTime" value="@ViewBag.StartTime.ToString("g")">
+            <input type="hidden" name="EndTime" value="@ViewBag.EndTime.ToString("g")">
+        </form>
+    </div>
 }
