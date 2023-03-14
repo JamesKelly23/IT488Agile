@@ -8,6 +8,7 @@
     <div style="width:100%;">
         <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier - 1)">Previous Week</a>
         <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier + 1)">Next Week</a>
+        <a class="link-button" asp-action="Index" asp-route-modifier="@ViewBag.Modifier" asp-route-showavailabilities="@(!(ViewBag.ShowAvailabilities))">@(ViewBag.ShowAvailabilities ? "Hide Availabilities" : "Show Availabilities")</a>
     </div>
     <p>Click on a day below to zoom to that day.</p>
 </center>
@@ -52,21 +53,24 @@
                                 @{
                                     foreach (Shift theShift in theMatchingList)
                                     {
-                                        @theShift.ToString()
-
-                                        <br>
+                                        @theShift.StartTime.ToString("t") <br />
+                                        @theShift.EndTime.ToString("t")
                                     }
                                     if (theMatchingList.Count == 0)
                                     {
-                                        @("Not Scheduled")
-                                        <br />
+                                        @("Off")
                                     }
                                 }
                             </p>
-                            <p class="sv-availability-bubble">
-                            Availability<br />
-                            @theEmployee.GetCurrentAvailability().GetDayString(theDay)
-                            </p>
+                            @{
+                                if(ViewBag.ShowAvailabilities)
+                                {
+                                    <p class="sv-availability-bubble">
+                                        Availability<br />
+                                        @theEmployee.GetCurrentAvailability().GetDayString(theDay)
+                                    </p>
+                                }
+                            }
                         </td>
                     }
                 }

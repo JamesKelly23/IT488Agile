@@ -5,15 +5,22 @@
     {
         dateCursor = dateCursor.AddDays(-1);
     }
-    while(currentMonday.DayOfWeek != DayOfWeek.Monday)
+    while (currentMonday.DayOfWeek != DayOfWeek.Monday)
     {
         currentMonday = currentMonday.AddDays(-1);
     }
     int mod = ((dateCursor - DateTime.Today).Days) / 7;
 }
 <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@mod">Back to Week View</a>
-<h1>@ViewBag.TargetDate.ToString("D")</h1>
-<p>Click a time slot to start a shift, then click the end time to finalize.</p>
+<center>
+    <h1>@ViewBag.TargetDate.ToString("D")</h1>
+    <hr />
+    <p>
+        <a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.TargetDate.AddDays(-1).ToString("d")">Previous Day</a>
+        Click a time slot to start a shift, then click the end time to finalize.
+        <a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.TargetDate.AddDays(1).ToString("d")">Next Day</a>
+    </p>
+</center>
 <table>
     <tr class="headerrow2">
         <td class="cell2">Employee</td>
@@ -44,12 +51,13 @@
                     @{
                         int startHour = (theShift.StartTime - ViewBag.TargetDate).Hours;
                         int shiftLength = (theShift.EndTime - theShift.StartTime).Hours;
-                        for(int i=6; i<24; i++)
+                        for (int i = 6; i < 24; i++)
                         {
-                            if((i<startHour)||(i>(startHour+shiftLength-1)))
+                            if ((i < startHour) || (i > (startHour + shiftLength - 1)))
                             {
                                 <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "cell2": "unavailable"))"></td>
-                            } else
+                            }
+                            else
                             {
                                 <td colspan="@shiftLength"><p class="shift">@theShift.ToString() - @theShift.Role<a class="link-button deny" asp-action="DeleteShift" asp-route-id="@theShift.ID">Delete</a></p></td>
                                 i += shiftLength - 1;
@@ -65,22 +73,26 @@
                     @{
                         for (int i = 6; i < 24; i++)
                         {
-                            if (((@ViewBag.EmployeeID ?? 0) == 0) && i<23)
+                            if (((@ViewBag.EmployeeID ?? 0) == 0) && i < 23)
                             {
                                 <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "cell2": "unavailable"))"><a asp-action="Painter" asp-route-date="@ViewBag.TargetDate.ToString("d")" asp-route-empid="@theEmployee.ID" asp-route-starttime="@ViewBag.TargetDate.AddHours(i).ToString("g")" class="link-button-nofloat">+</a></td>
-                            } else if ((ViewBag.EmployeeID == theEmployee.ID))
+                            }
+                            else if ((ViewBag.EmployeeID == theEmployee.ID))
                             {
-                                if((ViewBag.StartTime - ViewBag.TargetDate).Hours == i)
+                                if ((ViewBag.StartTime - ViewBag.TargetDate).Hours == i)
                                 {
                                     <td><p class="link-button shift">Start</p></td>
-                                } else if (i<(ViewBag.StartTime - ViewBag.TargetDate).Hours)
+                                }
+                                else if (i < (ViewBag.StartTime - ViewBag.TargetDate).Hours)
                                 {
                                     <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "cell2": "unavailable"))"></td>
-                                } else
+                                }
+                                else
                                 {
                                     <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "cell2": "unavailable"))"><a asp-action="Confirm" asp-route-date="@ViewBag.TargetDate.ToString("d")" asp-route-empid="@theEmployee.ID" asp-route-endtime="@ViewBag.TargetDate.AddHours(i).ToString("g")" asp-route-starttime="@ViewBag.StartTime.ToString("g")" class="link-button-nofloat">+</a></td>
                                 }
-                            } else
+                            }
+                            else
                             {
                                 <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "cell2": "unavailable"))"></td>
                             }

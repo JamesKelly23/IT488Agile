@@ -5,9 +5,10 @@ namespace ScheduleManager.Controllers
 {
     public class Composer : Controller
     {
-        public IActionResult Index(int? modifier)
+        public IActionResult Index(int? modifier, bool? showavailabilities)
         {
             ViewBag.Modifier = modifier ?? 0;
+            ViewBag.ShowAvailabilities = showavailabilities ?? false;
             DateTime theDate = DateTime.Today.AddDays((modifier ?? 0) * 7); //Add weeks based on the passed modifier argument
             while (theDate.DayOfWeek != DayOfWeek.Monday) //Roll backwards to the previous Monday
             {
