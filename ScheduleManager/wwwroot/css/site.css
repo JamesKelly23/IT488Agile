@@ -149,6 +149,23 @@ td.cell2, th.cell2 {
     vertical-align:middle;
     text-align:center;
 }
+tr.painter-headerrow {
+    padding: 2pt;
+    border: 2pt solid black;
+    background-color: #aaaaff;
+}
+
+tr.painter-row {
+    padding: 2pt;
+    border: 1pt solid black;
+}
+
+td.painter-cell, th.painter-cell {
+    border: 1pt solid black;
+    padding: 2pt;
+    vertical-align: middle;
+    text-align: center;
+}
 td.cell3, th.cell3 {
     padding: 0;
     margin: 3px;
