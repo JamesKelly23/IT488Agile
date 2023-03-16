@@ -31,7 +31,7 @@ p.error {
     width:100%;
     height:100%;
     padding:3px;
-    border: 1pt solid goldenrod;
+    border: 2pt solid goldenrod;
     border-radius:15px;
 }
 
@@ -75,7 +75,7 @@ li.linklist-item {
 }
 
 .unavailable {
-    background-color:palevioletred;
+    background-color:lightpink;
     border: 1pt solid black;
     text-align:center;
 }
@@ -125,18 +125,33 @@ div.details {
     border-radius: 10px;
     text-decoration: none;
     font-weight: bold;
-    box-shadow: 3px 3px 3px #888888;
+    box-shadow: 1px 1px 1px #888888;
     margin: 5px;
     float: none;
     vertical-align:top;
+    height:60%;
+    width:80%;
 }
 
 .painter-unavailable {
-    background-color: palevioletred;
     border: 1pt solid black;
+    
+    vertical-align: middle;
     text-align: center;
+    width: 60px;
+    height: 60px;
+    background-color: #f8a6b2;
 }
 
+.painter-unavailable-even {
+    border: 1pt solid black;
+    
+    vertical-align: middle;
+    text-align: center;
+    width: 60px;
+    height: 60px;
+    background-color: lightpink;
+}
 .confirm-box {
     padding: 40px;
     width: 600px;
@@ -230,7 +245,6 @@ tr.painter-row {
 
 td.painter-cell, th.painter-cell {
     border: 1pt solid black;
-    padding: 2pt;
     vertical-align: middle;
     text-align: center;
     width:60px;

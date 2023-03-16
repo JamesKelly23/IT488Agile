@@ -37,6 +37,7 @@
         int i = 0;
         foreach (Employee theEmployee in ViewBag.EmployeeList)
         {
+            DateTime theCursor = ViewBag.StartDate;
             <tr class="row2 @(i++%2==0 ? "evenrow" : "")">
                 <td class="cell2">@theEmployee.FullName()</td>
                 @{
@@ -49,6 +50,12 @@
                                                       select theShift;
                         List<Shift> theMatchingList = dayQuery.ToList();
                         <td class="cell2">
+                            @{
+                                if(TimeOffRequest.IsDayApprovedOffForEmployee(theEmployee.ID, theCursor))
+                                {
+                                    <p class="link-button-nofloat deny">Unavailable<br>Approved Time Off</p>
+                                }
+                            }
                             <p class="sv-shift-hours-bubble">
                                 @{
                                     foreach (Shift theShift in theMatchingList)
@@ -72,6 +79,7 @@
                                 }
                             }
                         </td>
+                        theCursor = theCursor.AddDays(1);
                     }
                 }
             </tr>

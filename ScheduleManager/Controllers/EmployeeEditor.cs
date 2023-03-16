@@ -127,7 +127,7 @@ namespace ScheduleManager.Controllers
             newEmployee.Email = HttpContext.Request.Form["addEmail"];
             newEmployee.Phone = HttpContext.Request.Form["addPhone"];
             newEmployee.Username = HttpContext.Request.Form["addUserName"];
-            newEmployee.Password = HttpContext.Request.Form["addPassowrd"];
+            newEmployee.Password = HttpContext.Request.Form["addPassword"];
             newEmployee.Save();
             EmployeeDetails(newEmployee.ID);
             return View("EmployeeDetails");
