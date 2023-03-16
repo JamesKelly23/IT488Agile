@@ -55,7 +55,7 @@
             }
             else
             {
-                theCommand = new SqlCommand("UPDATE Shift SET IsOpen='" + IsOpen + "', EmployeeID=" + EmployeeID + ", Date='" + ShiftDate + "', StartTime='" + StartTime + "', EndTime='" + EndTime + "', Role='" + Role + "', Notes='" + Notes.Replace("'", "").Replace(";", "") + "' WHERE ID=" + ID + ";", theConnection);
+                theCommand = new SqlCommand("UPDATE Shift SET IsOpen='" + IsOpen + "', EmployeeID=" + EmployeeID + ", Date='" + ShiftDate + "', StartTime='" + StartTime.ToString() + "', EndTime='" + EndTime.ToString() + "', Role='" + Role + "', Notes='" + Notes.Replace("'", "").Replace(";", "") + "' WHERE ID=" + ID + ";", theConnection);
                 String message;
                 try
                 {

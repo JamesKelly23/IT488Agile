@@ -34,7 +34,7 @@ namespace ScheduleManager.Controllers
             ViewBag.ShiftList = shiftList;
             return View("Index");
         }
-        public IActionResult Painter(DateTime? date, int? empid, DateTime? starttime) 
+        public IActionResult Painter(int? id, DateTime? date) 
         {
             if(date == null)
             {
@@ -54,40 +54,23 @@ namespace ScheduleManager.Controllers
                 return View("Error");
             }
             ViewBag.TargetDate = date;
-            if(starttime != null)
+            try
             {
-                if(empid==null)
-                {
-                    ViewData["Message"] = "StartTime supplied with no Employee ID";
-                    return View("Error");
-                }
-                ViewBag.EmployeeID = empid;
-                ViewBag.StartTime = starttime;
+                ViewBag.StartTime = Convert.ToDateTime(HttpContext.Request.Form["StartTime"]);
             }
+            catch { }
+            if(HttpContext.Request.Method == "POST")
+            {
+                ViewBag.RoleText = HttpContext.Request.Form["RoleTextBox"];
+                if(ViewBag.RoleText == "")
+                {
+                    ViewBag.SelectedRole = HttpContext.Request.Form["RoleSelector"];
+                }
+            }
+            ViewBag.EmployeeID = id ?? 0;
             ViewBag.EmployeeList = Models.Employee.GetList();
             ViewBag.ShiftList = Models.Shift.GetScheduleByDate(ViewBag.TargetDate, ViewBag.TargetDate);
             return View("Painter");
-        }
-        public IActionResult Confirm(int empid, DateTime date, DateTime starttime, DateTime endtime)
-        {
-            int loggedInID = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
-            if (loggedInID == 0)
-            {
-                ViewData["Message"] = "You are not logged in. In order to view this page, you must be logged in and privileged.";
-                return View("Error");
-            }
-            int loggedInRank = HttpContext.Session.GetInt32("_LoggedInRank") ?? 0;
-            if (loggedInRank < 3)
-            {
-                ViewData["Message"] = "You are not logged in. In order to view this page, you must be logged in and privileged.";
-                return View("Error");
-            }
-            ViewBag.EmployeeID = empid;
-            ViewBag.TheEmployee = new Employee(empid);
-            ViewBag.TargetDate = date;
-            ViewBag.StartTime = starttime;
-            ViewBag.EndTime = endtime;
-            return View();
         }
         public IActionResult AddShift()
         {
@@ -108,21 +91,21 @@ namespace ScheduleManager.Controllers
             DateTime startTime = Convert.ToDateTime(HttpContext.Request.Form["StartTime"]);
             DateTime endTime = Convert.ToDateTime(HttpContext.Request.Form["EndTime"]);
             String Role = HttpContext.Request.Form["RoleSelector"];
-            String Notes = HttpContext.Request.Form["Notes"];
+            String Notes = HttpContext.Request.Form["NotesTextBox"];
             if (HttpContext.Request.Form["RoleTextBox"]!="")
             {
                 Role = HttpContext.Request.Form["RoleTextBox"];
             }
             Shift theShift = new Shift(false, empID, theDate, startTime, endTime, Role, Notes);
             theShift.Save();
-            return Painter(theDate, null, null);
+            return Painter(null, theDate);
         }
         public IActionResult DeleteShift(int id)
         {
             Shift theShift = new Shift(id);
             DateTime theDate = theShift.ShiftDate;
             theShift.Delete();
-            return Painter(theDate, null, null);
+            return Painter(null, theDate);
         }
     }
 }

@@ -1,36 +1,45 @@
 html {
   font-size: 14px;
 }
+
 .navbar, .evenrow {
     background-color:#E0E0FF;
 }
+
 body {
     background-color: #F3F3FF;
 }
+
 .success {
     font-weight: bold;
     color:green;
 }
+
 .bulletless {
     list-style-type: none;
 }
+
 p.error {
     color: red;
     font-weight: bold;
 }
-p.shift {
+
+.painter-shift {
     background-color:palegoldenrod;
     text-align:center;
+    vertical-align:middle;
     width:100%;
     height:100%;
-    padding:10px;
+    padding:3px;
     border: 1pt solid goldenrod;
     border-radius:15px;
 }
+
 ul.linklist {
     list-style-type: none;
     align-content:center;
 }
+
 div.sv-shift-box {
     float: left;
     width: 230px;
@@ -43,6 +52,7 @@ div.sv-shift-box {
     box-shadow: 8px 8px 6px #888888;
     text-align: center;
 }
+
 .sv-shift-hours-bubble {
     border: 1pt solid goldenrod;
     background-color: palegoldenrod;
@@ -50,6 +60,7 @@ div.sv-shift-box {
     margin: 10px;
     padding: 10px;
 }
+
 .sv-availability-bubble {
     border: 1pt solid green;
     background-color: palegreen;
@@ -57,35 +68,44 @@ div.sv-shift-box {
     margin: 10px;
     padding: 10px;
 }
+
 li.linklist-item {
     margin:20pt;
     float:left;
 }
+
 .unavailable {
     background-color:palevioletred;
     border: 1pt solid black;
     text-align:center;
 }
+
 a.nav-link {
     font-weight: bold;
 }
+
 .approve {
     background-color: palegreen;
 }
+
 td.detailscell {
     padding: 0pt 13pt 13pt 13pt;
 }
+
 .deny {
     background-color: lightcoral;
 }
+
 .details {
     background-color: palegoldenrod;
 }
+
 div.details {
     background-color: palegoldenrod;
     padding: 8pt;
     border: 2pt solid goldenrod;
 }
+
 .link-button-nofloat {
     padding: 8px;
     color: black;
@@ -97,6 +117,26 @@ div.details {
     margin: 5px;
     float: none;
 }
+
+.painter-link-button-nofloat {
+    padding: 1pt;
+    color: black;
+    border: 1pt solid black;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #888888;
+    margin: 5px;
+    float: none;
+    vertical-align:top;
+}
+
+.painter-unavailable {
+    background-color: palevioletred;
+    border: 1pt solid black;
+    text-align: center;
+}
+
 .confirm-box {
     padding: 40px;
     width: 600px;
@@ -104,10 +144,12 @@ div.details {
     box-shadow: 3px 3px 3px #888888;
     border-radius:20px;
 }
+
 .form-label {
     text-align: right;
     font-weight: bold;
 }
+
 .link-button {
     padding: 8px;
     color: black;
@@ -119,6 +161,27 @@ div.details {
     margin: 5px;
     float: right;
 }
+
+.painter-link-button {
+    padding: 8px;
+    color: black;
+    border: 1pt solid black;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #888888;
+    margin: 5px;
+    float: right;
+}
+
+a.small-x {
+    width:35px;
+    height:35px;
+    font-size:8pt;
+    border-radius:35px;
+    background-color:palevioletred;
+}
+
 div.item-box {
     float: left;
     width: 200px;
@@ -130,18 +193,22 @@ div.item-box {
     box-shadow: 8px 8px 6px #888888;
     text-align: center;
 }
+
 table.request-table {
     border: 1pt solid black;
 }
+
 tr.headerrow2 {
     padding: 2pt;
     border: 2pt solid black;
     background-color: #aaaaff;
 }
+
 tr.row2 {
     padding: 2pt;
     border: 1pt solid black;
 }
+
 td.cell2, th.cell2 {
     border: 1pt solid black;
     padding: 13px;
@@ -149,6 +216,7 @@ td.cell2, th.cell2 {
     vertical-align:middle;
     text-align:center;
 }
+
 tr.painter-headerrow {
     padding: 2pt;
     border: 2pt solid black;
@@ -165,16 +233,28 @@ td.painter-cell, th.painter-cell {
     padding: 2pt;
     vertical-align: middle;
     text-align: center;
+    width:60px;
+    height:60px;
 }
+
+td.painter-name-cell, th.painter-name-cell {
+    border: 1pt solid black;
+    padding: 2pt;
+    vertical-align: middle;
+    text-align: center;
+}
+
 td.cell3, th.cell3 {
     padding: 0;
     margin: 3px;
 }
+
 div.container2 {
     content: "";
     clear: both;
     display: table;
 }
+
 div.available-shift-box {
     float: left;
     width: 200px;
@@ -186,6 +266,7 @@ div.available-shift-box {
     box-shadow: 8px 8px 6px #aaaaaa;
     text-align: center;
 }
+
 div.conflicting-shift-box {
     float: left;
     width: 200px;
@@ -197,9 +278,11 @@ div.conflicting-shift-box {
     box-shadow: 8px 8px 6px #aaaaaa;
     text-align: center;
 }
+
 a.item-box{
     color: #000000;
 }
+
 .list {
     float: left;
     margin: 10px;
@@ -209,18 +292,22 @@ a.item-box{
     box-shadow: 5px 5px 3px #aaaaaa;
     list-style-position: inside;
 }
+
 @media (min-width: 768px) {
     html {
     font-size: 16px;
   }
 }
+
 html {
   position: relative;
   min-height: 100%;
 }
+
 body {
     margin-bottom: 60px;
 }
+
 table.center {
     margin-left: auto;
     margin-right: auto;
