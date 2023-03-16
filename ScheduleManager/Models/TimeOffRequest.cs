@@ -1,4 +1,6 @@
-﻿namespace ScheduleManager.Models
+﻿using Microsoft.VisualBasic;
+
+namespace ScheduleManager.Models
 {
     public class TimeOffRequest
     {
@@ -18,7 +20,7 @@
             SqlCommand theCommand = new("SELECT ID FROM TimeOffRequest;", staticConnection);
             staticConnection.Open();
             SqlDataReader theReader = theCommand.ExecuteReader();
-            while(theReader.Read())
+            while (theReader.Read())
             {
                 list.Add(new TimeOffRequest(theReader.GetInt32(0)));
             }
@@ -62,7 +64,26 @@
             {
                 list.Add(new TimeOffRequest(theReader.GetInt32(0)));
             }
+            staticConnection.Close();
             return list;
+        }
+        public static bool IsDayApprovedOffForEmployee(int empid, DateTime theDate)
+        {
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            List<TimeOffRequest> list = new();
+            SqlCommand theCommand = new("SELECT ID FROM TimeOffRequest WHERE EmployeeID=" + empid + " AND IsApproved='TRUE' AND '" + theDate + "' BETWEEN StartDate AND EndDate;", staticConnection);
+            staticConnection.Open();
+            SqlDataReader theReader = theCommand.ExecuteReader();
+            if (theReader.Read())
+            {
+                staticConnection.Close();
+                return true;
+            }
+            else
+            {
+                staticConnection.Close();
+                return false;
+            }
         }
         public static List<TimeOffRequest> GetAllByDate(DateTime theDate) //Returns all time off requests that affect a certain day, whether approved or not
         {
@@ -75,6 +96,7 @@
             {
                 list.Add(new TimeOffRequest(theReader.GetInt32(0)));
             }
+            staticConnection.Close();
             return list;
         }
         public Employee GetEmployee()
@@ -83,7 +105,7 @@
         }
         public Employee GetManager()
         {
-            if(ManagerID == 0)
+            if (ManagerID == 0)
             {
                 return null;
             }
@@ -101,13 +123,13 @@
             ID = id;
             EmployeeID = theReader.GetInt32(1);
             StartDate = theReader.GetDateTime(2);
-            EndDate= theReader.GetDateTime(3);
+            EndDate = theReader.GetDateTime(3);
             IsApproved = theReader.GetBoolean(4);
             ManagerID = theReader.IsDBNull(5) ? 0 : theReader.GetInt32(5);
             Notes = theReader.IsDBNull(6) ? "" : theReader.GetString(6);
             theConnection.Close();
         }
-        public TimeOffRequest(int employeeID,  DateTime startDate, DateTime endDate, string notes)
+        public TimeOffRequest(int employeeID, DateTime startDate, DateTime endDate, string notes)
         {
             ID = 0;
             EmployeeID = employeeID;
@@ -122,7 +144,7 @@
             SqlCommand theCommand;
             if (ID == 0)
             {
-                theCommand = new SqlCommand("INSERT INTO TimeOffRequest (EmployeeID, StartDate, EndDate, IsApproved, ManagerID, Notes) OUTPUT INSERTED.ID VALUES (" + EmployeeID + ", '" + StartDate + "', '" + EndDate + "', '" + IsApproved + "', " + (ManagerID==0 ? "NULL" : ManagerID) + ", '" + Notes.Replace("'", "''").Replace(";", "") + "');", theConnection);
+                theCommand = new SqlCommand("INSERT INTO TimeOffRequest (EmployeeID, StartDate, EndDate, IsApproved, ManagerID, Notes) OUTPUT INSERTED.ID VALUES (" + EmployeeID + ", '" + StartDate + "', '" + EndDate + "', '" + IsApproved + "', " + (ManagerID == 0 ? "NULL" : ManagerID) + ", '" + Notes.Replace("'", "''").Replace(";", "") + "');", theConnection);
                 theConnection.Open();
                 ID = Convert.ToInt32(theCommand.ExecuteScalar());
                 theConnection.Close();

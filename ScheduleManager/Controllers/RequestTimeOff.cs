@@ -18,7 +18,8 @@ namespace ScheduleManager.Controllers
             int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
             if (loggedInEmployee == 0)
             {
-
+                ViewData["Message"] = "You must be logged in to view this page.";
+                return View("Error");
             }
             else
             {
@@ -27,8 +28,6 @@ namespace ScheduleManager.Controllers
                 ViewBag.CurrentUser = new Employee(loggedInEmployee);
             }
             return View("Index");
-
-
         }
         //POST: RequestTimeoff request
 
@@ -36,9 +35,7 @@ namespace ScheduleManager.Controllers
         {
             TimeOffRequest TheRequest = new(HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0, Convert.ToDateTime(HttpContext.Request.Form["start-date"]), Convert.ToDateTime(HttpContext.Request.Form["end-date"]), HttpContext.Request.Form["reason"]);
             TheRequest.Save();
-            
             return Index();
-            
         } 
     }
 }
