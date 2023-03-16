@@ -66,6 +66,7 @@ namespace ScheduleManager.Controllers
                 {
                     ViewBag.SelectedRole = HttpContext.Request.Form["RoleSelector"];
                 }
+                ViewBag.NotesText = HttpContext.Request.Form["NotesTextBox"];
             }
             ViewBag.EmployeeID = id ?? 0;
             ViewBag.EmployeeList = Models.Employee.GetList();

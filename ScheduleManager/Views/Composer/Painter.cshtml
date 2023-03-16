@@ -43,7 +43,7 @@
             Custom Role (optional):
             <input type="text" id="RoleText" name="RoleTextBox" value="@(ViewBag.RoleText)" />
             Notes (optional):
-            <input type="text" name="NotesTextBox" />
+            <input type="text" name="NotesTextBox" value="@ViewBag.NotesText"/>
             <input type="hidden" name="EmployeeID" value="@(ViewBag.EmployeeID ?? 0)" />
             <input type="hidden" name="TargetDate" value="@(ViewBag.TargetDate ?? new DateTime().ToString("d"))" />
             <input type="hidden" id="StartTime" name="StartTime" value="@(ViewBag.StartTime ?? new DateTime().ToString("g"))" />
