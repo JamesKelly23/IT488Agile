@@ -1,4 +1,5 @@
 ﻿@{
+
     DateTime dateCursor = ViewBag.TargetDate;
     DateTime currentMonday = DateTime.Today;
     while (dateCursor.DayOfWeek != DayOfWeek.Monday)
@@ -16,90 +17,141 @@
     <h1>@ViewBag.TargetDate.ToString("D")</h1>
     <hr />
     <p>
-        <a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.TargetDate.AddDays(-1).ToString("d")">Previous Day</a>
-        Click a time slot to start a shift, then click the end time to finalize.
-        <a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.TargetDate.AddDays(1).ToString("d")">Next Day</a>
+        <table style="border: 2pt solid black; box-shadow: 3px 3px 3px #888888;">
+            <tr style="padding:30px;">
+                <td style="width: 150px; padding:10px;"><a class="link-button-nofloat" asp-action="Painter" asp-route-id="" asp-route-date="@ViewBag.TargetDate.AddDays(-1).ToString("d")">Previous Day</a></td>
+                <td style="padding:10px;">Choose your options, then click a start time to start painting a shift onto the day. Finally, click the desired end time to add the shift.</td>
+                <td style="width: 150px; padding:10px;"><a class="link-button-nofloat" asp-action="Painter" asp-route-id="" asp-route-date="@ViewBag.TargetDate.AddDays(1).ToString("d")">Next Day</a></td>
+            </tr>
+        </table>
     </p>
+
+    <form asp-action="@((ViewBag.EmployeeID ?? 0) == 0 ? "Painter" : "CreateShift")">
+        <p style="padding:5px; border: 2pt solid black; box-shadow: 3px 3px 3px #888888;">
+            @{
+                if (ViewBag.EmployeeID != 0)
+                {
+                    <a asp-action="Painter" asp-route-id="" asp-route-date="@ViewBag.TargetDate.ToString("d")" class="link-button-nofloat deny">Cancel</a>
+                }
+            }
+            Role:
+            <select onchange="ChangeValue('RoleText','')" name="RoleSelector">
+                <option value=""></option>
+                @{
+                    foreach (Role theRole in Role.GetList())
+                    {
+                        if (ViewBag.SelectedRole == theRole.Name)
+                        {
+                            <option selected value="@theRole.Name">@theRole.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@theRole.Name">@theRole.Name</option>
+                        }
+                    }
+                }
+            </select>
+            Custom Role (optional):
+            <input type="text" id="RoleText" name="RoleTextBox" value="@(ViewBag.RoleText)" />
+            Notes (optional):
+            <input type="text" name="NotesTextBox" value="@ViewBag.NotesText"/>
+            <input type="hidden" name="EmployeeID" value="@(ViewBag.EmployeeID ?? 0)" />
+            <input type="hidden" name="TargetDate" value="@(ViewBag.TargetDate ?? new DateTime().ToString("d"))" />
+            <input type="hidden" id="StartTime" name="StartTime" value="@(ViewBag.StartTime ?? new DateTime().ToString("g"))" />
+            <input type="hidden" id="EndTime" name="EndTime" value="" />
+        </p>
+        <table style="border: 4pt solid black; box-shadow:3px 3px 3px #888888;">
+            <tr class="painter-headerrow">
+                <td class="painter-name-cell">Employee</td>
+                @{
+                    DateTime theCursor = ViewBag.TargetDate.AddHours(6);
+                    for (int i = 6; i < 24; i++)
+                    {
+                        <td class="painter-cell">@theCursor.ToString("htt")</td>
+                        theCursor = theCursor.AddHours(1);
+                    }
+                }
+            </tr>
+            @{
+                List<Shift> theList = ViewBag.ShiftList;
+                int rownum = 0;
+                foreach (Employee theEmployee in ViewBag.EmployeeList)
+                {
+                    Availability theAvailability = theEmployee.GetCurrentAvailability();
+                    IEnumerable<Shift> theQuery = from Shift theShift in theList
+                                                  where theShift.EmployeeID == theEmployee.ID
+                                                  select theShift;
+                    List<Shift> theShifts = theQuery.ToList();
+                    <tr class="painter-row @(rownum++%2==0?"evenrow":"")">
+                        <td class="painter-name-cell">@theEmployee.FullName()</td>
+                        @{
+                            if (TimeOffRequest.IsDayApprovedOffForEmployee(theEmployee.ID, ViewBag.TargetDate)) //Fires if there is an approved time off request for an employee on this day.
+                            {
+                                <td colspan="18" class="painter-cell @(rownum %2 == 0 ? "painter-unavailable-even" : "painter-unavailable")">Unavailable - Approved Time Off Request</td>
+                            }
+                            else if (theShifts.Count > 0) //Fires if a shift exists on the current row
+                            {
+                                Shift theShift = theShifts.ElementAt(0);
+
+                                int startHour = (theShift.StartTime - ViewBag.TargetDate).Hours;
+                                int shiftLength = (theShift.EndTime - theShift.StartTime).Hours;
+                                for (int i = 6; i < 24; i++)
+                                {
+                                    if ((i < startHour) || (i > (startHour + shiftLength - 1))) //Adds empty cell
+                                    {
+                                        <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"></td>
+                                    }
+                                    else //Adds paragraph tag with shift
+                                    {
+                                        <td class="painter-shift painter-cell" colspan="@shiftLength">@theShift.ToString() - @theShift.Role<a class="painter-link-button small-x" asp-action="DeleteShift" asp-route-id="@theShift.ID">x</a></td>
+                                        i += shiftLength - 1;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 6; i < 24; i++)
+                                {
+                                    DateTime targetTime = ViewBag.TargetDate.AddHours(i);
+                                    if (((@ViewBag.EmployeeID ?? 0) == 0) && i < 23) //StartTime Buttons (Only show when starttime has not already been declared)
+                                    {
+                                        <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"><input type="submit" asp-route-date="@ViewBag.TargetDate.ToString("d")" name="Submit" asp-route-id="@theEmployee.ID" onmouseover="ChangeValue('StartTime', '@targetTime.ToString()')" value="@targetTime.ToString("htt")" class="painter-link-button-nofloat" asp-action="Painter"></td>
+                                    }
+                                    else if ((ViewBag.EmployeeID == theEmployee.ID))
+                                    {
+                                        if ((ViewBag.StartTime - ViewBag.TargetDate).Hours == i)//Start Button (shows when starttme has been declared and this hour is the same as the start time)
+                                        {
+                                            <td><input type="submit" id="focusButton" class="painter-link-button-nofloat painter-shift" value="Start" disabled></td>
+                                        }
+                                        else if (i < (ViewBag.StartTime - ViewBag.TargetDate).Hours) //Show nothing (for the hours before the declared starttime)
+                                        {
+                                            <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"></td>
+                                        }
+                                        else //Show the EndTime buttons.
+                                        {
+                                            <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"><input type="submit" name="Submit" onmouseover="ChangeValue('EndTime', '@targetTime.ToString()')" value="@ViewBag.TargetDate.AddHours(i).ToString("htt")" class="painter-link-button-nofloat" asp-action="AddShift"></td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"></td>
+                                    }
+                                }
+                            }
+                        }
+                    </tr>
+                }
+            }
+        </table>
+    </form>
 </center>
-<table>
-    <tr class="painter-headerrow">
-        <td class="painter-cell">Employee</td>
-        @{
-            DateTime theCursor = ViewBag.TargetDate.AddHours(6);
-            for (int i = 6; i < 24; i++)
-            {
-                <td class="painter-cell">@theCursor.ToString("htt")</td>
-                theCursor = theCursor.AddHours(1);
-            }
-        }
-    </tr>
-    @{
-        List<Shift> theList = ViewBag.ShiftList;
-        int rownum = 0;
-        foreach (Employee theEmployee in ViewBag.EmployeeList)
-        {
-            Availability theAvailability = theEmployee.GetCurrentAvailability();
-            IEnumerable<Shift> theQuery = from Shift theShift in theList
-                                          where theShift.EmployeeID == theEmployee.ID
-                                          select theShift;
-            List<Shift> theShifts = theQuery.ToList();
-            if (theShifts.Count > 0)
-            {
-                Shift theShift = theShifts.ElementAt(0);
-                <tr class="painter-row">
-                    <td class="painter-cell">@theEmployee.FullName()</td>
-                    @{
-                        int startHour = (theShift.StartTime - ViewBag.TargetDate).Hours;
-                        int shiftLength = (theShift.EndTime - theShift.StartTime).Hours;
-                        for (int i = 6; i < 24; i++)
-                        {
-                            if ((i < startHour) || (i > (startHour + shiftLength - 1)))
-                            {
-                                <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": "painter-unavailable"))"></td>
-                            }
-                            else
-                            {
-                                <td colspan="@shiftLength"><p class="painter-shift">@theShift.ToString() - @theShift.Role<a class="link-button deny" asp-action="DeleteShift" asp-route-id="@theShift.ID">Delete</a></p></td>
-                                i += shiftLength - 1;
-                            }
-                        }
-                    }
-                </tr>
-            }
-            else
-            {
-                <tr class="painter-row @(rownum++%2==0?"evenrow":"")">
-                    <td class="painter-cell">@theEmployee.FullName()</td>
-                    @{
-                        for (int i = 6; i < 24; i++)
-                        {
-                            if (((@ViewBag.EmployeeID ?? 0) == 0) && i < 23)
-                            {
-                                <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": "painter-unavailable"))"><a asp-action="Painter" asp-route-date="@ViewBag.TargetDate.ToString("d")" asp-route-empid="@theEmployee.ID" asp-route-starttime="@ViewBag.TargetDate.AddHours(i).ToString("g")" class="link-button-nofloat">+</a></td>
-                            }
-                            else if ((ViewBag.EmployeeID == theEmployee.ID))
-                            {
-                                if ((ViewBag.StartTime - ViewBag.TargetDate).Hours == i)
-                                {
-                                    <td><p class="link-button shift">Start</p></td>
-                                }
-                                else if (i < (ViewBag.StartTime - ViewBag.TargetDate).Hours)
-                                {
-                                    <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": "painter-unavailable"))"></td>
-                                }
-                                else
-                                {
-                                    <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": "painter-unavailable"))"><a asp-action="Confirm" asp-route-date="@ViewBag.TargetDate.ToString("d")" asp-route-empid="@theEmployee.ID" asp-route-endtime="@ViewBag.TargetDate.AddHours(i).ToString("g")" asp-route-starttime="@ViewBag.StartTime.ToString("g")" class="link-button-nofloat">+</a></td>
-                                }
-                            }
-                            else
-                            {
-                                <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": "painter-unavailable"))"></td>
-                            }
-                        }
-                    }
-                </tr>
-            }
-        }
+<script>
+    function ChangeValue(id, val) {
+        document.getElementById(id).setAttribute("Value", val);
     }
-</table>
+    document.onload = ScrollToFocusButton()
+    function ScrollToFocusButton() {
+        var element = document.getElementById("focusButton");
+        element.scrollIntoView(true);
+    }
+</script>
