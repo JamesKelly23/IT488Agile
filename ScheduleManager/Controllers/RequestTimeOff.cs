@@ -32,7 +32,13 @@ namespace ScheduleManager.Controllers
         //POST: RequestTimeoff request
 
         public IActionResult Submit()
+
         {
+            if (Convert.ToDateTime(HttpContext.Request.Form["start-date"]) > Convert.ToDateTime(HttpContext.Request.Form["end-date"]))
+            {
+                ViewData["Message"] = "Start date cannot be after the end date.";
+                return Index();
+            }
             TimeOffRequest TheRequest = new(HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0, Convert.ToDateTime(HttpContext.Request.Form["start-date"]), Convert.ToDateTime(HttpContext.Request.Form["end-date"]), HttpContext.Request.Form["reason"]);
             TheRequest.Save();
             return Index();

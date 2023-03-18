@@ -39,7 +39,9 @@
         <form asp-action = "Submit">
             <label for="employee-name">Name:</label>
             @ViewBag.CurrentUser.FullName()<br /><br />
-
+            <p class="error">
+                @ViewData["Message"]
+            </p>
             <label for="start-date">Start Date:</label>
             <input type="date" id="start-date" name="start-date" required /><br /><br />
                
