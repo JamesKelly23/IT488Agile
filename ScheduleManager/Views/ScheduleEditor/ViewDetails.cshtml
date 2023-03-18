@@ -4,65 +4,136 @@
 @{
     ViewData["Title"]= "View Shift Details";
     Shift thisShift = ViewBag.ThisShift;
-    
-    <dl class="row">
-        <dt class="col-1">
-        ID:
-        </dt>
-        <dd class="col-1">
-        @thisShift.ID
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-1">
-            Role:
-        </dt>
-        <dd class="col-2">
-            @thisShift.Role
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-1">
-            Is Open:
-        </dt>
-        <dd class="col-2">
-            @thisShift.IsOpen
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-1">
-            Date:
-        </dt>
-        <dd class="col-2">
-            @thisShift.ShiftDate
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-1">
-            Start Time:
-        </dt>
-        <dd class="col-2">
-            @thisShift.StartTime
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-1">
-            End Time:
-        </dt>
-        <dd class="col-2">
-            @thisShift.EndTime
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-1">
-            Notes:
-        </dt>
-        <dd class="col-2">
-            @thisShift.Notes
-        </dd>
-    </dl>
 
-    <hr/>
-    <a asp-action="ScheduleEditorIndex" class="link-button-nofloat">Back</a> <a class="link-button-nofloat">Edit</a><a asp-action="deleteShift" asp-route-id="@thisShift.ID" class="link-button-nofloat">Delete</a>
+    if (Convert.ToInt32(ViewData["EditShift"]) == thisShift.ID)
+    {
+        <form>
+        <dl class="row">
+            <dt class="col-1">
+                ID:
+            </dt>
+            <dd class="col-1">
+                @thisShift.ID
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-1">
+                Role:
+            </dt>
+            <dd class="col-2">
+                <input value="@thisShift.Role" name="NewRole">
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-1">
+                Is Open:
+            </dt>
+            <dd class="col-2">
+                <input value=@thisShift.IsOpen name="NewIsOpen" type="checkbox">
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-1">
+                Date:
+            </dt>
+            <dd class="col-2">
+                <input name="NewDate" type="date" value= "@thisShift.ShiftDate">
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-1">
+                Start Time:
+            </dt>
+            <dd class="col-2">
+                <input name=NewStartTime type="time" value= "@thisShift.StartTime">
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-1">
+                End Time:
+            </dt>
+            <dd class="col-2">
+                <input name="NewEndTime" type="time" value = "@thisShift.EndTime">
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-1">
+                Notes:
+            </dt>
+            <dd class="col-2">
+                <input name="NewNotes" value = "@thisShift.Notes">
+            </dd>
+        </dl>
+        <textarea name="ShiftNotes" rows="20" cols="100" style="resize:none" value="@thisShift.Notes"></textarea>
+        <button asp-action="ViewDetails" asp-route-id="@thisShift.ID">Cancel</button>
+        <input type="submit" value="Save">
+        </form>
+        <hr />
+    }
+    else
+    {
+        <dl class="row">
+            <dt class="col-1">
+                ID:
+            </dt>
+            <dd class="col-1">
+                @thisShift.ID
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-1">
+                Role:
+            </dt>
+            <dd class="col-2">
+                @thisShift.Role
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-1">
+                Is Open:
+            </dt>
+            <dd class="col-2">
+                @thisShift.IsOpen
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-1">
+                Date:
+            </dt>
+            <dd class="col-2">
+                @thisShift.ShiftDate
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-1">
+                Start Time:
+            </dt>
+            <dd class="col-2">
+                @thisShift.StartTime
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-1">
+                End Time:
+            </dt>
+            <dd class="col-2">
+                @thisShift.EndTime
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-1">
+                Notes:
+            </dt>
+            <dd class="col-2">
+                @thisShift.Notes
+            </dd>
+        </dl>
+        <hr />
+        <a asp-action="ScheduleEditorIndex" class="link-button-nofloat">Back</a> <a asp-action="EditShift" asp-route-id="@thisShift.ID" class="link-button-nofloat">Edit</a>
+
+        <a asp-action="deleteShift" asp-route-id="@thisShift.ID" class="link-button-nofloat">Delete</a>
+    }
+
+
 
 }

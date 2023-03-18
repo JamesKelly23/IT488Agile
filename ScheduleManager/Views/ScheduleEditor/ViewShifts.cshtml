@@ -1,4 +1,110 @@
-﻿<h2 class="text-center">View Shifts</h2>
+﻿
 @{
     ViewData["Title"] = "View Shifts";
+    List<Shift> theShifts = ViewBag.ShiftList;
+    
+    if(ViewBag.control == 1 )
+    {
+        <center>
+        
+        <h2>Search Shifts By Date</h2>
+
+
+        <form asp-action="ByDate">
+        <p>Start Date <input name="StartDate" type="date" /></p>
+        <p>End Date <input  name="EndDate" type="date" min="StartDate" max="StartDate"/></p>
+        <button asp-action="ScheduleEditorIndex">Cancel</button>
+        <input type="submit" value="Search">
+        </form>
+        </center>
+        <br />
+        <hr />
+        if(ViewBag.ShiftList == null)
+        {
+            <p>No Shifts to Display</p>
+        }
+        else
+        {
+            foreach (Shift theShift in theShifts)
+            {
+                <div>
+                    <a asp-action="ViewDetails" class="link-button-nofloat" asp-route-id="@theShift.ID"> @theShift.ID : @theShift.Role</a>
+                    <br /><br />
+                </div>
+            }
+        }
+    }
+    else if(ViewBag.control == 2)
+    {
+        <center>
+        <h2>Search By Employee</h2>
+        <br />
+        </center>
+        foreach(Employee employee in ViewBag.EmplyList)
+        {
+            <a asp-action="ByEmployee" asp-route-id="@employee.ID"class="link-button-nofloat">@employee.FullName()</a>
+        }
+        <br />
+        <hr />
+        if (ViewBag.ShiftList == null)
+        {
+            <p>No Shifts to Display</p>
+        }
+        else
+        {
+            foreach (Shift theShift in theShifts)
+            {
+                <div>
+                    <a asp-action="ViewDetails" class="link-button-nofloat" asp-route-id="@theShift.ID"> @theShift.ID : @theShift.Role</a>
+                    <br /><br />
+                </div>
+            }
+        }
+    }
+    else if(ViewBag.control == 3)
+    {
+        <h3 class="text-center">All Shifts</h3>
+        <br />
+        if (ViewBag.ShiftList == null)
+        {
+            <p>There are no Shifts</p>
+        }
+
+        else
+        {
+            foreach (Shift theShift in theShifts)
+            {
+                <div>
+                    <a asp-action="ViewDetails" class="link-button-nofloat" asp-route-id="@theShift.ID"> @theShift.ID : @theShift.Role</a>
+                    <br /><br />
+                </div>
+            }
+        }
+    }
+    else if (ViewBag.control == 4)
+    {
+        <h3 class="text-center">Open Shifts</h3>
+        <br />
+        if (ViewBag.ShiftList == null)
+        {
+            <p>There are no Open Shifts</p>
+        }
+
+        else
+        {
+            foreach (Shift theShift in theShifts)
+            {
+                <div>
+                    <a asp-action="ViewDetails" class="link-button-nofloat" asp-route-id="@theShift.ID"> @theShift.ID : @theShift.Role</a>
+                    <br /><br />
+                </div>
+            }
+        }
+    }
+    else
+    {
+        <p>There was an error processing the request</p>
+    }
+    <hr />
+    <a asp-action="ScheduleEditorIndex" class="link-button-nofloat">Back to Index</a>
 }

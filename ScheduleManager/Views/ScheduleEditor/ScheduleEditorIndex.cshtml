@@ -2,30 +2,30 @@
 <hr />
 @{
     ViewData["Title"] = "Schedule Editor";
-    List<Shift> theShifts = ViewBag.ShiftList;
-
 
     <center>
     <div>
         <a asp-action="ViewShifts" class="link-button-nofloat">View Schedules</a>
         <a asp-action ="AddShift" class="link-button-nofloat">Add New Shift</a>
     </div>
+    <br />
+        <div>
+            <h2>Search Shifts</h2>
+            <hr />
+            <a asp-action="ViewShifts" asp-route-a="1" class="link-button-nofloat">By Date</a>
+            <a asp-action="ViewShifts" asp-route-a="2" class="link-button-nofloat">By Employee</a>
+            <a asp-action="ViewShifts" asp-route-a="4" class="link-button-nofloat">Open Shifts</a>
+            <a asp-action="ViewShifts" asp-route-a="3" class="link-button-nofloat">View All</a>
+
+        </div>
     </center>
 
-    if(ViewBag.ShiftList == null)
-    {
-        <p>There are no Shifts</p>
-    }
-    else
-    {
-        foreach (Shift theShift in theShifts)
-        {
-            <div>
-            <a asp-action = "ViewDetails" class="link-button-nofloat" asp-route-id = "@theShift.ID"> @theShift.ID : @theShift.Role</a>
-                <br /><br />
-            </div>
-        }
-    }
+    <hr />
+    
+
+
+
+
 
 }
 

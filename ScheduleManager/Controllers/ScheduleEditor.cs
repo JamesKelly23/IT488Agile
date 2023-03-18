@@ -11,6 +11,7 @@ namespace ScheduleManager.Controllers
     {
         public int LogonID ()
         {
+            //Serves as a guide for limiting actions to certain login users
             int currentID = HttpContext.Session.GetInt32("_LoggedINEmployeeID") ?? 0;
             Employee employee = new Employee(currentID);
             int loggedInRank = employee.RankID;
@@ -19,11 +20,19 @@ namespace ScheduleManager.Controllers
         public IActionResult ScheduleEditorIndex()
         {
             int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
-            ViewBag.LoggedInEmployee = new Employee(loggedInEmployee);
-            List<Shift> shiftList = Models.Shift.GetList();
+            Employee employee = new Employee(loggedInEmployee);
+            int currentRank = employee.RankID;
+            if(currentRank <2)
+            {
+                return View("Error");
+            }
+            else
+            {
+                return View();
+            }
+            // List<Shift> shiftList = Models.Shift.GetList();
 
-            ViewBag.ShiftList = shiftList;
-            return View();
+            //ViewBag.ShiftList = shiftList;
         }
         public IActionResult AddShift()
         {
@@ -41,10 +50,49 @@ namespace ScheduleManager.Controllers
 
             //return View();
         }
-        public IActionResult ViewShifts()
+        public IActionResult ViewShifts(int a)
         {
+            int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
+            Employee employee = new Employee(loggedInEmployee);
+            int currentRank = employee.RankID;
+            if (currentRank < 2)
+            {
+                return View("Error");
+            }
+            else if (a == 1)
+            {
+                ViewBag.control = 1;
+                return View();
+            }
+            else if (a == 2)
+            {
+                ViewBag.control = 2;
+                List<Employee> employees = Models.Employee.GetList();
+                ViewBag.EmplyList = employees;
+                return View();
+            }
+            else if (a == 3)
+            {
+                ViewBag.control = 3;
+                List<Shift> shiftList = Models.Shift.GetList();
 
-            return View();
+                ViewBag.ShiftList = shiftList;
+
+                return View();
+            }
+            else if (a == 4)
+            {
+                ViewBag.control = 4;
+                List<Shift> openShifts = Models.Shift.GetOpenShifts();
+
+                ViewBag.ShiftList = openShifts;
+                return View();
+            }
+            else
+            {
+                return View("Error");
+            }
+            
         }
         public IActionResult CreateShift()
         {
@@ -77,5 +125,29 @@ namespace ScheduleManager.Controllers
             ScheduleEditorIndex();
             return View("ScheduleEditorIndex");
         }
+        public IActionResult EditShift(int id) 
+        {
+            ViewData["EditShift"] = id;
+            ViewDetails(id);
+            return View("ViewDetails");
+        }
+        public IActionResult ByDate()
+        {
+            DateTime a = Convert.ToDateTime(HttpContext.Request.Form["StartDate"]);
+            DateTime b = Convert.ToDateTime(HttpContext.Request.Form["EndDate"]);
+            List<Shift> shiftList = Models.Shift.GetScheduleByDate(a, b);
+            ViewBag.ShiftList = shiftList;
+            ViewShifts(1);
+            return View ("ViewShifts");
+        }
+        public IActionResult ByEmployee(int id)
+        {
+            
+            List<Shift> employeeShift = Models.Shift.GetScheduleByEmployee(id);
+            ViewBag.ShiftList = employeeShift;
+            ViewShifts(2);
+            return View("ViewShifts");
+        }
+ 
     }
 }
