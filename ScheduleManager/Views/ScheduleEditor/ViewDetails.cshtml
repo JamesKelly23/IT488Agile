@@ -4,9 +4,10 @@
 @{
     ViewData["Title"]= "View Shift Details";
     Shift thisShift = ViewBag.ThisShift;
+    @*View Data when in Edit Mode. Creates a form that will allow you to save to the database*@
     if (Convert.ToInt32(ViewData["EditShift"]) == thisShift.ID)
     {
-        <form>
+        <form asp-action="UpdateShift" asp-route-id ="@thisShift.ID">
         <dl class="row">
             <dt class="col-1">
                 ID:
@@ -20,9 +21,28 @@
                 Role:
             </dt>
             <dd class="col-2">
-                <input value="@thisShift.Role" name="NewRole">
+                @*<input value="@thisShift.Role" name="NewRole">*@
+                <select name="NewRole">
+                        @{
+                            List<Role> RoleList = Role.GetList();
+                            foreach (Role theRole in RoleList)
+                            {
+                                if(theRole.Name == thisShift.Role)
+                                {
+                                    <option selected value ="@theRole.Name">@theRole.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@theRole.Name">@theRole.Name</option>
+                                }
+
+                            }
+                        }
+                        <option value="Unspecified">Unspecified</option>
+                </select>
             </dd>
         </dl>
+        @* Not sure how to allow to edit this in yet
         <dl class="row">
             <dt class="col-1">
                 Is Open:
@@ -31,22 +51,13 @@
                 <input value=@thisShift.IsOpen name="NewIsOpen" type="checkbox">
             </dd>
         </dl>
+        *@
         <dl class="row">
             <dt class="col-1">
                 Date:
             </dt>
             <dd class="col-2">
-                @*<input name="NewDate" type="date" value= "@thisShift.ShiftDate">*@
-                <select name="NewDate">
-                        @{
-                            DateTime theDate = Convert.ToDateTime("00:00:00");
-                            for(int i = 0; i < 96; i++)
-                            {
-                                <option value="@theDate.ToString()">@theDate.ToString("t")</option>
-                                theDate = theDate.AddMinutes(15);
-                            }
-                        }
-                </select>
+                <input name="NewDate" type="date"Value ="@thisShift.ShiftDate.ToString("yyyy-MM-dd")">
             </dd>
         </dl>
         <dl class="row">
@@ -54,7 +65,24 @@
                 Start Time:
             </dt>
             <dd class="col-2">
-                <input name=NewStartTime type="time" value= "@thisShift.StartTime">Convert.ToTime(@thisShift.StartTime)
+                    <select name="NewStartTime">
+                        @{
+                            DateTime theStartTime = Convert.ToDateTime("00:00:00");
+                            for (int i = 0; i < 96; i++)
+                            {
+                                if(theStartTime.ToString("t") == thisShift.StartTime.ToString("t"))
+                                {
+                                    <option selected value="@theStartTime.ToString()">@theStartTime.ToString("t")</option>
+                                }
+                                else
+                                {
+                                    <option value="@theStartTime.ToString()">@theStartTime.ToString("t")</option>
+                                }
+
+                                theStartTime = theStartTime.AddMinutes(15);
+                            }
+                        }
+                    </select>
 
             </dd>
         </dl>
@@ -63,23 +91,39 @@
                 End Time:
             </dt>
             <dd class="col-2">
-                <input name="NewEndTime" type="time" value = "@thisShift.EndTime">
+                    <select name="NewEndTime">
+                        @{
+                            DateTime theEndTime = Convert.ToDateTime("00:00:00");
+                            for (int i = 0; i < 96; i++)
+                            {
+                                if(theEndTime.ToString("t") == thisShift.EndTime.ToString("t"))
+                                {
+                                    <option selected value="@theEndTime.ToString()">@theEndTime.ToString("t")</option>
+                                }
+                                else
+                                {
+                                    <option value="@theEndTime.ToString()">@theEndTime.ToString("t")</option>
+                                }
+
+                                theEndTime = theEndTime.AddMinutes(15);
+                            }
+                        }
+                    </select>
             </dd>
         </dl>
         <dl class="row">
             <dt class="col-1">
                 Notes:
             </dt>
-            <dd class="col-2">
-                <input name="NewNotes" value = "@thisShift.Notes">
-            </dd>
         </dl>
-        <textarea name="ShiftNotes" rows="20" cols="100" style="resize:none" value="@thisShift.Notes"></textarea>
+        <textarea id="NewNotes" name="NewNotes" rows="20" cols="100" style="resize:none" value="@thisShift.Notes">@thisShift.Notes</textarea>
+        <br />
         <button asp-action="ViewDetails" asp-route-id="@thisShift.ID">Cancel</button>
         <input type="submit" value="Save">
         </form>
         <hr />
     }
+    @*View Data that displays when not in Edit mode*@
     else
     {
         <dl class="row">

@@ -132,6 +132,19 @@ namespace ScheduleManager.Controllers
             ViewDetails(id);
             return View("ViewDetails");
         }
+        public IActionResult UpdateShift(int id)
+        {
+            Shift updateShift = new Shift(id);
+            updateShift.Role = HttpContext.Request.Form["NewRole"];
+            updateShift.ShiftDate = Convert.ToDateTime(HttpContext.Request.Form["NewDate"]);
+            updateShift.StartTime = Convert.ToDateTime(HttpContext.Request.Form["NewStartTime"]);
+            updateShift.EndTime = Convert.ToDateTime(HttpContext.Request.Form["NewEndTime"]);
+            updateShift.Notes = HttpContext.Request.Form["NewNotes"];
+            
+            updateShift.Save();
+            ViewDetails(id);
+            return View("ViewDetails");
+        }
         public IActionResult ByDate()
         {
             DateTime a = Convert.ToDateTime(HttpContext.Request.Form["StartDate"]);
