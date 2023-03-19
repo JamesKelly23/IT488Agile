@@ -11,7 +11,7 @@
 
 
         <form asp-action="ByDate">
-        <p>Start Date <input name="StartDate" type="date" /></p>
+        <p>Start Date <input name="StartDate" id="StartDate" type="date" /></p>
         <p>End Date <input  name="EndDate" type="date" min="StartDate" max="StartDate"/></p>
         <button asp-action="ScheduleEditorIndex">Cancel</button>
         <input type="submit" value="Search">

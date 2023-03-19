@@ -1,17 +1,57 @@
-﻿<h2 class="text-center">New Shift</h2>
+﻿@*This is the View Page for Adding a Shift. Should only be able to see if user holds a certain Rank (Logic in Controller)*@
+
+<h2 class="text-center">New Shift</h2>
 <hr />
 @{
     ViewData["Title"] = "Add New Shift";
 
     <form asp-action="CreateShift">
+    @*This is the input for the Role. Will Create a dropdown box of all available Roles*@
+    <p class="fw-bold">Role: 
+    <select name="ShiftRole">
+    @*Unspecifed Selection (not part of Role List)*@
+    <option value="Unspecified">Unspecified</option>
+    @{
+        List<Role> RoleList = Role.GetList();
+        foreach(Role theRole in RoleList)
+        {
+                    <option value="@theRole.Name">@theRole.Name</option>
+        }
 
-
-    <p class="fw-bold">Role: <input name="ShiftRole" /></p>
+    }
+    </select>
+    </p>
+    @*Input for the Date*@
     <p class="fw-bold">Date:<input name= "ShiftDate" type="date" /></p>
-    <p class="fw-bold">From: <input name="ShiftStart"type="time"/></p>
-    <p class="fw-bold">To: <input name="ShiftEnd" type="time" /></p>
+    @*Input for the Start Time. Currently Set to allow times in increments of 15 minutes using a for loop.*@
+    <p class="fw-bold">From: 
+    <select name="ShiftStart">
+    @{
+        DateTime theStartTime = Convert.ToDateTime("00:00:00");
+        for (int i = 0; i < 96; i++)
+        {
+            <option value="@theStartTime.ToString()">@theStartTime.ToString("t")</option>
+            theStartTime = theStartTime.AddMinutes(15);
+        }
+    }
+    </select>
+    </p>
+    @*Input for the End Time. Similar to Start Time*@
+    <p class="fw-bold">To: 
+    <select name="ShiftEnd">
+                @{
+                    DateTime theEndTime = Convert.ToDateTime("00:00:00");
+                    for(int i = 0; i < 96; i++)
+                    {
+                        <option value="@theEndTime.ToString()">@theEndTime.ToString("t")</option>
+                        theEndTime = theEndTime.AddMinutes(15);
+                    }
+    }
+    </select>
+    </p>
+    @*Input for the Notes. Wil create a text box that can't be resized*@
     <p class="fw-bold">Notes:</p>
-    
+
     <textarea name="ShiftNotes" rows="20" cols="100" style="resize:none"></textarea>
     <hr/>
     <input type="submit">

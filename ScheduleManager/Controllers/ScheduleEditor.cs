@@ -45,6 +45,7 @@ namespace ScheduleManager.Controllers
             }
             else
             {
+                
                 return View();
             }
 
