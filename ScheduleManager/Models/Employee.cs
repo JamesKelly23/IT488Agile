@@ -87,6 +87,10 @@ namespace ScheduleManager.Models
             }
             return "There is no record to delete.";
         }
+        public Rank GetRank()
+        {
+            return new Rank(RankID);
+        }
         public string Save()
         {
             SqlCommand theCommand;

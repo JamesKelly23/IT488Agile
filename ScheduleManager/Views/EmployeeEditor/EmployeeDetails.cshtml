@@ -53,13 +53,27 @@
                     Current Rank
                 </dt>
                 <dd class="col-sm-4">
-                    @currentDetails.RankID
+                    @currentDetails.GetRank().Title
                 </dd>
                 <dt class="col-sm-2">
                     New Rank
                 </dt>
                 <dd class="col-sm-4">
-                    <input name="newRank"value=@currentDetails.RankID>
+                    <select name="newRank">
+                        @{
+                            foreach(Rank theRank in Rank.GetList(Context.Session.GetInt32("_LoggedInRank") ?? 0))
+                            {
+                                if(theRank.ID == currentDetails.RankID)
+                                {
+                                    <option selected value="@theRank.ID">@theRank.Title</option>
+                                } 
+                                else
+                                {
+                                    <option value="@theRank.ID">@theRank.Title</option>
+                                }
+                            }
+                        }
+                    </select>
                 </dd>
             </dl>
             <dl class="row">
@@ -182,7 +196,7 @@
                     Rank
                 </dt>
                 <dd class="col-sm-10">
-                    @currentDetails.RankID
+                    @currentDetails.GetRank().Title
                 </dd>
             </dl>
             <dl class="row">

@@ -74,5 +74,19 @@ namespace ScheduleManager.Models
             staticConnection.Close();
             return list;
         }
+        public static List<Rank> GetList(int maxRank)
+        {
+            SqlConnection staticConnection = new(ConnectionStrings.local);
+            List<Rank> list = new();
+            SqlCommand theCommand = new("SELECT ID From Rank WHERE ID <= " + maxRank + ";", staticConnection);
+            staticConnection.Open();
+            SqlDataReader theReader = theCommand.ExecuteReader();
+            while (theReader.Read())
+            {
+                list.Add(new Rank(theReader.GetInt32(0)));
+            }
+            staticConnection.Close();
+            return list;
+        }
     }
 }

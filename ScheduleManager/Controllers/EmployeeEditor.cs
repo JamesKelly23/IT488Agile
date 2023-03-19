@@ -67,7 +67,6 @@ namespace ScheduleManager.Controllers
         {
             try
             {
-
                 EmployeeDetails(EmplyID);
                 return View("EmployeeDetails");
             }
