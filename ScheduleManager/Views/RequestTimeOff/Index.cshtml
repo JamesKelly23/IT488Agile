@@ -70,10 +70,23 @@
                 <td class="cell2">@TheRequest.StartDate.ToString("D")</td>
                     <td class="cell2">@TheRequest.EndDate.ToString("D")</td>
                     <td class="cell2">@TheRequest.Notes</td>
-                    <td class="cell2">@TheRequest.IsApproved</td>
-                    <td class="cell2">@(TheRequest.ManagerID == 0 ? "None" : TheRequest.GetManager().FullName())</td>
+                    @{
+                    if(TheRequest.IsApproved){//is aproved
+                            <td class="cell2">Aproved</td>
+                        }
+                        else if (!TheRequest.IsApproved && TheRequest.ManagerID == 0)
+                        {//not aproved or denied yet
+                            <td class="cell2">Pending</td>
+                        }
+                        else{//Denied
+                            <td class="cell2">Denied</td>
+                    }
+                    }
+                   
+                    
+                    <td class="cell2">@(TheRequest.ManagerID == 0 ? "No one" : TheRequest.GetManager().FullName())</td>
 
-
+                    
                 </tr>
             }
         }
