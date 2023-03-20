@@ -9,13 +9,41 @@
             {//if more than two weeks ahead, do not load the button
                 <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier + 1)">Next Week</a>
             }
-            
-}
-</div>
+
+        }
+    </div>
 </center>
 <div style="width:100%; overflow:scroll;">
     <div style="width: 1750px;">
         @{
+            DateTime thisDate = DateTime.Today.AddDays(7 * ViewBag.Modifier);
+            //we need thisDate=monday of that week.
+            if (thisDate.DayOfWeek.ToString()=="Sunday")
+            {
+                thisDate=thisDate.AddDays(-6);
+            }
+            else if (thisDate.DayOfWeek.ToString() == "Saturday")
+            {
+                thisDate = thisDate.AddDays(-5);
+            }
+            else if (thisDate.DayOfWeek.ToString() == "Friday")
+            {
+                thisDate = thisDate.AddDays(-4);
+            }
+            else if (thisDate.DayOfWeek.ToString() == "Thursday")
+            {
+                thisDate = thisDate.AddDays(-3);
+            }
+            else if (thisDate.DayOfWeek.ToString() == "Wednesday")
+            {
+                thisDate = thisDate.AddDays(-2);
+            }
+            else if (thisDate.DayOfWeek.ToString() == "Tuesday")
+            {
+                thisDate = thisDate.AddDays(-1);
+            }
+
+
             foreach (DayOfWeek theDay in Availability.GetDaysOfWeek())
             {
                 List<Shift> theShiftList = ViewBag.ShiftList;
@@ -42,7 +70,7 @@
                         if (theMatchingList.Count == 0)//if not schduled
                         {
                             <div class="sv-shift-hours-bubble">
-                              <p>theShift.ToString() <br>
+                              <p>@thisDate.ToString("d")<br>
                                 Not Scheduled</p>
                             </div>
                         }//end of if count==0
@@ -56,7 +84,8 @@
                         </div>
                     }
                 </div>
-            }
+                thisDate = thisDate.AddDays(1);
+            }//end if for each 
         }
     </div>
 </div>
