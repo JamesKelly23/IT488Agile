@@ -18,27 +18,7 @@
         @{
             DateTime thisDate = DateTime.Today.AddDays(7 * ViewBag.Modifier);
             //we need thisDate=monday of that week.
-            if (thisDate.DayOfWeek.ToString()=="Sunday")
-            {
-                thisDate=thisDate.AddDays(-6);
-            }
-            else if (thisDate.DayOfWeek.ToString() == "Saturday")
-            {
-                thisDate = thisDate.AddDays(-5);
-            }
-            else if (thisDate.DayOfWeek.ToString() == "Friday")
-            {
-                thisDate = thisDate.AddDays(-4);
-            }
-            else if (thisDate.DayOfWeek.ToString() == "Thursday")
-            {
-                thisDate = thisDate.AddDays(-3);
-            }
-            else if (thisDate.DayOfWeek.ToString() == "Wednesday")
-            {
-                thisDate = thisDate.AddDays(-2);
-            }
-            else if (thisDate.DayOfWeek.ToString() == "Tuesday")
+            while (thisDate.DayOfWeek.ToString() != "Monday")
             {
                 thisDate = thisDate.AddDays(-1);
             }
