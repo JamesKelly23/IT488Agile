@@ -18,12 +18,100 @@
                     <button type="button" class="cancelbtn"> Cancel</button>
                 </form>
             </p>
-            <p>Sample Logins:</p>
-            <ul class="bulletless">
-            <li>General Manager Level: Username GM Password GM</li>
-            <li>Manager Level: Username M Password M</li>
-            <li>4 Team Members. William Max James and Kent. Username and Password are both the first name.</li>
-            </ul>
+            <center>
+                <table border="1">
+                    <tr class="headerrow2">
+                        <td class="cell2" colspan="5">
+                            Sample Logins:
+                        </td>
+                    </tr>
+                    <tr class="headerrow2">
+                        <td class="cell2">Rank</td>
+                        <td class="cell2">Name</td>
+                        <td class="cell2">Username</td>
+                        <td class="cell2">Password</td>
+                        <td class="cell2">Actions</td>
+                    </tr>
+                    <tr class="row2">
+                        <td class="cell2">General Manager</td>
+                        <td class="cell2">General Manager</td>
+                        <td class="cell2">GM</td>
+                        <td class="cell2">GM</td>
+                        <td class="cell2">
+                            <form asp-action="LogIn">
+                                <input type="hidden" name="Username" value="GM">
+                                <input type="hidden" name="Password" value="GM">
+                                <input class="link-button-nofloat" type="submit" value="LogIn"><br>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr class="row2 evenrow">
+                        <td class="cell2">Manager</td>
+                        <td class="cell2">Regular Manager</td>
+                        <td class="cell2">M</td>
+                        <td class="cell2">M</td>
+                        <td class="cell2">
+                            <form asp-action="LogIn">
+                                <input type="hidden" name="Username" value="M">
+                                <input type="hidden" name="Password" value="M">
+                                <input class="link-button-nofloat" type="submit" value="LogIn">
+                            </form>
+                        </td>
+                    </tr>
+                    <tr class="row2">
+                        <td class="cell2">Team Member</td>
+                        <td class="cell2">James Kelly</td>
+                        <td class="cell2">James</td>
+                        <td class="cell2">James</td>
+                        <td class="cell2">
+                            <form asp-action="LogIn">
+                                <input type="hidden" name="Username" value="James">
+                                <input type="hidden" name="Password" value="James">
+                                <input class="link-button-nofloat" type="submit" value="LogIn">
+                            </form>
+                        </td>
+                    </tr>
+                    <tr class="row2 evenrow">
+                        <td class="cell2">Team Member</td>
+                        <td class="cell2">William White</td>
+                        <td class="cell2">William</td>
+                        <td class="cell2">William</td>
+                        <td class="cell2">
+                            <form asp-action="LogIn">
+                                <input type="hidden" name="Username" value="William">
+                                <input type="hidden" name="Password" value="William">
+                                <input class="link-button-nofloat" type="submit" value="LogIn">
+                            </form>
+                        </td>
+                    </tr>
+                    <tr class="row2">
+                        <td class="cell2">Team Member</td>
+                        <td class="cell2">Maxwell Connor</td>
+                        <td class="cell2">Max</td>
+                        <td class="cell2">Max</td>
+                        <td class="cell2">
+                            <form asp-action="LogIn">
+                                <input type="hidden" name="Username" value="Max">
+                                <input type="hidden" name="Password" value="Max">
+                                <input class="link-button-nofloat" type="submit" value="LogIn">
+                            </form>
+                        </td>
+                    </tr>
+                    <tr class="row2 evenrow">
+                        <td class="cell2">Team Member</td>
+                        <td class="cell2">Kent Shrock</td>
+                        <td class="cell2">Kent</td>
+                        <td class="cell2">Kent</td>
+                        <td class="cell2">
+                            <form asp-action="LogIn">
+                                <input type="hidden" name="Username" value="Kent">
+                                <input type="hidden" name="Password" value="Kent">
+                                <input class="link-button-nofloat" type="submit" value="LogIn">
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </center>
         }
         if (Convert.ToInt32(ViewData["LoggedIn"]) == 1)
         {
@@ -31,22 +119,22 @@
             <p>What would you like to do today? Here are some suggestions:</p>
             <ul class="container2 linklist">
                 <li class="linklist-item">
-                <a class="link-button" asp-controller="OpenShifts" asp-action="Index">View Available Shifts</a>
+                    <a class="link-button" asp-controller="OpenShifts" asp-action="Index">View Available Shifts</a>
                 </li>
                 <li class="linklist-item">
-                <a class="link-button" asp-controller="EmployeeEditor" asp-action="EmployeeDetails" asp-route-id="@ViewBag.CurrentUser.ID">Edit My Information</a>
+                    <a class="link-button" asp-controller="EmployeeEditor" asp-action="EmployeeDetails" asp-route-id="@ViewBag.CurrentUser.ID">Edit My Information</a>
                 </li>
                 @{
                     if (ViewBag.CurrentUser.RankID > 1)
                     {
                         <li class="linklist-item">
-                        <a class="link-button" asp-controller="Approvals" asp-action="Index">View Manager Approvals</a>
+                            <a class="link-button" asp-controller="Approvals" asp-action="Index">View Manager Approvals</a>
                         </li>
                         <li class="linklist-item">
-                        <a class="link-button" asp-controller="ScheduleEditor" asp-action="ScheduleEditorIndex">Manage Schedules</a>
+                            <a class="link-button" asp-controller="ScheduleEditor" asp-action="ScheduleEditorIndex">Manage Schedules</a>
                         </li>
                     }
-                    if(ViewBag.CurrentUser.RankID>2)
+                    if (ViewBag.CurrentUser.RankID > 2)
                     {
                         <li class="linklist-item">
                             <a class="link-button" asp-controller="Composer" asp-action="Index">Schedule Composer - GM Only</a>
