@@ -27,6 +27,21 @@
     </tr>
     <tr class="headerrow2">
         <td class="cell2">Employee</td>
+        @{
+            for(int j =0; j < 7; j++)
+            {
+                if( ViewBag.StartDate.AddDays(j) < DateTime.Today)
+                {//if the day in question is before today, then it shouldn't be able to be edited
+                    <td class="cell2"><a class="link-button-nofloat">@ViewBag.StartDate.AddDays(j).ToString("d")</a></td>
+
+                }
+                else
+                {//this means it is after today
+                    <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(j).ToString("d")">@ViewBag.StartDate.AddDays(j).ToString("d")</a></td>
+
+                }
+            }
+            /*
         <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.ToString("d")">@ViewBag.StartDate.ToString("d")</a></td>
         <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(1).ToString("d")">@ViewBag.StartDate.AddDays(1).ToString("d")</a></td>
         <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(2).ToString("d")">@ViewBag.StartDate.AddDays(2).ToString("d")</a></td>
@@ -34,7 +49,9 @@
         <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(4).ToString("d")">@ViewBag.StartDate.AddDays(4).ToString("d")</a></td>
         <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(5).ToString("d")">@ViewBag.StartDate.AddDays(5).ToString("d")</a></td>
         <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(6).ToString("d")">@ViewBag.StartDate.AddDays(6).ToString("d")</a></td>
-    </tr>
+   */
+        }
+        </tr>
     @{
         int i = 0;
         foreach (Employee theEmployee in ViewBag.EmployeeList)
