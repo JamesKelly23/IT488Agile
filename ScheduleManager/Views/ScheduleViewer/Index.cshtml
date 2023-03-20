@@ -4,7 +4,13 @@
 <center><h1>Employee Schedule View</h1>
 <div style="width:100%;">
 <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier - 1)">Previous Week</a>
-<a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier + 1)">Next Week</a>
+        @{
+            if (ViewBag.Modifier<2)
+            {//if more than two weeks ahead, do not load the button
+                <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier + 1)">Next Week</a>
+            }
+            
+}
 </div>
 </center>
 <div style="width:100%; overflow:scroll;">
@@ -21,8 +27,9 @@
                     <h3>@Availability.DayString(theDay)</h3>
                     @{
                         foreach (Shift theShift in theMatchingList)
-                        {
+                        {//if scheduled
                             <div class="sv-shift-hours-bubble">
+                           
                                 <p>
                                     Work Hours<br>
                                     @theShift.ShiftDate.ToString("d") <br>
@@ -30,13 +37,17 @@
                                     <a class="link-button-nofloat @(theShift.IsOpen ? "deny":"approve")" asp-route-modifier="@ViewBag.Modifier" asp-action="UpdateShift" type="button" asp-route-id="@theShift.ID" asp-route-isopen="@(theShift.IsOpen ? "false" : "true")">@(theShift.IsOpen ? "Close This Shift" : "Open This Shift")</a>
                                 </p>
                             </div>
-                        }
-                        if (theMatchingList.Count == 0)
+                        }//end of for each the shift
+
+                        if (theMatchingList.Count == 0)//if not schduled
                         {
                             <div class="sv-shift-hours-bubble">
-                                <p>Not Scheduled</p>
+                              <p>theShift.ToString() <br>
+                                Not Scheduled</p>
                             </div>
-                        }
+                        }//end of if count==0
+                      
+
                         <div class="sv-availability-bubble">
                             <p>
                                 Availability <br>
