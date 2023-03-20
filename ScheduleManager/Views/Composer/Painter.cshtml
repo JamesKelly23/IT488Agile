@@ -27,34 +27,40 @@
     </p>
 
     <form asp-action="@((ViewBag.EmployeeID ?? 0) == 0 ? "Painter" : "CreateShift")">
-        <p style="padding:5px; border: 2pt solid black; box-shadow: 3px 3px 3px #888888;">
+        <p style="width: 80%; padding:5px; border: 2pt solid black; box-shadow: 3px 3px 3px #888888;">
             @{
                 if (ViewBag.EmployeeID != 0)
                 {
                     <a asp-action="Painter" asp-route-id="" asp-route-date="@ViewBag.TargetDate.ToString("d")" class="link-button-nofloat deny">Cancel</a>
                 }
             }
-            Role:
-            <select onchange="ChangeValue('RoleText','')" name="RoleSelector">
-                <option value=""></option>
-                @{
-                    foreach (Role theRole in Role.GetList())
-                    {
-                        if (ViewBag.SelectedRole == theRole.Name)
+            <span class="text-nowrap" style="margin:10px;">
+                Role:
+                <select onchange="ChangeValue('RoleText','')" name="RoleSelector">
+                    <option value=""></option>
+                    @{
+                        foreach (Role theRole in Role.GetList())
                         {
-                            <option selected value="@theRole.Name">@theRole.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@theRole.Name">@theRole.Name</option>
+                            if (ViewBag.SelectedRole == theRole.Name)
+                            {
+                                <option selected value="@theRole.Name">@theRole.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@theRole.Name">@theRole.Name</option>
+                            }
                         }
                     }
-                }
-            </select>
-            Custom Role (optional):
-            <input type="text" id="RoleText" name="RoleTextBox" value="@(ViewBag.RoleText)" />
-            Notes (optional):
-            <input type="text" name="NotesTextBox" value="@ViewBag.NotesText"/>
+                </select>
+            </span>
+            <span class="text-nowrap" style="margin:10px;">
+                Custom Role (optional):
+                <input type="text" id="RoleText" name="RoleTextBox" value="@(ViewBag.RoleText)" />
+            </span>
+            <span class="text-nowrap" style="margin:10px;">
+                Notes (optional):
+                <input type="text" name="NotesTextBox" value="@ViewBag.NotesText" />
+            </span>
             <input type="hidden" name="EmployeeID" value="@(ViewBag.EmployeeID ?? 0)" />
             <input type="hidden" name="TargetDate" value="@(ViewBag.TargetDate ?? new DateTime().ToString("d"))" />
             <input type="hidden" id="StartTime" name="StartTime" value="@(ViewBag.StartTime ?? new DateTime().ToString("g"))" />
