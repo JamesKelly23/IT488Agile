@@ -1,6 +1,6 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [ScheduleManager]    Script Date: 3/6/2023 6:28:31 PM ******/
+/****** Object:  Database [ScheduleManager]    Script Date: 3/21/2023 2:25:45 PM ******/
 CREATE DATABASE [ScheduleManager]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -80,7 +80,7 @@ ALTER DATABASE [ScheduleManager] SET QUERY_STORE = OFF
 GO
 USE [ScheduleManager]
 GO
-/****** Object:  Table [dbo].[Availability]    Script Date: 3/6/2023 6:28:31 PM ******/
+/****** Object:  Table [dbo].[Availability]    Script Date: 3/21/2023 2:25:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -109,7 +109,7 @@ CREATE TABLE [dbo].[Availability](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Employee]    Script Date: 3/6/2023 6:28:31 PM ******/
+/****** Object:  Table [dbo].[Employee]    Script Date: 3/21/2023 2:25:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -130,7 +130,7 @@ CREATE TABLE [dbo].[Employee](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PickupRequest]    Script Date: 3/6/2023 6:28:31 PM ******/
+/****** Object:  Table [dbo].[PickupRequest]    Script Date: 3/21/2023 2:25:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -147,7 +147,7 @@ CREATE TABLE [dbo].[PickupRequest](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Rank]    Script Date: 3/6/2023 6:28:31 PM ******/
+/****** Object:  Table [dbo].[Rank]    Script Date: 3/21/2023 2:25:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -161,7 +161,7 @@ CREATE TABLE [dbo].[Rank](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Role]    Script Date: 3/6/2023 6:28:31 PM ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 3/21/2023 2:25:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -175,7 +175,7 @@ CREATE TABLE [dbo].[Role](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Shift]    Script Date: 3/6/2023 6:28:31 PM ******/
+/****** Object:  Table [dbo].[Shift]    Script Date: 3/21/2023 2:25:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -183,7 +183,7 @@ GO
 CREATE TABLE [dbo].[Shift](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[IsOpen] [bit] NOT NULL,
-	[EmployeeID] [int] NULL,
+	[EmployeeID] [int] NOT NULL,
 	[Date] [datetime] NOT NULL,
 	[StartTime] [datetime] NOT NULL,
 	[EndTime] [datetime] NOT NULL,
@@ -195,7 +195,7 @@ CREATE TABLE [dbo].[Shift](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TimeOffRequest]    Script Date: 3/6/2023 6:28:31 PM ******/
+/****** Object:  Table [dbo].[TimeOffRequest]    Script Date: 3/21/2023 2:25:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -216,17 +216,23 @@ CREATE TABLE [dbo].[TimeOffRequest](
 GO
 SET IDENTITY_INSERT [dbo].[Availability] ON 
 GO
-INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (1, 1, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime))
+INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (1, 1, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T18:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T17:00:00.000' AS DateTime), CAST(N'2001-01-01T10:00:00.000' AS DateTime), CAST(N'2001-01-01T16:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T17:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T17:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T17:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T17:00:00.000' AS DateTime))
 GO
 INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (2, 2, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime))
 GO
 INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (5, 6, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T12:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T06:00:00.000' AS DateTime), CAST(N'2001-01-01T20:00:00.000' AS DateTime), CAST(N'2001-01-01T07:00:00.000' AS DateTime), CAST(N'2001-01-01T16:00:00.000' AS DateTime), CAST(N'2001-01-01T10:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime))
 GO
-INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (7, 7, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime))
+INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (7, 7, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T17:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime))
 GO
 INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (9, 8, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T06:00:00.000' AS DateTime), CAST(N'2001-01-01T15:00:00.000' AS DateTime), CAST(N'2001-01-01T06:00:00.000' AS DateTime), CAST(N'2001-01-01T15:00:00.000' AS DateTime), CAST(N'2001-01-01T06:00:00.000' AS DateTime), CAST(N'2001-01-01T15:00:00.000' AS DateTime), CAST(N'2001-01-01T06:00:00.000' AS DateTime), CAST(N'2001-01-01T15:00:00.000' AS DateTime), CAST(N'2001-01-01T06:00:00.000' AS DateTime), CAST(N'2001-01-01T15:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime))
 GO
 INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (11, 9, CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T22:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (12, 11, CAST(N'2023-03-11T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T15:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (13, 12, CAST(N'2023-03-16T00:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime), CAST(N'2001-01-01T00:00:00.000' AS DateTime), CAST(N'2001-01-01T23:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[Availability] ([ID], [EmployeeID], [EffectiveDate], [MondayStart], [MondayEnd], [TuesdayStart], [TuesdayEnd], [WednesdayStart], [WednesdayEnd], [ThursdayStart], [ThursdayEnd], [FridayStart], [FridayEnd], [SaturdayStart], [SaturdayEnd], [SundayStart], [SundayEnd]) VALUES (14, 13, CAST(N'2023-03-21T00:00:00.000' AS DateTime), CAST(N'2001-01-01T07:00:00.000' AS DateTime), CAST(N'2001-01-01T08:00:00.000' AS DateTime), CAST(N'2001-01-01T06:00:00.000' AS DateTime), CAST(N'2001-01-01T09:00:00.000' AS DateTime), CAST(N'2001-01-01T05:00:00.000' AS DateTime), CAST(N'2001-01-01T10:00:00.000' AS DateTime), CAST(N'2001-01-01T04:00:00.000' AS DateTime), CAST(N'2001-01-01T11:00:00.000' AS DateTime), CAST(N'2001-01-01T03:00:00.000' AS DateTime), CAST(N'2001-01-01T12:00:00.000' AS DateTime), CAST(N'2001-01-01T02:00:00.000' AS DateTime), CAST(N'2001-01-01T13:00:00.000' AS DateTime), CAST(N'2001-01-01T01:00:00.000' AS DateTime), CAST(N'2001-01-01T14:00:00.000' AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[Availability] OFF
 GO
@@ -244,17 +250,25 @@ INSERT [dbo].[Employee] ([ID], [FirstName], [LastName], [RankID], [Password], [U
 GO
 INSERT [dbo].[Employee] ([ID], [FirstName], [LastName], [RankID], [Password], [Username], [Phone], [Email], [DateOfBirth]) VALUES (9, N'James', N'Kelly', 1, N'James', N'James', N'1234567890', N'james@james.com', CAST(N'1989-11-28' AS Date))
 GO
+INSERT [dbo].[Employee] ([ID], [FirstName], [LastName], [RankID], [Password], [Username], [Phone], [Email], [DateOfBirth]) VALUES (11, N'New', N'Employee', 3, N'New', N'New', N'1234567890', N'new@new.com', CAST(N'2004-01-01' AS Date))
+GO
+INSERT [dbo].[Employee] ([ID], [FirstName], [LastName], [RankID], [Password], [Username], [Phone], [Email], [DateOfBirth]) VALUES (12, N'Michael', N'Jackson', 1, N'Michael', N'Michael', N'1234567890', N'michael@michael.com', CAST(N'1989-12-06' AS Date))
+GO
+INSERT [dbo].[Employee] ([ID], [FirstName], [LastName], [RankID], [Password], [Username], [Phone], [Email], [DateOfBirth]) VALUES (13, N'Jon', N'Snow', 1, N'jon', N'jon', N'1234567890', N'jon@jon.com', CAST(N'2040-12-20' AS Date))
+GO
 SET IDENTITY_INSERT [dbo].[Employee] OFF
 GO
-INSERT [dbo].[PickupRequest] ([ShiftID], [EmployeeID], [IsApproved], [ManagerID]) VALUES (1, 1, 0, NULL)
+INSERT [dbo].[PickupRequest] ([ShiftID], [EmployeeID], [IsApproved], [ManagerID]) VALUES (1, 1, 0, 1)
+GO
+INSERT [dbo].[PickupRequest] ([ShiftID], [EmployeeID], [IsApproved], [ManagerID]) VALUES (1, 9, 1, 1)
 GO
 INSERT [dbo].[PickupRequest] ([ShiftID], [EmployeeID], [IsApproved], [ManagerID]) VALUES (2, 1, 0, 1)
 GO
-INSERT [dbo].[PickupRequest] ([ShiftID], [EmployeeID], [IsApproved], [ManagerID]) VALUES (5, 1, 0, NULL)
+INSERT [dbo].[PickupRequest] ([ShiftID], [EmployeeID], [IsApproved], [ManagerID]) VALUES (5, 9, 1, 1)
 GO
 INSERT [dbo].[PickupRequest] ([ShiftID], [EmployeeID], [IsApproved], [ManagerID]) VALUES (8, 6, 0, 1)
 GO
-INSERT [dbo].[PickupRequest] ([ShiftID], [EmployeeID], [IsApproved], [ManagerID]) VALUES (12, 1, 0, NULL)
+INSERT [dbo].[PickupRequest] ([ShiftID], [EmployeeID], [IsApproved], [ManagerID]) VALUES (20, 9, 1, 1)
 GO
 SET IDENTITY_INSERT [dbo].[Rank] ON 
 GO
@@ -268,10 +282,6 @@ SET IDENTITY_INSERT [dbo].[Rank] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Role] ON 
 GO
-INSERT [dbo].[Role] ([ID], [Name]) VALUES (13, N'General Manager')
-GO
-INSERT [dbo].[Role] ([ID], [Name]) VALUES (14, N'Manager')
-GO
 INSERT [dbo].[Role] ([ID], [Name]) VALUES (15, N'Cashier')
 GO
 INSERT [dbo].[Role] ([ID], [Name]) VALUES (16, N'Cook')
@@ -282,19 +292,19 @@ INSERT [dbo].[Role] ([ID], [Name]) VALUES (18, N'Maintenance')
 GO
 INSERT [dbo].[Role] ([ID], [Name]) VALUES (19, N'Driver')
 GO
-INSERT [dbo].[Role] ([ID], [Name]) VALUES (20, N'Drive-Thru')
+INSERT [dbo].[Role] ([ID], [Name]) VALUES (23, N'Floater')
 GO
 SET IDENTITY_INSERT [dbo].[Role] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Shift] ON 
 GO
-INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (1, 1, 1, CAST(N'2023-03-06T00:00:00.000' AS DateTime), CAST(N'2023-03-06T06:00:00.000' AS DateTime), CAST(N'2023-03-06T15:00:00.000' AS DateTime), N'General Manager', NULL)
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (1, 0, 9, CAST(N'2023-03-06T00:00:00.000' AS DateTime), CAST(N'2023-03-06T06:00:00.000' AS DateTime), CAST(N'2023-03-06T15:00:00.000' AS DateTime), N'General Manager', N'')
 GO
-INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (2, 0, 1, CAST(N'2023-03-07T00:00:00.000' AS DateTime), CAST(N'2023-03-07T06:00:00.000' AS DateTime), CAST(N'2023-03-07T15:00:00.000' AS DateTime), N'General Manager', NULL)
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (2, 0, 1, CAST(N'2023-03-07T00:00:00.000' AS DateTime), CAST(N'2023-03-07T06:00:00.000' AS DateTime), CAST(N'2023-03-07T15:00:00.000' AS DateTime), N'General Manager', N'')
 GO
 INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (4, 0, 1, CAST(N'2023-03-08T00:00:00.000' AS DateTime), CAST(N'2023-03-08T06:00:00.000' AS DateTime), CAST(N'2023-03-08T15:00:00.000' AS DateTime), N'General Manager', NULL)
 GO
-INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (5, 1, 1, CAST(N'2023-03-09T00:00:00.000' AS DateTime), CAST(N'2023-03-09T08:00:00.000' AS DateTime), CAST(N'2023-03-09T17:00:00.000' AS DateTime), N'General Manager', NULL)
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (5, 0, 9, CAST(N'2023-03-09T00:00:00.000' AS DateTime), CAST(N'2023-03-09T08:00:00.000' AS DateTime), CAST(N'2023-03-09T17:00:00.000' AS DateTime), N'General Manager', N'')
 GO
 INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (6, 0, 1, CAST(N'2023-03-10T00:00:00.000' AS DateTime), CAST(N'2023-03-10T06:00:00.000' AS DateTime), CAST(N'2023-03-10T15:00:00.000' AS DateTime), N'General Manager', N'')
 GO
@@ -306,25 +316,93 @@ INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTim
 GO
 INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (12, 1, 2, CAST(N'2023-03-11T00:00:00.000' AS DateTime), CAST(N'2023-03-11T13:00:00.000' AS DateTime), CAST(N'2023-03-11T22:00:00.000' AS DateTime), N'Manager', NULL)
 GO
-INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (13, 0, 2, CAST(N'2023-03-12T00:00:00.000' AS DateTime), CAST(N'2023-03-12T15:00:00.000' AS DateTime), CAST(N'2023-03-12T23:00:00.000' AS DateTime), N'Manager', NULL)
-GO
 INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (14, 1, 6, CAST(N'2023-03-07T00:00:00.000' AS DateTime), CAST(N'2023-03-07T17:00:00.000' AS DateTime), CAST(N'2023-03-07T22:00:00.000' AS DateTime), N'Cashier', NULL)
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (15, 0, 7, CAST(N'2023-03-08T00:00:00.000' AS DateTime), CAST(N'2023-03-08T12:00:00.000' AS DateTime), CAST(N'2023-03-08T19:00:00.000' AS DateTime), N'Manager in Training', N'I dont need notes but Im putting them anyways!')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (16, 0, 6, CAST(N'2023-03-08T00:00:00.000' AS DateTime), CAST(N'2023-03-08T08:00:00.000' AS DateTime), CAST(N'2023-03-08T13:00:00.000' AS DateTime), N'Cook', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (17, 0, 1, CAST(N'2023-03-15T00:00:00.000' AS DateTime), CAST(N'2023-03-15T06:00:00.000' AS DateTime), CAST(N'2023-03-15T15:00:00.000' AS DateTime), N'General Manager', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (18, 0, 2, CAST(N'2023-03-15T00:00:00.000' AS DateTime), CAST(N'2023-03-15T15:00:00.000' AS DateTime), CAST(N'2023-03-15T23:00:00.000' AS DateTime), N'Manager', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (19, 0, 6, CAST(N'2023-03-15T00:00:00.000' AS DateTime), CAST(N'2023-03-15T12:00:00.000' AS DateTime), CAST(N'2023-03-15T18:00:00.000' AS DateTime), N'Cashier', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (20, 0, 9, CAST(N'2023-03-16T00:00:00.000' AS DateTime), CAST(N'2023-03-16T06:00:00.000' AS DateTime), CAST(N'2023-03-16T15:00:00.000' AS DateTime), N'General Manager', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (21, 0, 1, CAST(N'2023-03-16T00:00:00.000' AS DateTime), CAST(N'2023-03-16T06:00:00.000' AS DateTime), CAST(N'2023-03-16T15:00:00.000' AS DateTime), N'General Manager', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (50, 0, 1, CAST(N'2023-03-13T00:00:00.000' AS DateTime), CAST(N'2023-03-13T06:00:00.000' AS DateTime), CAST(N'2023-03-13T15:00:00.000' AS DateTime), N'General Manager', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (51, 0, 6, CAST(N'2023-03-13T00:00:00.000' AS DateTime), CAST(N'2023-03-13T09:00:00.000' AS DateTime), CAST(N'2023-03-13T18:00:00.000' AS DateTime), N'Floater', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (53, 0, 8, CAST(N'2023-03-13T00:00:00.000' AS DateTime), CAST(N'2023-03-13T06:00:00.000' AS DateTime), CAST(N'2023-03-13T15:00:00.000' AS DateTime), N'Cook', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (55, 0, 11, CAST(N'2023-03-13T00:00:00.000' AS DateTime), CAST(N'2023-03-13T06:00:00.000' AS DateTime), CAST(N'2023-03-13T15:00:00.000' AS DateTime), N'Cashier', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (56, 0, 12, CAST(N'2023-03-13T00:00:00.000' AS DateTime), CAST(N'2023-03-13T14:00:00.000' AS DateTime), CAST(N'2023-03-13T23:00:00.000' AS DateTime), N'Cashier', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (57, 0, 9, CAST(N'2023-03-13T00:00:00.000' AS DateTime), CAST(N'2023-03-13T13:00:00.000' AS DateTime), CAST(N'2023-03-13T22:00:00.000' AS DateTime), N'Cook', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (58, 0, 2, CAST(N'2023-03-13T00:00:00.000' AS DateTime), CAST(N'2023-03-13T13:00:00.000' AS DateTime), CAST(N'2023-03-13T22:00:00.000' AS DateTime), N'Manager', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (59, 0, 1, CAST(N'2023-03-14T00:00:00.000' AS DateTime), CAST(N'2023-03-14T06:00:00.000' AS DateTime), CAST(N'2023-03-14T15:00:00.000' AS DateTime), N'General Manager', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (60, 0, 1, CAST(N'2023-03-14T00:00:00.000' AS DateTime), CAST(N'2023-03-14T06:00:00.000' AS DateTime), CAST(N'2023-03-14T15:00:00.000' AS DateTime), N'General Manager', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (61, 0, 1, CAST(N'2023-03-14T00:00:00.000' AS DateTime), CAST(N'2023-03-14T06:00:00.000' AS DateTime), CAST(N'2023-03-14T15:00:00.000' AS DateTime), N'General Manager', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (69, 0, 1, CAST(N'2023-03-20T00:00:00.000' AS DateTime), CAST(N'2023-03-20T06:00:00.000' AS DateTime), CAST(N'2023-03-20T18:00:00.000' AS DateTime), N'GM', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (70, 0, 2, CAST(N'2023-03-20T00:00:00.000' AS DateTime), CAST(N'2023-03-20T11:00:00.000' AS DateTime), CAST(N'2023-03-20T22:00:00.000' AS DateTime), N'Manager', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (72, 0, 2, CAST(N'2023-03-21T00:00:00.000' AS DateTime), CAST(N'2023-03-21T11:00:00.000' AS DateTime), CAST(N'2023-03-21T22:00:00.000' AS DateTime), N'Driver', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (73, 0, 6, CAST(N'2023-03-21T00:00:00.000' AS DateTime), CAST(N'2023-03-21T11:00:00.000' AS DateTime), CAST(N'2023-03-21T23:00:00.000' AS DateTime), N'Driver', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (74, 0, 8, CAST(N'2023-03-21T00:00:00.000' AS DateTime), CAST(N'2023-03-21T06:00:00.000' AS DateTime), CAST(N'2023-03-21T15:00:00.000' AS DateTime), N'Driver', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (75, 0, 9, CAST(N'2023-03-21T00:00:00.000' AS DateTime), CAST(N'2023-03-21T13:00:00.000' AS DateTime), CAST(N'2023-03-21T22:00:00.000' AS DateTime), N'Driver', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (76, 0, 11, CAST(N'2023-03-21T00:00:00.000' AS DateTime), CAST(N'2023-03-21T06:00:00.000' AS DateTime), CAST(N'2023-03-21T23:00:00.000' AS DateTime), N'Driver', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (77, 0, 12, CAST(N'2023-03-21T00:00:00.000' AS DateTime), CAST(N'2023-03-21T06:00:00.000' AS DateTime), CAST(N'2023-03-21T23:00:00.000' AS DateTime), N'Driver', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (78, 0, 13, CAST(N'2023-03-21T00:00:00.000' AS DateTime), CAST(N'2023-03-21T06:00:00.000' AS DateTime), CAST(N'2023-03-21T09:00:00.000' AS DateTime), N'Driver', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (81, 0, 9, CAST(N'2023-03-22T00:00:00.000' AS DateTime), CAST(N'2023-03-22T13:00:00.000' AS DateTime), CAST(N'2023-03-22T22:00:00.000' AS DateTime), N'', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (82, 0, 11, CAST(N'2023-03-22T00:00:00.000' AS DateTime), CAST(N'2023-03-22T06:00:00.000' AS DateTime), CAST(N'2023-03-22T23:00:00.000' AS DateTime), N'', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (83, 0, 1, CAST(N'2023-03-22T00:00:00.000' AS DateTime), CAST(N'2023-03-22T10:00:00.000' AS DateTime), CAST(N'2023-03-22T16:00:00.000' AS DateTime), N'Cook', N'')
+GO
+INSERT [dbo].[Shift] ([ID], [IsOpen], [EmployeeID], [Date], [StartTime], [EndTime], [Role], [Notes]) VALUES (84, 0, 1, CAST(N'2023-03-21T00:00:00.000' AS DateTime), CAST(N'2023-03-21T06:00:00.000' AS DateTime), CAST(N'2023-03-21T17:00:00.000' AS DateTime), N'Cashier', N'')
 GO
 SET IDENTITY_INSERT [dbo].[Shift] OFF
 GO
 SET IDENTITY_INSERT [dbo].[TimeOffRequest] ON 
 GO
-INSERT [dbo].[TimeOffRequest] ([ID], [EmployeeID], [StartDate], [EndDate], [IsApproved], [ManagerID], [Notes]) VALUES (1, 1, CAST(N'2023-03-20T00:00:00.000' AS DateTime), CAST(N'2023-03-25T00:00:00.000' AS DateTime), 1, 1, NULL)
-GO
-INSERT [dbo].[TimeOffRequest] ([ID], [EmployeeID], [StartDate], [EndDate], [IsApproved], [ManagerID], [Notes]) VALUES (2, 2, CAST(N'2023-05-16T00:00:00.000' AS DateTime), CAST(N'2023-05-31T00:00:00.000' AS DateTime), 0, NULL, NULL)
+INSERT [dbo].[TimeOffRequest] ([ID], [EmployeeID], [StartDate], [EndDate], [IsApproved], [ManagerID], [Notes]) VALUES (2, 2, CAST(N'2023-05-16T00:00:00.000' AS DateTime), CAST(N'2023-05-31T00:00:00.000' AS DateTime), 0, 1, N'')
 GO
 INSERT [dbo].[TimeOffRequest] ([ID], [EmployeeID], [StartDate], [EndDate], [IsApproved], [ManagerID], [Notes]) VALUES (4, 6, CAST(N'2023-09-30T00:00:00.000' AS DateTime), CAST(N'2023-09-30T00:00:00.000' AS DateTime), 1, 1, N'Birthday Party!')
 GO
-INSERT [dbo].[TimeOffRequest] ([ID], [EmployeeID], [StartDate], [EndDate], [IsApproved], [ManagerID], [Notes]) VALUES (5, 7, CAST(N'2023-05-14T00:00:00.000' AS DateTime), CAST(N'2023-05-18T00:00:00.000' AS DateTime), 0, NULL, NULL)
+INSERT [dbo].[TimeOffRequest] ([ID], [EmployeeID], [StartDate], [EndDate], [IsApproved], [ManagerID], [Notes]) VALUES (5, 7, CAST(N'2023-05-14T00:00:00.000' AS DateTime), CAST(N'2023-05-18T00:00:00.000' AS DateTime), 0, 1, N'')
 GO
 INSERT [dbo].[TimeOffRequest] ([ID], [EmployeeID], [StartDate], [EndDate], [IsApproved], [ManagerID], [Notes]) VALUES (6, 8, CAST(N'2023-09-30T00:00:00.000' AS DateTime), CAST(N'2023-09-30T00:00:00.000' AS DateTime), 0, NULL, N'Surgery')
 GO
+INSERT [dbo].[TimeOffRequest] ([ID], [EmployeeID], [StartDate], [EndDate], [IsApproved], [ManagerID], [Notes]) VALUES (13, 6, CAST(N'2023-04-19T00:00:00.000' AS DateTime), CAST(N'2023-04-24T00:00:00.000' AS DateTime), 0, NULL, N'Going to be sick that week.')
+GO
+INSERT [dbo].[TimeOffRequest] ([ID], [EmployeeID], [StartDate], [EndDate], [IsApproved], [ManagerID], [Notes]) VALUES (14, 9, CAST(N'2023-05-16T00:00:00.000' AS DateTime), CAST(N'2023-05-21T00:00:00.000' AS DateTime), 0, 1, N'Ded')
+GO
+INSERT [dbo].[TimeOffRequest] ([ID], [EmployeeID], [StartDate], [EndDate], [IsApproved], [ManagerID], [Notes]) VALUES (20, 1, CAST(N'2023-03-13T00:00:00.000' AS DateTime), CAST(N'2023-03-31T00:00:00.000' AS DateTime), 0, NULL, N'')
+GO
+INSERT [dbo].[TimeOffRequest] ([ID], [EmployeeID], [StartDate], [EndDate], [IsApproved], [ManagerID], [Notes]) VALUES (22, 8, CAST(N'2023-03-29T00:00:00.000' AS DateTime), CAST(N'2023-03-30T00:00:00.000' AS DateTime), 0, NULL, N'Tired')
+GO
+INSERT [dbo].[TimeOffRequest] ([ID], [EmployeeID], [StartDate], [EndDate], [IsApproved], [ManagerID], [Notes]) VALUES (24, 8, CAST(N'2023-04-20T00:00:00.000' AS DateTime), CAST(N'2023-04-27T00:00:00.000' AS DateTime), 0, NULL, N'Now I can put apostrophe''s and semicolons ; all throughout here and it won''t hurt anything')
+GO
 SET IDENTITY_INSERT [dbo].[TimeOffRequest] OFF
+GO
+ALTER TABLE [dbo].[Shift] ADD  CONSTRAINT [DF_Shift_EmployeeID]  DEFAULT ((0)) FOR [EmployeeID]
 GO
 ALTER TABLE [dbo].[Availability]  WITH CHECK ADD  CONSTRAINT [FK_Availability_Employee] FOREIGN KEY([EmployeeID])
 REFERENCES [dbo].[Employee] ([ID])
@@ -343,13 +421,17 @@ ALTER TABLE [dbo].[PickupRequest] CHECK CONSTRAINT [FK_PickupRequest_Employee]
 GO
 ALTER TABLE [dbo].[PickupRequest]  WITH CHECK ADD  CONSTRAINT [FK_PickupRequest_Shift] FOREIGN KEY([ShiftID])
 REFERENCES [dbo].[Shift] ([ID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[PickupRequest] CHECK CONSTRAINT [FK_PickupRequest_Shift]
 GO
-ALTER TABLE [dbo].[Shift]  WITH CHECK ADD  CONSTRAINT [FK_Shift_Employee] FOREIGN KEY([EmployeeID])
+ALTER TABLE [dbo].[Shift]  WITH NOCHECK ADD  CONSTRAINT [FK_Shift_Employee] FOREIGN KEY([EmployeeID])
 REFERENCES [dbo].[Employee] ([ID])
+ON UPDATE CASCADE
+ON DELETE SET DEFAULT
 GO
-ALTER TABLE [dbo].[Shift] CHECK CONSTRAINT [FK_Shift_Employee]
+ALTER TABLE [dbo].[Shift] NOCHECK CONSTRAINT [FK_Shift_Employee]
 GO
 ALTER TABLE [dbo].[TimeOffRequest]  WITH CHECK ADD  CONSTRAINT [FK_TimeOffRequest_Employee] FOREIGN KEY([EmployeeID])
 REFERENCES [dbo].[Employee] ([ID])
@@ -362,6 +444,291 @@ ALTER TABLE [dbo].[TimeOffRequest]  WITH CHECK ADD  CONSTRAINT [FK_TimeOffReques
 REFERENCES [dbo].[Employee] ([ID])
 GO
 ALTER TABLE [dbo].[TimeOffRequest] CHECK CONSTRAINT [FK_TimeOffRequest_ManagerID]
+GO
+/****** Object:  StoredProcedure [dbo].[SP_Update_Availability]    Script Date: 3/21/2023 2:25:45 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		James Kelly
+-- Create date: 3/21/2023
+-- Description:	Insert or update an Availability
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_Update_Availability] 
+	-- Add the parameters for the stored procedure here
+	@ID int = 0, 
+	@EmployeeID int = 0,
+	@EffectiveDate datetime,
+	@MondayStart datetime,
+	@MondayEnd datetime,
+	@TuesdayStart datetime,
+	@TuesdayEnd datetime,
+	@WednesdayStart datetime,
+	@WednesdayEnd datetime,
+	@ThursdayStart datetime,
+	@ThursdayEnd datetime,
+	@FridayStart datetime,
+	@FridayEnd datetime,
+	@SaturdayStart datetime,
+	@SaturdayEnd datetime,
+	@SundayStart datetime,
+	@SundayEnd datetime,
+	@NewID int output
+AS
+BEGIN
+	SET NOCOUNT ON;
+	
+	IF @ID=0
+	BEGIN
+		INSERT INTO Availability (EmployeeID, EffectiveDate, MondayStart, 
+		MondayEnd, TuesdayStart, TuesdayEnd, WednesdayStart, WednesdayEnd,
+		ThursdayStart, ThursdayEnd, FridayStart, FridayEnd, SaturdayStart,
+		SaturdayEnd, SundayStart, SundayEnd) OUTPUT INSERTED.ID VALUES (@EmployeeID, @EffectiveDate,
+		@MondayStart, @MondayEnd, @TuesdayStart, @TuesdayEnd, @WednesdayStart,
+		@WednesdayEnd, @ThursdayStart, @ThursdayEnd, @FridayStart, @FridayEnd,
+		@SaturdayStart, @SaturdayEnd, @SundayStart, @SundayEnd);
+		SET @NewID = SCOPE_IDENTITY();
+	END
+	ELSE
+	BEGIN
+		UPDATE Availability SET
+		EmployeeID=@EmployeeID,
+		EffectiveDate=@EffectiveDate,
+		MondayStart=@MondayStart,
+		MondayEnd=@MondayEnd,
+		TuesdayStart=@TuesdayStart,
+		TuesdayEnd=@TuesdayEnd,
+		WednesdayStart=@WednesdayStart,
+		WednesdayEnd=@WednesdayEnd,
+		ThursdayStart=@ThursdayStart,
+		ThursdayEnd=@ThursdayEnd,
+		FridayStart=@FridayStart,
+		FridayEnd=@FridayEnd,
+		SaturdayStart=@SaturdayStart,
+		SaturdayEnd=@SaturdayEnd,
+		SundayStart=@SundayStart,
+		SundayEnd=@SundayEnd
+		WHERE ID=@ID;
+		SET @NewID = SCOPE_IDENTITY();
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_Update_Employee]    Script Date: 3/21/2023 2:25:45 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		James Kelly
+-- Create date: 3/21/2023
+-- Description:	Insert or update an Employee
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_Update_Employee]
+	@ID int = 0, 
+	@FirstName varchar(50),
+	@LastName varchar(50),
+	@RankID int = 1,
+	@Password varchar(50),
+	@Username varchar(50),
+	@Phone varchar(10),
+	@Email varchar(100),
+	@DateOfBirth date,
+	@NewID int output
+AS
+BEGIN
+	SET NOCOUNT ON;
+	
+	IF @ID=0
+	BEGIN
+		INSERT INTO Employee (FirstName, LastName, RankID, Password, Username, Phone, Email, DateOfBirth) 
+		VALUES (@FirstName, @LastName, @RankID, @Password, @Username, @Phone, @Email, @DateOfBirth);
+		SET @NewID = SCOPE_IDENTITY();
+	END
+	ELSE
+	BEGIN
+		UPDATE Employee SET
+		FirstName=@FirstName, LastName=@LastName, RankID=@RankID, Password=@Password,
+		Username=@Username, Phone=@Phone, Email=@Email,	DateOfBirth=@DateOfBirth
+		WHERE ID=@ID;
+		SET @NewID = SCOPE_IDENTITY();
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_Update_PickupRequest]    Script Date: 3/21/2023 2:25:45 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		James Kelly
+-- Create date: 3/21/2023
+-- Description:	Insert or update a PickupRequest
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_Update_PickupRequest]
+	@ShiftID int, 
+	@EmployeeID int,
+	@IsApproved bit,
+	@ManagerID int
+AS
+BEGIN
+	SET NOCOUNT ON;
+	
+	IF (SELECT COUNT(*) FROM PickupRequest WHERE ShiftID=@ShiftID AND EmployeeID=@EmployeeID)=0
+	BEGIN
+		INSERT INTO PickupRequest (ShiftID, EmployeeID, IsApproved, ManagerID) 
+		VALUES (@ShiftID, @EmployeeID, @IsApproved, @ManagerID);
+	END
+	ELSE
+	BEGIN
+		UPDATE PickupRequest
+		SET	IsApproved=@IsApproved,	ManagerID=@ManagerID
+		WHERE ShiftID=@ShiftID AND EmployeeID=@EmployeeID;
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_Update_Rank]    Script Date: 3/21/2023 2:25:45 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		James Kelly
+-- Create date: 3/21/2023
+-- Description:	Insert or update a PickupRequest
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_Update_Rank]
+	@ID int, 
+	@Title varchar(50),
+	@NewID int output
+AS
+BEGIN
+	SET NOCOUNT ON;
+	
+	IF @ID=0
+	BEGIN
+		INSERT INTO Rank (Title) 
+		VALUES (@Title);
+		SET @NewID = SCOPE_IDENTITY();
+	END
+	ELSE
+	BEGIN
+		UPDATE Rank
+		SET	Title=@Title
+		WHERE ID=@ID;
+		SET @NewID = SCOPE_IDENTITY();
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_Update_Role]    Script Date: 3/21/2023 2:25:45 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		James Kelly
+-- Create date: 3/21/2023
+-- Description:	Insert or update a Role
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_Update_Role]
+	@ID int, 
+	@Name varchar(50),
+	@NewID int output
+AS
+BEGIN
+	SET NOCOUNT ON;
+	
+	IF @ID=0
+	BEGIN
+		INSERT INTO Role (Name) 
+		VALUES (@Name);
+		SET @NewID = SCOPE_IDENTITY();
+	END
+	ELSE
+	BEGIN
+		UPDATE Role
+		SET	Name=@Name
+		WHERE ID=@ID;
+		SET @NewID = SCOPE_IDENTITY();
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_Update_Shift]    Script Date: 3/21/2023 2:25:45 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		James Kelly
+-- Create date: 3/21/2023
+-- Description:	Insert or update a Shift
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_Update_Shift]
+	@ID int, 
+	@IsOpen bit,
+	@EmployeeID int,
+	@Date datetime,
+	@StartTime datetime,
+	@EndTime datetime,
+	@Role varchar(50),
+	@Notes text,
+	@NewID int output
+AS
+BEGIN
+	SET NOCOUNT ON;
+	IF @ID=0
+	BEGIN
+		INSERT INTO Shift (IsOpen, EmployeeID, Date, StartTime, EndTime, Role, Notes) 
+		VALUES (@IsOpen, @EmployeeID, @Date, @StartTime, @EndTime, @Role, @Notes);
+		SET @NewID = SCOPE_IDENTITY();
+	END
+	ELSE
+	BEGIN
+		UPDATE Shift
+		SET	IsOpen=@IsOpen, EmployeeID=@EmployeeID, Date=@Date, 
+		StartTime=@StartTime, EndTime=@EndTime, Role=@Role, Notes=@Notes
+		WHERE ID=@ID;
+		SET @NewID = SCOPE_IDENTITY();
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_Update_TimeOffRequest]    Script Date: 3/21/2023 2:25:45 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		James Kelly
+-- Create date: 3/21/2023
+-- Description:	Insert or update a TimeOffRequest
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_Update_TimeOffRequest]
+	@ID int, 
+	@EmployeeID int,
+	@StartDate datetime,
+	@EndDate datetime,
+	@IsApproved bit,
+	@ManagerID int,
+	@Notes text,
+	@NewID int output
+AS
+BEGIN
+	SET NOCOUNT ON;
+	IF @ID=0
+	BEGIN
+		INSERT INTO TimeOffRequest (EmployeeID, StartDate, EndDate, IsApproved, ManagerID, Notes) 
+		VALUES (@EmployeeID, @StartDate, @EndDate, @IsApproved, @ManagerID, @Notes);
+		SET @NewID = SCOPE_IDENTITY();
+	END
+	ELSE
+	BEGIN
+		UPDATE TimeOffRequest
+		SET	EmployeeID=@EmployeeID, StartDate=@StartDate, EndDate=@EndDate, 
+		IsApproved=@IsApproved, ManagerID=@ManagerID, Notes=@Notes
+		WHERE ID=@ID;
+		SET @NewID = SCOPE_IDENTITY();
+	END
+END
 GO
 USE [master]
 GO

@@ -149,35 +149,38 @@ namespace ScheduleManager.Models
         }
         public String Save()
         {
-            SqlCommand theCommand;
-            if (ID == 0)
+            SqlCommand theCommand = new("SP_Update_TimeOffRequest", theConnection);
+            theCommand.CommandType = System.Data.CommandType.StoredProcedure;
+            theCommand.Parameters.AddWithValue("@ID", ID);
+            theCommand.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+            theCommand.Parameters.AddWithValue("@StartDate", StartDate);
+            theCommand.Parameters.AddWithValue("@EndDate", EndDate);
+            theCommand.Parameters.AddWithValue("@IsApproved", IsApproved);
+            theCommand.Parameters.AddWithValue("@ManagerID", (ManagerID==0?DBNull.Value:ManagerID));
+            theCommand.Parameters.AddWithValue("@Notes", Notes);
+            SqlParameter newParameter = new("@NewID", 0);
+            newParameter.Direction = System.Data.ParameterDirection.Output;
+            theCommand.Parameters.Add(newParameter);
+            String message = "The row was successfully updated.";
+            try
             {
-                theCommand = new SqlCommand("INSERT INTO TimeOffRequest (EmployeeID, StartDate, EndDate, IsApproved, ManagerID, Notes) OUTPUT INSERTED.ID VALUES (" + EmployeeID + ", '" + StartDate + "', '" + EndDate + "', '" + IsApproved + "', " + (ManagerID == 0 ? "NULL" : ManagerID) + ", '" + Notes.Replace("'", "''").Replace(";", "") + "');", theConnection);
                 theConnection.Open();
-                ID = Convert.ToInt32(theCommand.ExecuteScalar());
-                theConnection.Close();
-                return "Success, the ID of the new record is " + ID;
+                theCommand.ExecuteNonQuery();
+                if (ID == 0)
+                {
+                    ID = Convert.ToInt32(theCommand.Parameters["@NewID"].Value);
+                    message = "Success, the ID of the new record is " + ID;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                theCommand = new SqlCommand("UPDATE TimeOffRequest SET EmployeeID=" + EmployeeID + ", StartDate='" + StartDate + "', EndDate='" + EndDate + "', IsApproved='" + IsApproved + "', ManagerID=" + (ManagerID == 0 ? "NULL" : ManagerID) + ", Notes='" + Notes.Replace("'", "''").Replace(";", "") + "' WHERE ID=" + ID + ";", theConnection);
-                String message;
-                try
-                {
-                    theConnection.Open();
-                    theCommand.ExecuteNonQuery();
-                    message = "The row was successfully updated.";
-                }
-                catch (Exception ex)
-                {
-                    message = "The row was not successfully updated. Error: " + ex.Message;
-                }
-                finally
-                {
-                    theConnection.Close();
-                }
-                return message;
+                message = "The row was not successfully updated. Error: " + ex.Message;
             }
+            finally
+            {
+                theConnection.Close();
+            }
+            return message;
         }
     }
 }

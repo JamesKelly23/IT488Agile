@@ -24,7 +24,7 @@
         {
             return new Employee(EmployeeID);
         }
-        public Availability (int employeeID, DateTime effectiveDate, DateTime mondayStart, DateTime mondayEnd, DateTime tuesdayStart, DateTime tuesdayEnd, DateTime wednesdayStart, DateTime wednesdayEnd, DateTime thursdayStart, DateTime thursdayEnd, DateTime fridayStart, DateTime fridayEnd, DateTime saturdayStart, DateTime saturdayEnd, DateTime sundayStart, DateTime sundayEnd)
+        public Availability(int employeeID, DateTime effectiveDate, DateTime mondayStart, DateTime mondayEnd, DateTime tuesdayStart, DateTime tuesdayEnd, DateTime wednesdayStart, DateTime wednesdayEnd, DateTime thursdayStart, DateTime thursdayEnd, DateTime fridayStart, DateTime fridayEnd, DateTime saturdayStart, DateTime saturdayEnd, DateTime sundayStart, DateTime sundayEnd)
         {
             EmployeeID = employeeID;
             EffectiveDate = effectiveDate;
@@ -42,7 +42,7 @@
             SaturdayEnd = saturdayEnd;
             SundayStart = sundayStart;
             SundayEnd = sundayEnd;
-        }   
+        }
         public string GetDayString(DayOfWeek theDay)
         {
             if (!IsAvailable(theDay))
@@ -58,7 +58,7 @@
         public Availability(int employeeiD, DateTime effectiveDate)
         {
             ID = 0;
-            EmployeeID= employeeiD;
+            EmployeeID = employeeiD;
             EffectiveDate = effectiveDate;
             DateTime midnight = Convert.ToDateTime("1/1/2001 00:00:00");
             foreach (DayOfWeek theDay in GetDaysOfWeek())
@@ -69,7 +69,7 @@
         }
         public DateTime GetStart(DayOfWeek theDay)
         {
-            switch(theDay)
+            switch (theDay)
             {
                 case DayOfWeek.Monday: return MondayStart;
                 case DayOfWeek.Tuesday: return TuesdayStart;
@@ -83,21 +83,21 @@
         }
         public DateTime GetEnd(DayOfWeek theDay)
         {
-            switch(theDay)
+            switch (theDay)
             {
                 case DayOfWeek.Monday: return MondayEnd;
                 case DayOfWeek.Tuesday: return TuesdayEnd;
                 case DayOfWeek.Wednesday: return WednesdayEnd;
                 case DayOfWeek.Thursday: return ThursdayEnd;
                 case DayOfWeek.Friday: return FridayEnd;
-                case DayOfWeek.Saturday:return SaturdayEnd;
+                case DayOfWeek.Saturday: return SaturdayEnd;
                 case DayOfWeek.Sunday: return SundayEnd;
                 default: return new DateTime();
             }
         }
         public void SetStart(DayOfWeek theDay, DateTime startDate)
         {
-            switch(theDay)
+            switch (theDay)
             {
                 case DayOfWeek.Monday: MondayStart = startDate; break;
                 case DayOfWeek.Tuesday: TuesdayStart = startDate; break;
@@ -110,12 +110,12 @@
         }
         public Boolean IsAvailableAt(DayOfWeek theDay, int theHour)
         {
-            if(theHour>23)
+            if (theHour > 23)
             {
                 theHour = 23;
             }
             DateTime theTime = Convert.ToDateTime("1/1/2001 " + theHour + ":00:00");
-            if((theTime >= GetStart(theDay)) && (theTime < GetEnd(theDay)))
+            if ((theTime >= GetStart(theDay)) && (theTime < GetEnd(theDay)))
             {
                 return true;
             }
@@ -134,7 +134,7 @@
                 case DayOfWeek.Sunday: SundayEnd = endDate; break;
             }
         }
-        public Availability (int theID)
+        public Availability(int theID)
         {
             ID = theID;
             SqlConnection theConnection = new(ConnectionStrings.local);
@@ -202,33 +202,48 @@
         }
         public string Save()
         {
-            SqlCommand theCommand;
-            if (ID == 0)
+            SqlCommand theCommand = new("SP_Update_Availability", theConnection);
+            theCommand.CommandType = System.Data.CommandType.StoredProcedure;
+            theCommand.Parameters.AddWithValue("@ID", ID);
+            theCommand.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+            theCommand.Parameters.AddWithValue("@EffectiveDate", EffectiveDate);
+            theCommand.Parameters.AddWithValue("@MondayStart", MondayStart);
+            theCommand.Parameters.AddWithValue("@MondayEnd", MondayEnd);
+            theCommand.Parameters.AddWithValue("@TuesdayStart", TuesdayStart);
+            theCommand.Parameters.AddWithValue("@TuesdayEnd", TuesdayEnd);
+            theCommand.Parameters.AddWithValue("@WednesdayStart", WednesdayStart);
+            theCommand.Parameters.AddWithValue("@WednesdayEnd", WednesdayEnd);
+            theCommand.Parameters.AddWithValue("@ThursdayStart", ThursdayStart);
+            theCommand.Parameters.AddWithValue("@ThursdayEnd", ThursdayEnd);
+            theCommand.Parameters.AddWithValue("@FridayStart", FridayStart);
+            theCommand.Parameters.AddWithValue("@FridayEnd", FridayEnd);
+            theCommand.Parameters.AddWithValue("@SaturdayStart", SaturdayStart);
+            theCommand.Parameters.AddWithValue("@SaturdayEnd", SaturdayEnd);
+            theCommand.Parameters.AddWithValue("@SundayStart", SundayStart);
+            theCommand.Parameters.AddWithValue("@SundayEnd", SundayEnd);
+            SqlParameter newParameter = new("@NewID", 0);
+            newParameter.Direction = System.Data.ParameterDirection.Output;
+            theCommand.Parameters.Add(newParameter);
+            String message = "The row was successfully updated.";
+            try
             {
-                theCommand = new SqlCommand("INSERT INTO Availability (EmployeeID, EffectiveDate, MondayStart, MondayEnd, TuesdayStart, TuesdayEnd, WednesdayStart, WednesdayEnd, ThursdayStart, ThursdayEnd, FridayStart, FridayEnd, SaturdayStart, SaturdayEnd, SundayStart, SundayEnd) OUTPUT INSERTED.ID VALUES (" + EmployeeID + ", '" + EffectiveDate + "', '" + MondayStart + "', '" + MondayEnd + "', '" + TuesdayStart + "', '" + TuesdayEnd + "', '" + WednesdayStart + "', '" + WednesdayEnd + "', '" + ThursdayStart + "', '" + ThursdayEnd + "', '" + FridayStart + "', '" + FridayEnd + "', '" + SaturdayStart + "', '" + SaturdayEnd + "', '" + SundayStart + "', '" + SundayEnd + "');", theConnection);
                 theConnection.Open();
-                ID = Convert.ToInt32(theCommand.ExecuteScalar());
-                theConnection.Close();
-                return "Success, the ID of the new record is " + ID;
-            }
-            else
-            {
-                theCommand = new SqlCommand("UPDATE Availability SET EmployeeID=" + EmployeeID + ", EffectiveDate='" + EffectiveDate + "', MondayStart='" + MondayStart + "', MondayEnd='" + MondayEnd + "', TuesdayStart='" + TuesdayStart + "', TuesdayEnd='" + TuesdayEnd + "', WednesdayStart='" + WednesdayStart + "', WednesdayEnd='" + WednesdayEnd + "', ThursdayStart='" + ThursdayStart + "', ThursdayEnd='" + ThursdayEnd + "', FridayStart='" + FridayStart + "', FridayEnd='" + FridayEnd + "', SaturdayStart='" + SaturdayStart + "', SaturdayEnd='" + SaturdayEnd + "', SundayStart='" + SundayStart + "', SundayEnd='" + SundayEnd + "' WHERE ID=" + ID + ";", theConnection);
-                String message;
-                try
+                theCommand.ExecuteNonQuery();
+                if (ID == 0)
                 {
-                    theConnection.Open();
-                    theCommand.ExecuteNonQuery();
-                    message= "The row was successfully updated.";
-                } catch (Exception ex)
-                {
-                    message= "The row was not successfully updated. Error: " + ex.Message;
-                } finally
-                {
-                    theConnection.Close();
+                    ID = Convert.ToInt32(theCommand.Parameters["@NewID"].Value);
+                    message = "Success, the ID of the new record is " + ID;
                 }
-                return message;
             }
+            catch (Exception ex)
+            {
+                message = "The row was not successfully updated. Error: " + ex.Message;
+            }
+            finally
+            {
+                theConnection.Close();
+            }
+            return message;
         }
     }
 }

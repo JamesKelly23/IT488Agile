@@ -54,35 +54,33 @@ namespace ScheduleManager.Models
         }
         public String Save()
         {
-            SqlCommand theCommand;
-            if (ID == 0)
+            SqlCommand theCommand = new("SP_Update_Role", theConnection);
+            theCommand.CommandType = System.Data.CommandType.StoredProcedure;
+            theCommand.Parameters.AddWithValue("@ID", ID);
+            theCommand.Parameters.AddWithValue("@Name", Name);
+            SqlParameter newParameter = new("@NewID", 0);
+            newParameter.Direction = System.Data.ParameterDirection.Output;
+            theCommand.Parameters.Add(newParameter);
+            String message = "The row was successfully updated.";
+            try
             {
-                theCommand = new SqlCommand("INSERT INTO Role (Name) OUTPUT INSERTED.ID VALUES ('" + Name + "');", theConnection);
                 theConnection.Open();
-                ID = Convert.ToInt32(theCommand.ExecuteScalar());
-                theConnection.Close();
-                return "Success, the ID of the new record is " + ID;
+                theCommand.ExecuteNonQuery();
+                if (ID == 0)
+                {
+                    ID = Convert.ToInt32(theCommand.Parameters["@NewID"].Value);
+                    message = "Success, the ID of the new record is " + ID;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                theCommand = new SqlCommand("UPDATE Role SET Name='" + Name + "' WHERE ID=" + ID + ";", theConnection);
-                String message;
-                try
-                {
-                    theConnection.Open();
-                    theCommand.ExecuteNonQuery();
-                    message = "The row was successfully updated.";
-                }
-                catch (Exception ex)
-                {
-                    message = "The row was not successfully updated. Error: " + ex.Message;
-                }
-                finally
-                {
-                    theConnection.Close();
-                }
-                return message;
+                message = "The row was not successfully updated. Error: " + ex.Message;
             }
+            finally
+            {
+                theConnection.Close();
+            }
+            return message;
         }
     }
 }

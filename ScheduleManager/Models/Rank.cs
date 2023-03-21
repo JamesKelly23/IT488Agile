@@ -31,34 +31,33 @@ namespace ScheduleManager.Models
         }
         public string Save()
         {
-            SqlCommand theCommand;
-            if(ID==0)
+            SqlCommand theCommand = new("SP_Update_Rank", theConnection);
+            theCommand.CommandType = System.Data.CommandType.StoredProcedure;
+            theCommand.Parameters.AddWithValue("@ID", ID);
+            theCommand.Parameters.AddWithValue("@Title", Title);
+            SqlParameter newParameter = new("@NewID", 0);
+            newParameter.Direction = System.Data.ParameterDirection.Output;
+            theCommand.Parameters.Add(newParameter);
+            String message = "The row was successfully updated.";
+            try
             {
-                theCommand = new SqlCommand("INSERT INTO Rank (Title) OUTPUT INSERTED.ID VALUES ('" + Title + "');", theConnection);
                 theConnection.Open();
-                ID = Convert.ToInt32(theCommand.ExecuteScalar());
-                theConnection.Close();
-                return "Success, the ID of the new record is " + ID;
-            } else
-            {
-                theCommand = new SqlCommand("UPDATE Rank SET Title='" + Title + "' WHERE ID=" +ID +";", theConnection);
-                String message;
-                try
+                theCommand.ExecuteNonQuery();
+                if (ID == 0)
                 {
-                    theConnection.Open();
-                    theCommand.ExecuteNonQuery();
-                    message = "The row was successfully updated.";
+                    ID = Convert.ToInt32(theCommand.Parameters["@NewID"].Value);
+                    message = "Success, the ID of the new record is " + ID;
                 }
-                catch (Exception ex)
-                {
-                    message = "The row was not successfully updated. Error: " + ex.Message;
-                }
-                finally
-                {
-                    theConnection.Close();
-                }
-                return message;
             }
+            catch (Exception ex)
+            {
+                message = "The row was not successfully updated. Error: " + ex.Message;
+            }
+            finally
+            {
+                theConnection.Close();
+            }
+            return message;
         }
         public static List<Rank> GetList()
         {

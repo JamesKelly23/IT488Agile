@@ -99,35 +99,32 @@
         }
         public String Save()
         {
-            SqlCommand theCommand;
-            if(IsNew) 
+            SqlCommand theCommand = new("SP_Update_PickupRequest", theConnection);
+            theCommand.CommandType = System.Data.CommandType.StoredProcedure;
+            theCommand.Parameters.AddWithValue("@ShiftID", ShiftID);
+            theCommand.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+            theCommand.Parameters.AddWithValue("@IsApproved", IsApproved);
+            theCommand.Parameters.AddWithValue("@ManagerID", (ManagerID==0?DBNull.Value:ManagerID));
+            String message = "The row was successfully updated.";
+            try
             {
-                theCommand = new SqlCommand("INSERT INTO PickupRequest (ShiftID, EmployeeID, IsApproved, ManagerID) VALUES (" + ShiftID + ", " + EmployeeID + ", '" + IsApproved + "', " + (ManagerID == 0 ? "NULL" : ManagerID) + ");", theConnection);
                 theConnection.Open();
                 theCommand.ExecuteNonQuery();
-                theConnection.Close();
-                return "Success. Record added.";
+                if (IsNew)
+                {
+                    IsNew = false;
+                    message = "The row was successfully inserted.";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                theCommand = new SqlCommand("UPDATE PickupRequest SET IsApproved='" + IsApproved + "', ManagerID=" + (ManagerID==0 ? "NULL" : ManagerID) + " WHERE ShiftID=" + ShiftID + " AND EmployeeID=" + EmployeeID +";", theConnection);
-                String message;
-                try
-                {
-                    theConnection.Open();
-                    theCommand.ExecuteNonQuery();
-                    message = "The row was successfully updated.";
-                }
-                catch (Exception ex)
-                {
-                    message = "The row was not successfully updated. Error: " + ex.Message;
-                }
-                finally
-                {
-                    theConnection.Close();
-                }
-                return message;
+                message = "The row was not successfully updated. Error: " + ex.Message;
             }
+            finally
+            {
+                theConnection.Close();
+            }
+            return message;
         }
     }
 }

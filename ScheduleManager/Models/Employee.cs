@@ -93,37 +93,40 @@ namespace ScheduleManager.Models
         }
         public string Save()
         {
-            SqlCommand theCommand;
-            if (ID == 0)
+            SqlCommand theCommand = new("SP_Update_Employee", theConnection);
+            theCommand.CommandType = System.Data.CommandType.StoredProcedure;
+            theCommand.Parameters.AddWithValue("@ID", ID);
+            theCommand.Parameters.AddWithValue("@FirstName", FirstName);
+            theCommand.Parameters.AddWithValue("@LastName", LastName);
+            theCommand.Parameters.AddWithValue("@RankID", RankID);
+            theCommand.Parameters.AddWithValue("@Password", Password);
+            theCommand.Parameters.AddWithValue("@Username", Username);
+            theCommand.Parameters.AddWithValue("@Phone", Phone);
+            theCommand.Parameters.AddWithValue("@Email", Email);
+            theCommand.Parameters.AddWithValue("@DateOfBirth", DOB);
+            SqlParameter newParameter = new("@NewID", 0);
+            newParameter.Direction = System.Data.ParameterDirection.Output;
+            theCommand.Parameters.Add(newParameter);
+            String message = "The row was successfully updated.";
+            try
             {
-                theCommand = new SqlCommand("INSERT INTO Employee (FirstName, LastName, RankID, Password, UserName, Phone, Email, DateOfBirth) OUTPUT INSERTED.ID VALUES ('" + FirstName + "', '" + LastName + "', " + RankID + ", '" + Password + "', '" + Username + "', '" + Phone + "', '" + Email + "', '" + DOB.ToString() + "');", theConnection);
                 theConnection.Open();
-                ID = Convert.ToInt32(theCommand.ExecuteScalar());
-                theConnection.Close();
-                Availability newAvailability = new(ID, DateTime.Today);
-                newAvailability.Save();
-                return "Success, the ID of the new record is " + ID;
+                theCommand.ExecuteNonQuery();
+                if (ID == 0)
+                {
+                    ID = Convert.ToInt32(theCommand.Parameters["@NewID"].Value);
+                    message = "Success, the ID of the new record is " + ID;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                theCommand = new SqlCommand("UPDATE Employee SET FirstName='" + FirstName + "', LastName='" + LastName + "', RankID=" + RankID + ", Password='" + Password + "', Username='" + Username + "', Phone='" +Phone + "', Email='" + Email + "', DateOfBirth='" +DOB.ToString() + "' WHERE ID=" + ID + ";", theConnection);
-                String message;
-                try
-                {
-                    theConnection.Open();
-                    theCommand.ExecuteNonQuery();
-                    message = "The row was successfully updated.";
-                }
-                catch (Exception ex)
-                {
-                    message = "The row was not successfully updated. Error: " + ex.Message;
-                }
-                finally
-                {
-                    theConnection.Close();
-                }
-                return message;
+                message = "The row was not successfully updated. Error: " + ex.Message;
             }
+            finally
+            {
+                theConnection.Close();
+            }
+            return message;
         }
         public static void Delete(int id)
         {
