@@ -78,7 +78,8 @@
                     DateTime theCursor = ViewBag.TargetDate.AddHours(6);
                     for (int i = 6; i < 24; i++)
                     {
-                        <td class="painter-cell">@theCursor.ToString("htt")</td>
+                        <td class="painter-cell-left">@(i>12?i-12:i)</td>
+                        <td class="painter-cell-right">@theCursor.ToString("tt")</td>
                         theCursor = theCursor.AddHours(1);
                     }
                 }
@@ -93,12 +94,13 @@
                                                   where theShift.EmployeeID == theEmployee.ID
                                                   select theShift;
                     List<Shift> theShifts = theQuery.ToList();
-                    <tr class="painter-row @(rownum++%2==0?"evenrow":"")">
+                    <tr class="painter-row @(rownum++%2==0?"evenrow":"")">"
                         <td class="painter-name-cell">@theEmployee.FullName()</td>
+                        <td style="background-color:darkgray;" class="painter-cell"></td>
                         @{
                             if (TimeOffRequest.IsDayApprovedOffForEmployee(theEmployee.ID, ViewBag.TargetDate)) //Fires if there is an approved time off request for an employee on this day.
                             {
-                                <td colspan="18" class="painter-cell @(rownum %2 == 0 ? "painter-unavailable-even" : "painter-unavailable")">Unavailable - Approved Time Off Request</td>
+                                <td colspan="36" class="painter-cell @(rownum %2 == 0 ? "painter-unavailable-even" : "painter-unavailable")">Unavailable - Approved Time Off Request</td>
                             }
                             else if (theShifts.Count > 0) //Fires if a shift exists on the current row
                             {
@@ -110,11 +112,11 @@
                                 {
                                     if ((i < startHour) || (i > (startHour + shiftLength - 1))) //Adds empty cell
                                     {
-                                        <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"></td>
+                                        <td colspan="2" class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"></td>
                                     }
                                     else //Adds paragraph tag with shift
                                     {
-                                        <td class="painter-shift painter-cell" colspan="@shiftLength">@theShift.ToString() - @theShift.Role<a class="painter-link-button small-x" asp-action="DeleteShift" asp-route-id="@theShift.ID">x</a></td>
+                                        <td class="painter-shift painter-cell" colspan="@(shiftLength*2)">@theShift.ToString() - @theShift.Role<a class="painter-link-button small-x" asp-action="DeleteShift" asp-route-id="@theShift.ID">x</a></td>
                                         i += shiftLength - 1;
                                     }
                                 }
@@ -126,26 +128,29 @@
                                     DateTime targetTime = ViewBag.TargetDate.AddHours(i);
                                     if (((@ViewBag.EmployeeID ?? 0) == 0) && i < 23) //StartTime Buttons (Only show when starttime has not already been declared)
                                     {
-                                        <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"><input type="submit" asp-route-date="@ViewBag.TargetDate.ToString("d")" name="Submit" asp-route-id="@theEmployee.ID" onmouseover="ChangeValue('StartTime', '@targetTime.ToString()')" value="@targetTime.ToString("htt")" class="painter-link-button-nofloat" asp-action="Painter"></td>
+                                        <td colspan="2" class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"><input type="submit" asp-route-date="@ViewBag.TargetDate.ToString("d")" name="Submit" asp-route-id="@theEmployee.ID" onmouseover="ChangeValue('StartTime', '@targetTime.ToString()')" value="@targetTime.ToString("htt")" class="painter-link-button-nofloat" asp-action="Painter"></td>
                                     }
                                     else if ((ViewBag.EmployeeID == theEmployee.ID))
                                     {
                                         if ((ViewBag.StartTime - ViewBag.TargetDate).Hours == i)//Start Button (shows when starttme has been declared and this hour is the same as the start time)
                                         {
-                                            <td><input type="submit" id="focusButton" class="painter-link-button-nofloat painter-shift" value="Start" disabled></td>
+                                            <td colspan="2"><input type="submit" id="focusButton" class="painter-link-button-nofloat painter-shift" value="Start" disabled></td>
                                         }
                                         else if (i < (ViewBag.StartTime - ViewBag.TargetDate).Hours) //Show nothing (for the hours before the declared starttime)
                                         {
-                                            <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"></td>
+                                            <td colspan="2" class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"></td>
                                         }
                                         else //Show the EndTime buttons.
                                         {
-                                            <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"><input type="submit" name="Submit" onmouseover="ChangeValue('EndTime', '@targetTime.ToString()')" value="@ViewBag.TargetDate.AddHours(i).ToString("htt")" class="painter-link-button-nofloat" asp-action="AddShift"></td>
+                                            if(i<23)
+                                            {
+                                                <td colspan="2" class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"><input type="submit" name="Submit" onmouseover="ChangeValue('EndTime', '@targetTime.AddHours(1).ToString()')" value="@ViewBag.TargetDate.AddHours(i+1).ToString("htt")" class="painter-link-button-nofloat" asp-action="AddShift"></td>
+                                            }  
                                         }
                                     }
                                     else
                                     {
-                                        <td class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"></td>
+                                        <td colspan="2" class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"></td>
                                     }
                                 }
                             }

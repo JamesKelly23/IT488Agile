@@ -134,21 +134,21 @@ div.details {
 }
 
 .painter-unavailable {
-    border: 1pt solid black;
-    
+    border-left: 3pt solid black;
+    border-right: 3pt solid black;
     vertical-align: middle;
     text-align: center;
-    width: 60px;
+    width: 30px;
     height: 60px;
     background-color: #f8a6b2;
 }
 
 .painter-unavailable-even {
-    border: 1pt solid black;
-    
+    border-left: 3pt solid black;
+    border-right: 3pt solid black;
     vertical-align: middle;
     text-align: center;
-    width: 60px;
+    width: 30px;
     height: 60px;
     background-color: lightpink;
 }
@@ -244,11 +244,28 @@ tr.painter-row {
 }
 
 td.painter-cell, th.painter-cell {
-    border: 1pt solid black;
+    border-left: 3pt solid black;
+    border-right: 3pt solid black;
     vertical-align: middle;
     text-align: center;
-    width:60px;
+    width:30px;
     height:60px;
+}
+td.painter-cell-left, th.painter-cell-left {
+    
+    vertical-align: bottom;
+    text-align: right;
+    width: 30px;
+    height: 60px;
+    font-weight:bold;
+}
+td.painter-cell-right, th.painter-cell-right {
+    
+    vertical-align: bottom;
+    text-align: left;
+    width: 30px;
+    height: 60px;
+    font-weight: bold;
 }
 
 td.painter-name-cell, th.painter-name-cell {

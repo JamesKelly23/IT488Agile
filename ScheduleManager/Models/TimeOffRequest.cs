@@ -99,6 +99,14 @@ namespace ScheduleManager.Models
             staticConnection.Close();
             return list;
         }
+        public void Delete()
+        {
+            SqlCommand theCommand = new("DELETE FROM TimeOffRequest WHERE ID=" + ID + ";", theConnection);
+            theConnection.Open();
+            theCommand.ExecuteNonQuery();
+            theConnection.Close();
+            ID = 0;
+        }
         public Employee GetEmployee()
         {
             return new Employee(EmployeeID);

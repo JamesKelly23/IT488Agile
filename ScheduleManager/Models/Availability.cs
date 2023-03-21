@@ -110,8 +110,12 @@
         }
         public Boolean IsAvailableAt(DayOfWeek theDay, int theHour)
         {
+            if(theHour>23)
+            {
+                theHour = 23;
+            }
             DateTime theTime = Convert.ToDateTime("1/1/2001 " + theHour + ":00:00");
-            if((theTime >= GetStart(theDay)) && (theTime <= GetEnd(theDay)))
+            if((theTime >= GetStart(theDay)) && (theTime < GetEnd(theDay)))
             {
                 return true;
             }

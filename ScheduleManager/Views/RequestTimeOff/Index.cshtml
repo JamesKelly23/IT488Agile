@@ -14,6 +14,7 @@
         box-sizing: border-box;
         margin-bottom: 10px;
     }
+
     form input[type="submit"],
     form textarea {
         border: none;
@@ -34,64 +35,65 @@
 </style>
 
 
-    <center>
-        <h1>Request Time Off</h1>
-        <form asp-action = "Submit">
-            <label for="employee-name">Name:</label>
-            @ViewBag.CurrentUser.FullName()<br /><br />
-            <p class="error">
-                @ViewData["Message"]
-            </p>
-            <label for="start-date">Start Date:</label>
-            <input type="date" id="start-date" name="start-date" required /><br /><br />
-               
-                
-
-            <label for="end-date">End Date:</label>
-            <input type="date" id="end-date" name="end-date" required /><br /><br />
-
-            <label for="reason">Reason for Time Off:</label>
-            <textarea id="reason" name="reason" rows="4" cols="50"></textarea><br /><br />
-
+<center>
+    <h1>Request Time Off</h1>
+    <form asp-action="Submit">
+        <label for="employee-name">Name:</label>
+        @ViewBag.CurrentUser.FullName()<br /><br />
+        <p class="error">
+            @ViewData["Message"]
+        </p>
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date" name="start-date" required /><br /><br />
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date" name="end-date" required /><br /><br />
+        <label for="reason">Reason for Time Off:</label>
+        <textarea id="reason" name="reason" rows="4" cols="50"></textarea><br /><br />
         <input type="submit" value="Submit" />
-        </form>
-        <table class="request-table">
-            <tr class="row2">
-                <td class="cell2"> Start Date</td>
-                <td class="cell2">End Date</td>
-                <td class="cell2">Notes</td>
-                <td class="cell2">Approved</td>
-                <td class="cell2">Manager</td>
-            </tr>
+    </form>
+    <hr />
+    <table class="request-table">
+        <tr class="headerrow"><th class="cell2" colspan="6">Submitted Requests</th></tr>
+        <tr class="row2">
+            <td class="cell2">Start Date</td>
+            <td class="cell2">End Date</td>
+            <td class="cell2">Notes</td>
+            <td class="cell2">Approved</td>
+            <td class="cell2">Manager</td>
+            <td class="cell2">Actions</td>
+        </tr>
         @{
-            foreach(TimeOffRequest TheRequest in ViewBag.TORList)
+            foreach (TimeOffRequest TheRequest in ViewBag.TORList)
             {
-                <tr class ="row2">
-                <td class="cell2">@TheRequest.StartDate.ToString("D")</td>
+                <tr class="row2">
+                    <td class="cell2">@TheRequest.StartDate.ToString("D")</td>
                     <td class="cell2">@TheRequest.EndDate.ToString("D")</td>
                     <td class="cell2">@TheRequest.Notes</td>
                     @{
-                    if(TheRequest.IsApproved){//is aproved
-                            <td class="cell2">Aproved</td>
+                        if (TheRequest.IsApproved)
+                        {//is aproved
+                            <td class="cell2 approve">Approved</td>
                         }
                         else if (!TheRequest.IsApproved && TheRequest.ManagerID == 0)
                         {//not aproved or denied yet
-                            <td class="cell2">Pending</td>
+                            <td class="cell2 details">Pending</td>
                         }
-                        else{//Denied
-                            <td class="cell2">Denied</td>
+                        else
+                        {//Denied
+                            <td class="cell2 deny">Denied</td>
+                        }
                     }
-                    }
-                   
-                    
                     <td class="cell2">@(TheRequest.ManagerID == 0 ? "No one" : TheRequest.GetManager().FullName())</td>
-
-                    
+                    <td class="cell2"><a class="link-button-nofloat" asp-action="Delete" asp-route-id="@TheRequest.ID">Cancel</a></td>
                 </tr>
             }
+            if(ViewBag.TORList.Count==0)
+            {
+                <tr><td class="cell2" colspan="6">No requests to show</td></tr>
+            }
         }
-        </table>
-    </center>
-   
-       
+    </table>
+</center>
+
+
 

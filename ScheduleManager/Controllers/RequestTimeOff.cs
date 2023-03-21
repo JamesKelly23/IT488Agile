@@ -43,5 +43,20 @@ namespace ScheduleManager.Controllers
             TheRequest.Save();
             return Index();
         } 
+
+        public IActionResult Delete(int id)
+        {
+            if(id==null)
+            {
+                ViewData["Message"] = "No ID Supplied to Delete command.";
+            }
+            TimeOffRequest theRequest = new TimeOffRequest(id);
+            if(theRequest.EmployeeID != HttpContext.Session.GetInt32("_LoggedInEmployeeID"))
+            {
+                ViewData["Message"] = "You cannot delete someone else's Time Off Request.";
+            }
+            theRequest.Delete();
+            return Index();
+        }
     }
 }
