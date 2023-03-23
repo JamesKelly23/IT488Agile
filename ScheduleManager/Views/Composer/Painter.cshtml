@@ -116,7 +116,7 @@
                                     }
                                     else //Adds paragraph tag with shift
                                     {
-                                        <td class="painter-shift painter-cell" colspan="@(shiftLength*2)">@theShift.ToString() - @theShift.Role<a class="painter-link-button small-x" asp-action="DeleteShift" asp-route-id="@theShift.ID">x</a></td>
+                                        <td style="vertical-align:middle;" class="painter-shift painter-cell" colspan="@(shiftLength*2)">@theShift.ToString() - @theShift.Role<a class="painter-link-button-small-x" asp-action="DeleteShift" asp-route-id="@theShift.ID">x</a></td>
                                         i += shiftLength - 1;
                                     }
                                 }

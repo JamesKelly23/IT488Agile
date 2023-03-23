@@ -32,6 +32,7 @@ p.error {
     background-color:palegoldenrod;
     text-align:center;
     vertical-align:middle;
+    font-size:10pt;
     width:100%;
     height:100%;
     padding:3px;
@@ -133,8 +134,9 @@ div.details {
     margin: 5px;
     float: none;
     vertical-align:top;
-    height:60%;
+    height:50%;
     width:80%;
+    font-size: 8pt;
 }
 
 .painter-unavailable {
@@ -142,8 +144,8 @@ div.details {
     border-right: 3pt solid black;
     vertical-align: middle;
     text-align: center;
-    width: 30px;
-    height: 60px;
+    width: 20px;
+    height: 40px;
     background-color: #f8a6b2;
 }
 
@@ -152,8 +154,8 @@ div.details {
     border-right: 3pt solid black;
     vertical-align: middle;
     text-align: center;
-    width: 30px;
-    height: 60px;
+    width: 20px;
+    height: 40px;
     background-color: lightpink;
 }
 .confirm-box {
@@ -193,12 +195,19 @@ div.details {
     float: right;
 }
 
-a.small-x {
-    width:35px;
-    height:35px;
-    font-size:8pt;
-    border-radius:35px;
-    background-color:palevioletred;
+a.painter-link-button-small-x {
+    color: black;
+    border: 1pt solid black;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 3px 3px 3px #888888;
+    margin: 5px;
+    float: right;
+    width: 20px;
+    height: 20px;
+    font-size: 8pt;
+    background-color: palevioletred;
 }
 
 div.item-box {
@@ -252,15 +261,15 @@ td.painter-cell, th.painter-cell {
     border-right: 3pt solid black;
     vertical-align: middle;
     text-align: center;
-    width:30px;
-    height:60px;
+    width:20px;
+    height:40px;
 }
 td.painter-cell-left, th.painter-cell-left {
     
     vertical-align: bottom;
     text-align: right;
-    width: 30px;
-    height: 60px;
+    width: 20px;
+    height: 40px;
     font-weight:bold;
 }
 td.painter-cell-right, th.painter-cell-right {
