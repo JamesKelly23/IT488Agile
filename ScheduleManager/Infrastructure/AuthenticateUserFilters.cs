@@ -11,9 +11,7 @@ public class AuthenticateUser : ActionFilterAttribute
         {
             context.Result = new RedirectResult("~/Home");
         }
-        
     }
-
     public override void OnActionExecuted(ActionExecutedContext context)
     {
         // Do something after the action executes.
@@ -29,10 +27,8 @@ public class AuthenticateManager : ActionFilterAttribute
         } else if((new Employee(context.HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0)).RankID < 2)
         {
             context.Result = new RedirectResult("~/Home/Unauth");
-        }
-        
+        }  
     }
-
     public override void OnActionExecuted(ActionExecutedContext context)
     {
         // Do something after the action executes.
@@ -49,10 +45,8 @@ public class AuthenticateGM : ActionFilterAttribute
         else if((new Employee(context.HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0)).RankID < 3)
         {
             context.Result = new RedirectResult("~/Home/Unauth");
-        }
-        
+        }   
     }
-
     public override void OnActionExecuted(ActionExecutedContext context)
     {
         // Do something after the action executes.

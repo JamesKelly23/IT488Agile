@@ -7,6 +7,7 @@ namespace ScheduleManager.Controllers
 {
     public class AvailabilityEditor : Controller
     {
+        [AuthenticateUser]
         public IActionResult Index()
         {
             int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
@@ -14,7 +15,7 @@ namespace ScheduleManager.Controllers
             ViewBag.CurrentAvailability =  ViewBag.CurrentUser.GetCurrentAvailability();
             return View("Index");
         }
-
+        [AuthenticateUser]
         public IActionResult Update()
         {
             int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;

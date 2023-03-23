@@ -17,6 +17,7 @@ namespace ScheduleManager.Controllers
             int loggedInRank = employee.RankID;
             return loggedInRank;
         }
+        [AuthenticateManager]
         public IActionResult ScheduleEditorIndex()
         {
             int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
@@ -34,6 +35,7 @@ namespace ScheduleManager.Controllers
 
             //ViewBag.ShiftList = shiftList;
         }
+        [AuthenticateManager]
         public IActionResult AddShift()
         {
             int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
@@ -51,6 +53,7 @@ namespace ScheduleManager.Controllers
 
             //return View();
         }
+        [AuthenticateManager]
         public IActionResult ViewShifts(int a)
         {
             int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
@@ -92,9 +95,9 @@ namespace ScheduleManager.Controllers
             else
             {
                 return View("Error");
-            }
-            
+            } 
         }
+        [AuthenticateManager]
         public IActionResult CreateShift()
         {
             Shift newShift = new(true, 1,Convert.ToDateTime(HttpContext.Request.Form["ShiftDate"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftStart"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftEnd"]),HttpContext.Request.Form["ShiftRole"],HttpContext.Request.Form["ShiftNotes"]);
@@ -113,12 +116,14 @@ namespace ScheduleManager.Controllers
             ScheduleEditorIndex();
             return View("ScheduleEditorIndex");
         }
+        [AuthenticateManager]
         public IActionResult ViewDetails(int ID)
         {
             Shift thisShift = new Models.Shift(ID);
             ViewBag.ThisShift = thisShift;
             return View();
         }
+        [AuthenticateManager]
         public IActionResult DeleteShift(int id)
         {
             Shift thisShift = new(id);
@@ -126,12 +131,14 @@ namespace ScheduleManager.Controllers
             ScheduleEditorIndex();
             return View("ScheduleEditorIndex");
         }
+        [AuthenticateManager]
         public IActionResult EditShift(int id) 
         {
             ViewData["EditShift"] = id;
             ViewDetails(id);
             return View("ViewDetails");
         }
+        [AuthenticateManager]
         public IActionResult UpdateShift(int id)
         {
             Shift updateShift = new Shift(id);
@@ -148,6 +155,7 @@ namespace ScheduleManager.Controllers
             ViewDetails(id);
             return View("ViewDetails");
         }
+        [AuthenticateManager]
         public IActionResult ByDate()
         {
             DateTime a = Convert.ToDateTime(HttpContext.Request.Form["StartDate"]);
@@ -157,6 +165,7 @@ namespace ScheduleManager.Controllers
             ViewShifts(1);
             return View ("ViewShifts");
         }
+        [AuthenticateManager]
         public IActionResult ByEmployee(int id)
         {
             
@@ -165,6 +174,5 @@ namespace ScheduleManager.Controllers
             ViewShifts(2);
             return View("ViewShifts");
         }
- 
     }
 }

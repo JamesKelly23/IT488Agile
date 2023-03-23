@@ -5,6 +5,7 @@ namespace ScheduleManager.Controllers
 {
     public class OpenShifts : Controller
     {
+        [AuthenticateUser]
         public IActionResult Index()
         {
 
@@ -37,12 +38,14 @@ namespace ScheduleManager.Controllers
             ViewBag.RequestedShiftList = RequestedShifts;
             return View("Index");
         }
+        [AuthenticateUser]
         public IActionResult ShiftPickupRequest(int id, int empid)
         {
             PickupRequest theRequest = new(id, empid, false, 0);
             theRequest.Save();
             return Index();
         }
+        [AuthenticateUser]
         public IActionResult DeleteRequest(int id, int empid)
         {
             PickupRequest theRequest = new(id, empid);

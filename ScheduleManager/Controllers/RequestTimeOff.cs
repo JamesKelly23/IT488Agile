@@ -9,7 +9,7 @@ namespace ScheduleManager.Controllers
 {
     public class RequestTimeOff : Controller
     {
-        //GET:RequestTimeOff
+        [AuthenticateUser]
         public IActionResult Index()
         {
             //Display the form for RequestTimeOff 
@@ -29,7 +29,7 @@ namespace ScheduleManager.Controllers
             }
             return View("Index");
         }
-        //POST: RequestTimeoff request
+        [AuthenticateUser]
 
         public IActionResult Submit()
 
@@ -42,8 +42,8 @@ namespace ScheduleManager.Controllers
             TimeOffRequest TheRequest = new(HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0, Convert.ToDateTime(HttpContext.Request.Form["start-date"]), Convert.ToDateTime(HttpContext.Request.Form["end-date"]), HttpContext.Request.Form["reason"]);
             TheRequest.Save();
             return Index();
-        } 
-
+        }
+        [AuthenticateUser]
         public IActionResult Delete(int id)
         {
             if(id==null)

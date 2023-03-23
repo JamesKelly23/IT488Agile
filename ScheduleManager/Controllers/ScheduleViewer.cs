@@ -11,6 +11,7 @@ namespace ScheduleManager.Controllers
 {
 	public class ScheduleViewer : Controller
 	{
+		[AuthenticateUser]
 		public IActionResult Index(int? modifier)
 		{
 			ViewBag.Modifier = modifier ?? 0;
@@ -25,6 +26,7 @@ namespace ScheduleManager.Controllers
 			ViewBag.CurrentAvailability = new Employee(loggedInID).GetCurrentAvailability();
 			return View("Index");
 		}
+		[AuthenticateUser]
 		public IActionResult UpdateShift(int id, bool isOpen, int modifier)
 		{
             int loggedInID = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;

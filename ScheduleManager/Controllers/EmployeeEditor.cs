@@ -9,7 +9,7 @@ namespace ScheduleManager.Controllers
 {
     public class EmployeeEditor : Controller
     {
-  
+        [AuthenticateUser]
         public IActionResult EditorIndex()
         {
 
@@ -20,6 +20,7 @@ namespace ScheduleManager.Controllers
             return View();
 
         }
+        [AuthenticateUser]
         public IActionResult Edit(int id, int a)
         {
             if(a == 1)
@@ -42,7 +43,7 @@ namespace ScheduleManager.Controllers
                 return EmployeeDetails(id);
             }
         }
-
+        [AuthenticateUser]
         public IActionResult EmployeeDetails(int id)
         {
 
@@ -63,6 +64,7 @@ namespace ScheduleManager.Controllers
         {
             return View();
         }
+        [AuthenticateManager]
         public IActionResult Search(int EmplyID)
         {
             try
@@ -83,6 +85,7 @@ namespace ScheduleManager.Controllers
                 }
             }
         }
+        [AuthenticateUser]
         public IActionResult Update(int id, int a) 
         {
             Employee thisEmployee = new(id);
@@ -112,10 +115,12 @@ namespace ScheduleManager.Controllers
             EmployeeDetails(id);
             return View("EmployeeDetails");
         }
+        [AuthenticateManager]
         public ActionResult NewEmployee() 
         {
             return View();
         }
+        [AuthenticateManager]
         public ActionResult AddEmployee()
         {
             Employee newEmployee = new(0);
@@ -131,6 +136,7 @@ namespace ScheduleManager.Controllers
             EmployeeDetails(newEmployee.ID);
             return View("EmployeeDetails");
         }
+        [AuthenticateManager]
         public IActionResult Delete(int id)
         {
             Models.Employee.Delete(id);
