@@ -25,7 +25,7 @@
 
                 }
                 }
-                <td style="padding:10px;">Choose your options, then click a start time to start painting a shift onto the day. Finally, click the desired end time to add the shift.</td>
+                <td class="largeroptions" style="padding:10px;">Choose your options, then click a start time to start painting a shift onto the day. Finally, click the desired end time to add the shift.</td>
                 <td style="width: 150px; padding:10px;"><a class="link-button-nofloat" asp-action="Painter" asp-route-id="" asp-route-date="@ViewBag.TargetDate.AddDays(1).ToString("d")">Next Day</a></td>
             </tr>
         </table>
@@ -39,7 +39,7 @@
                     <a asp-action="Painter" asp-route-id="" asp-route-date="@ViewBag.TargetDate.ToString("d")" class="link-button-nofloat deny">Cancel</a>
                 }
             }
-            <span class="text-nowrap" style="margin:10px;">
+            <span class="text-nowrap largeroptions" style="margin:10px;">
                 Role:
                 <select onchange="ChangeValue('RoleText','')" name="RoleSelector">
                     <option value=""></option>
@@ -58,11 +58,11 @@
                     }
                 </select>
             </span>
-            <span class="text-nowrap" style="margin:10px;">
+            <span class="text-nowrap largeroptions" style="margin:10px;">
                 Custom Role (optional):
                 <input type="text" id="RoleText" name="RoleTextBox" value="@(ViewBag.RoleText)" />
             </span>
-            <span class="text-nowrap" style="margin:10px;">
+            <span class="text-nowrap largeroptions" style="margin:10px;">
                 Notes (optional):
                 <input type="text" name="NotesTextBox" value="@ViewBag.NotesText" />
             </span>

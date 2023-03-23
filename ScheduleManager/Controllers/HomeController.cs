@@ -45,6 +45,11 @@ namespace ScheduleManager.Controllers
         {
             return View();
         }
+        public IActionResult Unauth()
+        {
+            ViewData["Message"] = "You are not authorized to perform this action";
+            return View("Error");
+        }
 
         public IActionResult LogOut()
         {
