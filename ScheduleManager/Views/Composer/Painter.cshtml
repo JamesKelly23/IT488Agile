@@ -94,7 +94,7 @@
                                                   where theShift.EmployeeID == theEmployee.ID
                                                   select theShift;
                     List<Shift> theShifts = theQuery.ToList();
-                    <tr class="painter-row @(rownum++%2==0?"evenrow":"")">"
+                    <tr class="painter-row @(rownum++%2==0?"evenrow":"")">
                         <td class="painter-name-cell">@theEmployee.FullName()</td>
                         <td style="background-color:darkgray;" class="painter-cell"></td>
                         @{
