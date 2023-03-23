@@ -140,7 +140,10 @@ namespace ScheduleManager.Controllers
             updateShift.StartTime = Convert.ToDateTime(HttpContext.Request.Form["NewStartTime"]);
             updateShift.EndTime = Convert.ToDateTime(HttpContext.Request.Form["NewEndTime"]);
             updateShift.Notes = HttpContext.Request.Form["NewNotes"];
-            
+            if(Shift.GetScheduleByEmployee(updateShift.ShiftDate, updateShift.ShiftDate, (HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0)).Count > 0 )
+            {
+
+            }
             updateShift.Save();
             ViewDetails(id);
             return View("ViewDetails");
