@@ -18,19 +18,33 @@
         }
         public Shift(int theID)
         {
-            ID = theID;
-            SqlCommand theCommand = new("SELECT * FROM Shift WHERE ID = " + theID + ";", theConnection);
-            theConnection.Open();
-            SqlDataReader theReader = theCommand.ExecuteReader();
-            theReader.Read();
-            IsOpen = theReader.GetBoolean(1);
-            EmployeeID = theReader.GetInt32(2);
-            ShiftDate = theReader.GetDateTime(3);
-            StartTime = theReader.GetDateTime(4);
-            EndTime = theReader.GetDateTime(5);
-            Role = theReader.GetString(6);
-            Notes = theReader.IsDBNull(7) ? "" : theReader.GetString(7);
-            theConnection.Close();
+            if(theID != 0)
+            {
+                ID = theID;
+                SqlCommand theCommand = new("SELECT * FROM Shift WHERE ID = " + theID + ";", theConnection);
+                theConnection.Open();
+                SqlDataReader theReader = theCommand.ExecuteReader();
+                theReader.Read();
+                IsOpen = theReader.GetBoolean(1);
+                EmployeeID = theReader.GetInt32(2);
+                ShiftDate = theReader.GetDateTime(3);
+                StartTime = theReader.GetDateTime(4);
+                EndTime = theReader.GetDateTime(5);
+                Role = theReader.GetString(6);
+                Notes = theReader.IsDBNull(7) ? "" : theReader.GetString(7);
+                theConnection.Close();
+            }
+            else
+            {
+                IsOpen = true;
+                EmployeeID = 0;
+                ShiftDate = DateTime.Now;
+                StartTime= DateTime.Now;
+                EndTime=DateTime.Now;
+                Role = " ";
+                Notes= " ";
+            }
+
         }
         public Shift(bool isOpen, int employeeID, DateTime shiftDate, DateTime startTime, DateTime endTime, string role, string notes)
         {

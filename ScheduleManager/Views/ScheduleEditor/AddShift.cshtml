@@ -49,6 +49,18 @@
     }
     </select>
     </p>
+    <p class="fw-bold">Employee:
+    <select name="ShiftEmployee">
+        @{
+            <option selected value="0">Open</option>
+            List<Employee>EmployeeList = Employee.GetList();
+            foreach(Employee employee in EmployeeList)
+            {
+                <option value="@employee.ID">@employee.FullName()</option>
+            }
+        }
+    </select>
+    </p>
     @*Input for the Notes. Wil create a text box that can't be resized*@
     <p class="fw-bold">Notes:</p>
 

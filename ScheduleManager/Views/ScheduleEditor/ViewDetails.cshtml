@@ -4,6 +4,7 @@
 @{
     ViewData["Title"]= "View Shift Details";
     Shift thisShift = ViewBag.ThisShift;
+    Employee thisEmployee = thisShift.GetEmployee();
     @*View Data when in Edit Mode. Creates a form that will allow you to save to the database*@
     if (Convert.ToInt32(ViewData["EditShift"]) == thisShift.ID)
     {
@@ -109,8 +110,36 @@
                             }
                         }
                     </select>
-            </dd>
-        </dl>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-1">
+                    Employee:
+                </dt>
+                <dd class="col-2">
+                    <select name="NewEmployee">
+                        @{
+                            <option value="0">Open</option>
+                            if(thisEmployee== null)
+                            {
+                                <option selected value="null">Open</option>
+                            }
+                            List<Employee> EmployeeList = Employee.GetList();
+                            foreach(Employee employee in EmployeeList)
+                            {
+                                if(employee.ID == thisEmployee.ID)
+                                {
+                                    <option selected value="@employee.ID">@employee.FullName()</option>
+                                }
+                                else
+                                {
+                                    <option value="@employee.ID">@employee.FullName()</option>
+                                }
+                            }
+                        }
+                    </select>
+                </dd>
+            </dl>
         <dl class="row">
             <dt class="col-1">
                 Notes:
@@ -172,6 +201,14 @@
             </dt>
             <dd class="col-2">
                 @thisShift.EndTime.ToString("t")
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-1">
+                Employee:
+            </dt>
+            <dd class="col-2">
+                @thisEmployee.FullName()
             </dd>
         </dl>
         <dl class="row">

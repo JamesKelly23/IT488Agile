@@ -100,17 +100,28 @@ namespace ScheduleManager.Controllers
         [AuthenticateManager]
         public IActionResult CreateShift()
         {
-            Shift newShift = new(true, 1,Convert.ToDateTime(HttpContext.Request.Form["ShiftDate"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftStart"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftEnd"]),HttpContext.Request.Form["ShiftRole"],HttpContext.Request.Form["ShiftNotes"]);
-            /*
-            newShift.IsOpen = true;
+            //Shift newShift = new(true, 1,Convert.ToDateTime(HttpContext.Request.Form["ShiftDate"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftStart"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftEnd"]),HttpContext.Request.Form["ShiftRole"],HttpContext.Request.Form["ShiftNotes"]);
+            Shift newShift = new(0);
+            if (Convert.ToInt32(HttpContext.Request.Form["ShiftEmployee"]) == 0)
+            {
+                newShift.IsOpen = true;
+                newShift.EmployeeID = Convert.ToInt32(null);
+            }
+            else
+            {
+                newShift.IsOpen = false;
+            }
             newShift.Role = HttpContext.Request.Form["ShiftRole"];
             newShift.ShiftDate = Convert.ToDateTime(HttpContext.Request.Form["ShiftDate"]);
             newShift.StartTime = Convert.ToDateTime(HttpContext.Request.Form["ShiftStart"]);
             newShift.EndTime = Convert.ToDateTime(HttpContext.Request.Form["ShiftEnd"]);
+            newShift.EmployeeID = Convert.ToInt32(HttpContext.Request.Form["ShiftEmployee"]);
+
+
             newShift.Notes = HttpContext.Request.Form["ShiftNotes"];
             
-            newShift.EmployeeID = 0;
-            */
+            //newShift.EmployeeID = 0;
+            
             newShift.Save();
             
             ScheduleEditorIndex();
@@ -146,11 +157,23 @@ namespace ScheduleManager.Controllers
             updateShift.ShiftDate = Convert.ToDateTime(HttpContext.Request.Form["NewDate"]);
             updateShift.StartTime = Convert.ToDateTime(HttpContext.Request.Form["NewStartTime"]);
             updateShift.EndTime = Convert.ToDateTime(HttpContext.Request.Form["NewEndTime"]);
+            
+            updateShift.EmployeeID = Convert.ToInt32(HttpContext.Request.Form["NewEmployee"]);
+            if(updateShift.EmployeeID == 0)
+            {
+                updateShift.IsOpen = true;
+                updateShift.EmployeeID = Convert.ToInt32(null);
+            }
+            else
+            {
+                updateShift.IsOpen = false;
+            }
             updateShift.Notes = HttpContext.Request.Form["NewNotes"];
             if(Shift.GetScheduleByEmployee(updateShift.ShiftDate, updateShift.ShiftDate, (HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0)).Count > 0 )
             {
 
             }
+            
             updateShift.Save();
             ViewDetails(id);
             return View("ViewDetails");
