@@ -128,7 +128,7 @@
                                     DateTime targetTime = ViewBag.TargetDate.AddHours(i);
                                     if (((@ViewBag.EmployeeID ?? 0) == 0) && i < 23) //StartTime Buttons (Only show when starttime has not already been declared)
                                     {
-                                        <td colspan="2" class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"><input type="submit" asp-route-date="@ViewBag.TargetDate.ToString("d")" name="Submit" asp-route-id="@theEmployee.ID" onmouseover="ChangeValue('StartTime', '@targetTime.ToString()')" value="@targetTime.ToString("htt")" class="painter-link-button-nofloat" asp-action="Painter"></td>
+                                        <td colspan="2" class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"><input type="submit" asp-route-date="@ViewBag.TargetDate.ToString("d")" name="Submit" asp-route-id="@theEmployee.ID" onmousedown="ChangeValue('StartTime', '@targetTime.ToString()')" value="@targetTime.ToString("htt")" class="painter-link-button-nofloat" asp-action="Painter"></td>
                                     }
                                     else if ((ViewBag.EmployeeID == theEmployee.ID))
                                     {
@@ -144,7 +144,7 @@
                                         {
                                             if(i<23)
                                             {
-                                                <td colspan="2" class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"><input type="submit" name="Submit" onmouseover="ChangeValue('EndTime', '@targetTime.AddHours(1).ToString()')" value="@ViewBag.TargetDate.AddHours(i+1).ToString("htt")" class="painter-link-button-nofloat" asp-action="AddShift"></td>
+                                                <td colspan="2" class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"><input type="submit" name="Submit" onmousedown="ChangeValue('EndTime', '@targetTime.AddHours(1).ToString()')" value="@ViewBag.TargetDate.AddHours(i+1).ToString("htt")" class="painter-link-button-nofloat" asp-action="AddShift"></td>
                                             }  
                                         }
                                     }
