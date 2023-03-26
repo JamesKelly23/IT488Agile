@@ -244,6 +244,12 @@ td.cell2, th.cell2 {
     vertical-align:middle;
     text-align:center;
 }
+td.cell4, th.cell4 {
+    padding: 13px;
+    margin: 3px;
+    vertical-align: middle;
+    text-align: center;
+}
 
 tr.painter-headerrow {
     padding: 2pt;

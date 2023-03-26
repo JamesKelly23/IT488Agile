@@ -14,43 +14,38 @@
 </div>
 <br/>
 <br/>
-<dl class="row">
-    <dt class="col">
-        ID
-    </dt>
-    <dt class="col">
-        First Name
-    </dt>
-    <dt class="col">
-        Last Name
-    </dt>
-    <dt class="col">
-        Birthday
-    </dt>
-    <dt class="col">
-        Function
-    </dt>
-</dl>
+<center>
+<table class="w-75" >
+<tr class="headerrow2">
+    <td class="cell4">ID</td>
+    <td class="cell4">First Name</td>
+    <td class="cell4">Last Name</td>
+    <td class="cell4">Birthday</td>
+    <td class="cell4">Function</td>
+</tr>
+
 @{
     
     foreach(Employee theEmployee in ViewBag.EmployeeList)
     {
-        <dl class="row">
-            <dt class="col">
+        <tr>
+            <td class="cell4">
                 @theEmployee.ID
-            </dt>
-            <dd class="col">
+            </td>
+            <td class="cell4">
                 @theEmployee.FirstName
-            </dd>
-            <dd class="col">
+            </td>
+            <td class="cell4">
                 @theEmployee.LastName
-            </dd>
-            <dd class="col">
-                @theEmployee.DOB
-            </dd>
-            <dd class="col">
+            </td>
+            <td class="cell4">
+                @theEmployee.DOB.ToString("d")
+            </td>
+            <td class="cell4">
                 <a asp-action="EmployeeDetails" asp-route-id="@theEmployee.ID" class="link-button">Details</a>
-            </dd>
-        </dl>
+            </td>
+        </tr>
     }
 }
+</table>
+</center>
