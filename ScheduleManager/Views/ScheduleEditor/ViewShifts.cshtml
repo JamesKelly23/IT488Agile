@@ -20,6 +20,7 @@
         <br />
         <hr />
         <center>
+        @*This is the Standard Shift Table for displaying Shifts in an organized list. All other search methods will end with this table as a result*@
         <table class="w-75">
             <tr class="headerrow2">
                 <td class="cell4">ID</td>
@@ -60,7 +61,8 @@
         <br />
         </center>
         <div>
-        <div class="sv-shift-box">
+        @*Organizes Employees by Rank in bubble box similar to one used in shift viewer*@
+        <div class="editorShiftBox">
             <h4>General Manager</h4>
             @{
                 foreach(Employee GManager in ViewBag.EmplyList)
@@ -72,7 +74,7 @@
                     }
             }
         </div>
-        <div class="sv-shift-box">
+        <div class="editorShiftBox">
             <h4>Manager</h4>
             @{
                 foreach(Employee Manager in ViewBag.EmplyList)
@@ -84,7 +86,7 @@
                     }
             }
         </div>
-        <div class="sv-shift-box" style="overflow:auto">
+        <div class="editorShiftBox">
             <h4>Team Member</h4>
             @{
                 foreach(Employee TMember in ViewBag.EmplyList)
@@ -100,12 +102,7 @@
             }
         </div>
         </div>
-       @* foreach(Employee employee in ViewBag.EmplyList)
-        {
-            <a asp-action="ByEmployee" asp-route-id="@employee.ID"class="link-button-nofloat">@employee.FullName()</a>
-        }
-        *@<br />
-        <hr />
+        @*Standard Result Table*@
         <center>
         <table class="w-75">
         <tr class="headerrow2">
@@ -144,7 +141,7 @@
     {
         <h3 class="text-center">All Shifts</h3>
         <br />
-
+        @*Standard Result Table*@
         <center>
             <table class="w-75">
                 <tr class="headerrow2">
@@ -183,6 +180,7 @@
     {
         <h3 class="text-center">Open Shifts</h3>
         <br />
+        @*Standard Result Table*@
         <center>
             <table class="w-75">
                 <tr class="headerrow2">
