@@ -124,7 +124,12 @@ namespace ScheduleManager.Controllers
 
             //newShift.EmployeeID = 0;
             //we don't want bad shifts to be created, so lets prevent that
-            if (newShift.EndTime <= newShift.StartTime) {
+             if (!(Shift.GetScheduleByEmployee(newShift.ShiftDate, newShift.ShiftDate, (HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0)).Count > 0))
+            {//if the person isn't a manager the day they are adding to.
+                ViewData["Error"] = "Error: You are not the manager this day, you cannot edit it.";
+                return View("AddShift");
+            }
+           else if (newShift.EndTime <= newShift.StartTime) {
                 //end is before start
                 ViewData["Error"] = "Error: End time cannot be before start time.";
                 return View("AddShift");
@@ -137,8 +142,9 @@ namespace ScheduleManager.Controllers
                 return View("AddShift");
               //  return View("Error");
             }
+            
 
-
+            //if we reach here we are good.
             newShift.Save();
             
             ScheduleEditorIndex();
