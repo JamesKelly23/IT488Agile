@@ -13,26 +13,45 @@
         <form asp-action="ByDate">
         <p>Start Date <input name="StartDate" id="StartDate" type="date" /></p>
         <p>End Date <input  name="EndDate" type="date" min="StartDate" max="StartDate"/></p>
-        <button asp-action="ScheduleEditorIndex">Cancel</button>
         <input type="submit" value="Search">
+        <button asp-action="ScheduleEditorIndex">Cancel</button>
         </form>
         </center>
         <br />
         <hr />
-        if(ViewBag.ShiftList == null)
-        {
-            <p>No Shifts to Display</p>
-        }
-        else
-        {
-            foreach (Shift theShift in theShifts)
+        <center>
+        <table class="w-75">
+            <tr class="headerrow2">
+                <td class="cell4">ID</td>
+                <td class="cell4">Employee</td>
+                <td class="cell4">Role</td>
+                <td class="cell4">Date</td>
+                <td class="cell4">Action</td>
+            </tr>
+        @{
+            if(ViewBag.ShiftList == null)
             {
-                <div>
-                    <a asp-action="ViewDetails" class="link-button-nofloat" asp-route-id="@theShift.ID"> @theShift.ID : @theShift.Role</a>
-                    <br /><br />
-                </div>
+                <tr>
+                <td class="cell4" colspan="5">No Shifts to Display</td>
+                </tr>
+            }
+            else
+            {
+                foreach (Shift theShift in theShifts)
+                {
+                        Employee currentEmployee = theShift.GetEmployee();
+                        <tr>
+                            <td class="cell4">@theShift.ID</td>
+                            <td class="cell4">@currentEmployee.FullName()</td>
+                            <td class="cell4">@theShift.Role</td>
+                            <td class="cell4">@theShift.ShiftDate.ToString("D")</td>
+                            <td class="cell4"><a asp-action="ViewDetails" class="link-button-nofloat" asp-route-id="@theShift.ID">Detais</a></td>
+                        </tr>
+                }
             }
         }
+        </table>
+        </center>
     }
     else if(ViewBag.control == 2)
     {
@@ -40,66 +59,163 @@
         <h2>Search By Employee</h2>
         <br />
         </center>
-        foreach(Employee employee in ViewBag.EmplyList)
+        <div>
+        <div class="sv-shift-box">
+            <h4>General Manager</h4>
+            @{
+                foreach(Employee GManager in ViewBag.EmplyList)
+                    if(GManager.RankID == 3 )
+                    {
+                        <div class="blockquote">
+                        <a asp-action="ByEmployee" asp-route-id ="@GManager.ID" class="link-button-nofloat">@GManager.FullName()</a>
+                        </div>
+                    }
+            }
+        </div>
+        <div class="sv-shift-box">
+            <h4>Manager</h4>
+            @{
+                foreach(Employee Manager in ViewBag.EmplyList)
+                    if(Manager.RankID == 2)
+                    {
+                        <div class="blockquote">
+                        <a asp-action="ByEmployee" asp-route-id = "@Manager.ID" class="link-button-nofloat">@Manager.FullName()</a>
+                       </div>
+                    }
+            }
+        </div>
+        <div class="sv-shift-box" style="overflow:auto">
+            <h4>Team Member</h4>
+            @{
+                foreach(Employee TMember in ViewBag.EmplyList)
+                {
+                    if(TMember.RankID == 1)
+                    {
+                        <div class="blockquote">
+                        <a asp-action ="ByEmployee" asp-route-id ="@TMember.ID" class="link-button-nofloat">@TMember.FullName()</a>
+                        </div>
+                        
+                    }
+                }
+            }
+        </div>
+        </div>
+       @* foreach(Employee employee in ViewBag.EmplyList)
         {
             <a asp-action="ByEmployee" asp-route-id="@employee.ID"class="link-button-nofloat">@employee.FullName()</a>
         }
-        <br />
+        *@<br />
         <hr />
-        if (ViewBag.ShiftList == null)
+        <center>
+        <table class="w-75">
+        <tr class="headerrow2">
+        <td class="cell4">ID</td>
+        <td class="cell4">Employee</td>
+        <td class="cell4">Role</td>
+        <td class="cell4">Date</td>
+        <td class="cell4">Action</td>
+        </tr>
+        @{if (ViewBag.ShiftList == null)
         {
-            <p>No Shifts to Display</p>
+            <tr class="row">
+            <td class="cell4" colspan="5">No Data to Display</td>
+            </tr>
         }
         else
         {
+             
             foreach (Shift theShift in theShifts)
             {
-                <div>
-                    <a asp-action="ViewDetails" class="link-button-nofloat" asp-route-id="@theShift.ID"> @theShift.ID : @theShift.Role</a>
-                    <br /><br />
-                </div>
+                Employee currentEmployee= theShift.GetEmployee();
+                <tr>
+                    <td class="cell4">@theShift.ID</td>
+                    <td class="cell4">@currentEmployee.FullName()</td>
+                    <td class="cell4">@theShift.Role</td>
+                    <td class="cell4">@theShift.ShiftDate.ToString("D")</td>
+                    <td class="cell4"><a asp-action="ViewDetails" class="link-button-nofloat" asp-route-id="@theShift.ID">Detais</a></td>
+                </tr>
             }
         }
+        }
+        </table>
+        </center>
     }
     else if(ViewBag.control == 3)
     {
         <h3 class="text-center">All Shifts</h3>
         <br />
-        if (ViewBag.ShiftList == null)
-        {
-            <p>There are no Shifts</p>
-        }
 
-        else
-        {
-            foreach (Shift theShift in theShifts)
-            {
-                <div>
-                    <a asp-action="ViewDetails" class="link-button-nofloat" asp-route-id="@theShift.ID"> @theShift.ID : @theShift.Role</a>
-                    <br /><br />
-                </div>
-            }
-        }
+        <center>
+            <table class="w-75">
+                <tr class="headerrow2">
+                    <td class="cell4">ID</td>
+                    <td class="cell4">Employee</td>
+                    <td class="cell4">Role</td>
+                    <td class="cell4">Date</td>
+                    <td class="cell4">Action</td>
+                </tr>
+                @{
+                    if (ViewBag.ShiftList == null)
+                    {
+                        <tr>
+                            <td class="cell4" colspan="5">No Shifts to Display</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (Shift theShift in theShifts)
+                        {
+                            Employee currentEmployee = theShift.GetEmployee();
+                            <tr>
+                                <td class="cell4">@theShift.ID</td>
+                                <td class="cell4">@currentEmployee.FullName()</td>
+                                <td class="cell4">@theShift.Role</td>
+                                <td class="cell4">@theShift.ShiftDate.ToString("D")</td>
+                                <td class="cell4"><a asp-action="ViewDetails" class="link-button-nofloat" asp-route-id="@theShift.ID">Detais</a></td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+        </center>
     }
     else if (ViewBag.control == 4)
     {
         <h3 class="text-center">Open Shifts</h3>
         <br />
-        if (ViewBag.ShiftList == null)
-        {
-            <p>There are no Open Shifts</p>
-        }
-
-        else
-        {
-            foreach (Shift theShift in theShifts)
-            {
-                <div>
-                    <a asp-action="ViewDetails" class="link-button-nofloat" asp-route-id="@theShift.ID"> @theShift.ID : @theShift.Role</a>
-                    <br /><br />
-                </div>
-            }
-        }
+        <center>
+            <table class="w-75">
+                <tr class="headerrow2">
+                    <td class="cell4">ID</td>
+                    <td class="cell4">Employee</td>
+                    <td class="cell4">Role</td>
+                    <td class="cell4">Date</td>
+                    <td class="cell4">Action</td>
+                </tr>
+                @{
+                    if (ViewBag.ShiftList == null)
+                    {
+                        <tr>
+                            <td class="cell4" colspan="5">No Shifts to Display</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (Shift theShift in theShifts)
+                        {
+                            Employee currentEmployee = theShift.GetEmployee();
+                            <tr>
+                                <td class="cell4">@theShift.ID</td>
+                                <td class="cell4">@currentEmployee.FullName()</td>
+                                <td class="cell4">@theShift.Role</td>
+                                <td class="cell4">@theShift.ShiftDate.ToString("D")</td>
+                                <td class="cell4"><a asp-action="ViewDetails" class="link-button-nofloat" asp-route-id="@theShift.ID">Detais</a></td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+        </center>
     }
     else
     {
