@@ -119,9 +119,26 @@ namespace ScheduleManager.Controllers
 
 
             newShift.Notes = HttpContext.Request.Form["ShiftNotes"];
-            
+
+
+
             //newShift.EmployeeID = 0;
-            
+            //we don't want bad shifts to be created, so lets prevent that
+            if (newShift.EndTime <= newShift.StartTime) {
+                //end is before start
+                ViewData["Error"] = "Error: End time cannot be before start time.";
+                return View("AddShift");
+           // return View("Error");
+            }
+            else if (newShift.ShiftDate<DateTime.Today){
+                //adding a shift for a day that has already passed
+
+                ViewData["Error"] = "Error: Cannot create a shift for day before today.";
+                return View("AddShift");
+              //  return View("Error");
+            }
+
+
             newShift.Save();
             
             ScheduleEditorIndex();
