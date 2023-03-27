@@ -100,6 +100,10 @@ namespace ScheduleManager.Controllers
         [AuthenticateManager]
         public IActionResult CreateShift()
         {
+            int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
+            Employee employee = new Employee(loggedInEmployee);
+            int currentRank = employee.RankID;
+
             //Shift newShift = new(true, 1,Convert.ToDateTime(HttpContext.Request.Form["ShiftDate"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftStart"]),Convert.ToDateTime(HttpContext.Request.Form["ShiftEnd"]),HttpContext.Request.Form["ShiftRole"],HttpContext.Request.Form["ShiftNotes"]);
             Shift newShift = new(0);
             if (Convert.ToInt32(HttpContext.Request.Form["ShiftEmployee"]) == 0)
@@ -124,8 +128,8 @@ namespace ScheduleManager.Controllers
 
             //newShift.EmployeeID = 0;
             //we don't want bad shifts to be created, so lets prevent that
-             if (!(Shift.GetScheduleByEmployee(newShift.ShiftDate, newShift.ShiftDate, (HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0)).Count > 0))
-            {//if the person isn't a manager the day they are adding to.
+             if (!(Shift.GetScheduleByEmployee(newShift.ShiftDate, newShift.ShiftDate, (HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0)).Count > 0)&&currentRank!=3)
+            {//if the person isn't a manager the day they are adding to and not GM
                 ViewData["Error"] = "Error: You are not the manager this day, you cannot edit it.";
                 return View("AddShift");
             }
@@ -133,14 +137,13 @@ namespace ScheduleManager.Controllers
                 //end is before start
                 ViewData["Error"] = "Error: End time cannot be before start time.";
                 return View("AddShift");
-           // return View("Error");
             }
             else if (newShift.ShiftDate<DateTime.Today){
                 //adding a shift for a day that has already passed
 
                 ViewData["Error"] = "Error: Cannot create a shift for day before today.";
                 return View("AddShift");
-              //  return View("Error");
+
             }
             
 
@@ -175,6 +178,11 @@ namespace ScheduleManager.Controllers
         [AuthenticateManager]
         public IActionResult UpdateShift(int id)
         {
+
+            int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
+            Employee employee = new Employee(loggedInEmployee);
+            int currentRank = employee.RankID;
+
             Shift updateShift = new Shift(id);
             updateShift.Role = HttpContext.Request.Form["NewRole"];
             updateShift.ShiftDate = Convert.ToDateTime(HttpContext.Request.Form["NewDate"]);
@@ -192,11 +200,31 @@ namespace ScheduleManager.Controllers
                 updateShift.IsOpen = false;
             }
             updateShift.Notes = HttpContext.Request.Form["NewNotes"];
-            if(Shift.GetScheduleByEmployee(updateShift.ShiftDate, updateShift.ShiftDate, (HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0)).Count > 0 )
-            {
+
+            //now make sure things are good
+            if(!(Shift.GetScheduleByEmployee(updateShift.ShiftDate, updateShift.ShiftDate, (HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0)).Count > 0 ) && currentRank != 3)
+            {//if not the manager, then they can't update this.
+                ViewData["Error"] = "Error: You are not manager this day, you cannot edit this shift.";
+                return View("AddShift");
 
             }
-            
+            else if (updateShift.EndTime <= updateShift.StartTime)
+            {
+                //end is before start
+                ViewData["Error"] = "Error: End time cannot be before start time.";
+                return View("AddShift");
+            }
+            else if (updateShift.ShiftDate < DateTime.Today)
+            {
+                //adding a shift for a day that has already passed
+
+                ViewData["Error"] = "Error: Cannot change a shift to a day before today.";
+                return View("AddShift");
+
+            }
+
+
+            //if we reach here, the shift is good to go
             updateShift.Save();
             ViewDetails(id);
             return View("ViewDetails");

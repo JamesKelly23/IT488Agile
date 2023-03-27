@@ -212,8 +212,18 @@
         </dl>
         <hr />
         <a asp-action="ScheduleEditorIndex" class="link-button-nofloat">Back</a> <a asp-action="EditShift" asp-route-id="@thisShift.ID" class="link-button-nofloat">Edit</a>
+       
+        //only create the delete button if the person in question should be able to delete it
+        //only deletable if 1. Logged in user is manager this day or 2. Logged in user is GM
 
-        <a asp-action="deleteShift" asp-route-id="@thisShift.ID" class="link-button-nofloat">Delete</a>
+        //|| ViewBag.CurrentUser.RankID == 3
+        if ((Shift.GetScheduleByEmployee(thisShift.ShiftDate, thisShift.ShiftDate, (Context.Session.GetInt32("_LoggedInEmployeeID") ?? 0)).Count > 0) || new Employee(Context.Session.GetInt32("_LoggedInEmployeeID")??0).RankID == 3)
+        {
+                <a asp-action="deleteShift" asp-route-id="@thisShift.ID" class="link-button-nofloat">Delete</a>
+
+            }
+            
+       // <a asp-action="deleteShift" asp-route-id="@thisShift.ID" class="link-button-nofloat">Delete</a>
     }
 
 
