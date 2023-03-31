@@ -270,7 +270,7 @@
         </div>
         <hr/>
 
-        if(ViewBag.CurrentUser.RankID>1 && ViewBag.CurrentUser != ViewBag.currentDetails)
+        if(ViewBag.CurrentUser.RankID>1 && ViewBag.CurrentUser != ViewBag.currentDetails && ViewBag.CurrentUser.RankID > ViewBag.currentDetails.RankID)
         {
             <a class="link-button" asp-action="Delete" asp-route-id=@currentDetails.ID>Delete</a>
         }
