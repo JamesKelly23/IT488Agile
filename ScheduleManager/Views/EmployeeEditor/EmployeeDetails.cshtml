@@ -2,13 +2,14 @@
 @{
     @model ScheduleManager.Models.Employee
     ViewData["Title"] = "Employee Details";
-    
+    @*Identifies the current employee being viewed*@
     Employee currentDetails = ViewBag.currentDetails;
 
 }
 
 <div>
     
+    @*Back to List button to bring user back to employee table. Only shows for Managers and GMs*@
     @{
         Employee CurrentUser = ViewBag.CurrentUser;
         int currentRank = CurrentUser.RankID;
@@ -25,6 +26,7 @@
 </div>
 
 @{
+    @*Displays General Information for a user to edit*@
     if (Convert.ToInt32(ViewData["EmployeeEditGeneral"]) == currentDetails.ID)
     {
         <form asp-action="Update" asp-route-id =@currentDetails.ID asp-route-a ="1">
@@ -96,13 +98,14 @@
                     New Date of Birth
                 </dt>
                 <dd class="col-sm-4">
-                    <input name="newDOB" value=@currentDetails.DOB.ToString("d") type="date">
+                    <input name="newDOB" value="@currentDetails.DOB.ToString("yyyy-MM-dd")" type="date">
                 </dd>
             </dl>
             <input type="submit" name="Save"><br/>
             <button asp-action="EmployeeDetails" asp-route-id=@currentDetails.ID>Cancel</button>
         </form>
     }
+    @*Will Display Contact information for user to edit their data*@
     else if (Convert.ToInt32(ViewData["EmployeeEditContact"]) == currentDetails.ID)
     {
         <form asp-action="Update" asp-route-id=@currentDetails.ID asp-route-a ="2">
@@ -139,6 +142,7 @@
             <button asp-action="EmployeeDetails" asp-route-id=@currentDetails.ID>Cancel</button>
         </form>
     }
+    @*Allows User to Change their username and password*@
     else if (Convert.ToInt32(ViewData["EmployeeEditAccount"]) == currentDetails.ID)
     {
         <form asp-action="Update" asp-route-id=@currentDetails.ID asp-route-a ="3">
@@ -177,6 +181,7 @@
             <button asp-action="EmployeeDetails" asp-route-id=@currentDetails.ID>Cancel</button>
         </form>
     }
+    @*Displays all sections of Employe Details. No user should be able to edit the details of a user of higher rank*@
     else
     {
         <div class="text-center">
@@ -217,7 +222,12 @@
                 </dd>
             </dl>
             <div>
-            <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a ="1" class="link-button-nofloat">Edit</a>
+            @{
+               if(ViewBag.currentDetails.RankID <= ViewBag.CurrentUser.RankID)
+                 {
+                    <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a="1" class="link-button-nofloat">Edit</a>
+                 }
+            }
             </div><br />
         </div>
         <div class="text-center">
@@ -241,7 +251,13 @@
                 </dd>
             </dl>
             <div>
-            <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a ="2" class="link-button-nofloat">Edit</a>
+                @{
+                    if (ViewBag.currentDetails.RankID <= ViewBag.CurrentUser.RankID)
+                    {
+                        <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a="2" class="link-button-nofloat">Edit</a>
+                    }
+                }
+           
             </div><br />
         </div>
         <div class="text-center">
@@ -265,7 +281,13 @@
                 </dd>
             </dl>
             <div>
-            <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a="3" class="link-button-nofloat">Edit</a>
+                @{
+                    if (ViewBag.currentDetails.RankID <= ViewBag.CurrentUser.RankID)
+                    {
+                        <a asp-action="Edit" asp-route-id=@currentDetails.ID asp-route-a="3" class="link-button-nofloat">Edit</a>
+                    }
+                }
+            
             </div><br/>
         </div>
         <hr/>

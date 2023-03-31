@@ -10,9 +10,13 @@ namespace ScheduleManager.Controllers
     public class EmployeeEditor : Controller
     {
         [AuthenticateUser]
+        /*Displays table for all employees*/
         public IActionResult EditorIndex()
         {
 
+            int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
+            Employee CurrentUser = new(loggedInEmployee);
+            ViewBag.CurrentUser = CurrentUser;
             List<Employee> theEmployeeList = Models.Employee.GetList();
 
             ViewBag.EmployeeList = theEmployeeList;

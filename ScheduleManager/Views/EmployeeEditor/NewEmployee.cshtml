@@ -5,6 +5,7 @@
 
     Employee newEmployee = ViewBag.currentDetails;
 }
+@*This displays the page to add an employee via a form. *@
 <div class="text-center">
     <h2>Enter General Information</h2>
     <br />
@@ -33,9 +34,9 @@
         <dd class="col-sm-10">
             <select name="addRank">
                 @{
-                    foreach (Rank rank in Rank.GetList())
+                    foreach (Rank theRank in Rank.GetList(Context.Session.GetInt32("_LoggedInRank") ?? 0))
                     {
-                        <option value="@rank.ID">@rank.Title</option>
+                        <option value="@theRank.ID">@theRank.Title</option>
                     }
                 }
             </select>

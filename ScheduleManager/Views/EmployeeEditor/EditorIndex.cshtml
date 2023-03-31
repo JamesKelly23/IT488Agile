@@ -9,6 +9,7 @@
 <br/>
 <center>
 <div>
+    @*Button to add new Employee*@
     <a asp-action="NewEmployee" class="link-button-nofloat" style="color:black; Background:violet">New Employee</a>
 </div>
 </center>
@@ -23,7 +24,7 @@
     <td class="cell4">Birthday</td>
     <td class="cell4">Function</td>
 </tr>
-
+@*Creates a table containing each Employee*@
 @{
     
     foreach(Employee theEmployee in ViewBag.EmployeeList)
@@ -42,7 +43,13 @@
                 @theEmployee.DOB.ToString("d")
             </td>
             <td class="cell4">
-                <a asp-action="EmployeeDetails" asp-route-id="@theEmployee.ID" class="link-button">Details</a>
+                @{
+                    if(@theEmployee.RankID <= ViewBag.CurrentUser.RankID)
+                    {
+                        <a asp-action="EmployeeDetails" asp-route-id="@theEmployee.ID" class="link-button">Details</a>
+                    }
+                }
+                
             </td>
         </tr>
     }

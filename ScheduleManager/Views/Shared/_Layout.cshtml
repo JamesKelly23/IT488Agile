@@ -35,11 +35,17 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="RequestTimeOff" asp-action="Index">Request Time Off</a>
                                 </li>
                             }
-                            if((Context.Session.GetInt32("_LoggedInRank") ?? 0 ) > 2)
+                            if((Context.Session.GetInt32("_LoggedInRank") ?? 0) >=2)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="EmployeeEditor" asp-action="EditorIndex">Employee Editor</a>
                                 </li>
+                            }
+                            if((Context.Session.GetInt32("_LoggedInRank") ?? 0 ) > 2)
+                            {
+                                @*<li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="EmployeeEditor" asp-action="EditorIndex">Employee Editor</a>
+                                </li>*@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Utility" asp-action="Index">Utilities</a>
                                 </li>
