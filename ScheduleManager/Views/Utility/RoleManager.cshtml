@@ -14,7 +14,7 @@
         <div class="item-box">
         @{
 
-            if(Convert.ToInt32(ViewData["RoleToEdit"]) == theRole.ID)
+            if(Convert.ToInt32(ViewData["RoleToEdit"]) == theRole.ID) //If the role is being edited, show a textbox form instead of a regular Role item-box
             {
                 <form asp-action="UpdateRole" asp-route-id="@theRole.ID">
                 <input name="NewRoleName" type="text" style="width:160px;" value="@theRole.Name">
@@ -22,7 +22,7 @@
                 <input type="submit" value="Save">
                 </form>
             }
-            else
+            else //No role is being edited, just show the name of the role in the box.
             {
                 <p><h5>@theRole.Name</h5></p>
             }     
@@ -33,6 +33,7 @@
         <a class="item-box" asp-action="DeleteRole" asp-route-id="@theRole.ID">Delete</a>
         </div>
     }
+    //Also include a form to allow users to quickly add a new role
     <div class="item-box">
         <p><h5>Add New Role</h5></p>
         <br />

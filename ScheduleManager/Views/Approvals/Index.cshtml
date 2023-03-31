@@ -1,5 +1,5 @@
 ﻿@{
-
+    ViewData["Title"] = "Approvals Screen";
 }
 <h2>Shift Pickup Requests</h2>
 <table class="request-table">
@@ -13,7 +13,7 @@
     </tr>
     @{
         int i = 0;
-        foreach(PickupRequest theRequest in ViewBag.PUList)
+        foreach(PickupRequest theRequest in ViewBag.PUList) //Get the list of PickupRequests from the ViewBag
         {
             <tr class="row2 @(i++ % 2 ==0 ? "evenrow " : "")">
                 <td class="cell2">@theRequest.GetEmployee().FullName()</td>
@@ -27,6 +27,7 @@
                     <a class="link-button details" asp-action="PickupDetails" asp-route-empid="@theRequest.EmployeeID" asp-route-shiftid="@theRequest.ShiftID">Details</a>
                 </td>
             </tr>
+            //Show details if they are requested
             if ((Convert.ToInt32(ViewData["DetailsEmpID"]) == theRequest.EmployeeID) && (Convert.ToInt32(ViewData["DetailsShiftID"]) == theRequest.ShiftID))
             {
                 <tr>
@@ -65,7 +66,7 @@
     </tr>
     @{
         i = 0;
-        foreach (TimeOffRequest theRequest in ViewBag.TOList)
+        foreach (TimeOffRequest theRequest in ViewBag.TOList) //Get the list of Time Off Requests from the ViewBag, iterate once per request
         {
             <tr class="row2 @(i++ % 2 ==0 ? "evenrow " : "")">
                 <td class="cell2">@theRequest.GetEmployee().FullName()</td>
@@ -78,6 +79,7 @@
                     <a class="link-button details" asp-action="TimeOffDetails" asp-route-id="@theRequest.ID">Details</a>
                 </td>
             </tr>
+            //Show details if they are requested.
             if(Convert.ToInt32(ViewData["DetailsTORID"])==theRequest.ID)
             {
                 <tr>
@@ -96,7 +98,7 @@
                                 </tr>
                                 @{
                                     i = 0;
-                                    foreach(TimeOffRequest theOverlap in ViewBag.OverlapList)
+                                    foreach(TimeOffRequest theOverlap in ViewBag.OverlapList) //Get list of overlapping Time Off Requests from the ViewBag, iterate once per overlapping request
                                     {
                                         String ManagerName = (theOverlap.ManagerID == 0 ? "None" : theOverlap.GetManager().FullName());
                                         <tr class="row2">

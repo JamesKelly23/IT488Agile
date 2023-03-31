@@ -1,8 +1,7 @@
 ﻿@{
-
     DateTime dateCursor = ViewBag.TargetDate;
-    DateTime currentMonday = DateTime.Today;
-    while (dateCursor.DayOfWeek != DayOfWeek.Monday)
+    DateTime currentMonday = DateTime.Today; //Start from today's date
+    while (dateCursor.DayOfWeek != DayOfWeek.Monday) //Backtrack to the previous Monday
     {
         dateCursor = dateCursor.AddDays(-1);
     }
@@ -10,7 +9,7 @@
     {
         currentMonday = currentMonday.AddDays(-1);
     }
-    int mod = ((dateCursor - DateTime.Today).Days) / 7;
+    int mod = ((dateCursor - DateTime.Today).Days) / 7; //Calculate the number of weeks are between the current week and the week of the TargetDate. Use this information to supply the Week View Link with the appropriate week modifier
 }
 <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@mod">Back to Week View</a>
 <center>
@@ -19,11 +18,16 @@
     <p>
         <table style="border: 2pt solid black; box-shadow: 3px 3px 3px #888888;">
             <tr style="padding:30px;">
-                @{//we don't want the GM to edit the schedule of a day that has passsed
-                if(!(ViewBag.TargetDate.AddDays(-1)<DateTime.Today )){
-                        <td style="width: 150px; padding:10px;"><a class="link-button-nofloat" asp-action="Painter" asp-route-id="" asp-route-date="@ViewBag.TargetDate.AddDays(-1).ToString("d")">Previous Day</a></td>
-
-                }
+                @{
+                    //we don't want the GM to edit the schedule of a day that has passsed
+                    if (!(ViewBag.TargetDate.AddDays(-1) < DateTime.Today))
+                    {
+                        <td style="width: 150px; padding:10px;">
+                            <a class="link-button-nofloat" asp-action="Painter" asp-route-id="" asp-route-date="@ViewBag.TargetDate.AddDays(-1).ToString("d")">
+                                Previous Day
+                            </a>
+                        </td>
+                    }
                 }
                 <td class="largeroptions" style="padding:10px;">Choose your options, then click a start time to start painting a shift onto the day. Finally, click the desired end time to add the shift.</td>
                 <td style="width: 150px; padding:10px;"><a class="link-button-nofloat" asp-action="Painter" asp-route-id="" asp-route-date="@ViewBag.TargetDate.AddDays(1).ToString("d")">Next Day</a></td>
@@ -42,11 +46,11 @@
             <span class="text-nowrap largeroptions" style="margin:10px;">
                 Role:
                 <select onchange="ChangeValue('RoleText','')" name="RoleSelector">
-                    <option value=""></option>
+                    <option value=""></option><!--Give the user the option to choose no value-->
                     @{
                         foreach (Role theRole in Role.GetList())
                         {
-                            if (ViewBag.SelectedRole == theRole.Name)
+                            if (ViewBag.SelectedRole == theRole.Name) //If a role has been selected previously, automatically select that role again
                             {
                                 <option selected value="@theRole.Name">@theRole.Name</option>
                             }
@@ -66,6 +70,7 @@
                 Notes (optional):
                 <input type="text" name="NotesTextBox" value="@ViewBag.NotesText" />
             </span>
+            <!--These hidden form elements hold the shift information that is determined by which submit button is pressed-->
             <input type="hidden" name="EmployeeID" value="@(ViewBag.EmployeeID ?? 0)" />
             <input type="hidden" name="TargetDate" value="@(ViewBag.TargetDate ?? new DateTime().ToString("d"))" />
             <input type="hidden" id="StartTime" name="StartTime" value="@(ViewBag.StartTime ?? new DateTime().ToString("g"))" />
@@ -78,14 +83,14 @@
                     DateTime theCursor = ViewBag.TargetDate.AddHours(6);
                     for (int i = 6; i < 24; i++)
                     {
-                        <td class="painter-cell-left">@(i>12?i-12:i)</td>
+                        <td class="painter-cell-left">@(i > 12 ? i - 12 : i)</td>
                         <td class="painter-cell-right">@theCursor.ToString("tt")</td>
                         theCursor = theCursor.AddHours(1);
                     }
                 }
             </tr>
             @{
-                List<Shift> theList = ViewBag.ShiftList;
+                List<Shift> theList = ViewBag.ShiftList; //Obtain the list<Shift> from the controller
                 int rownum = 0;
                 foreach (Employee theEmployee in ViewBag.EmployeeList)
                 {
@@ -93,7 +98,9 @@
                     IEnumerable<Shift> theQuery = from Shift theShift in theList
                                                   where theShift.EmployeeID == theEmployee.ID
                                                   select theShift;
+                    //Filter to the shifts that are for the current Employee record.
                     List<Shift> theShifts = theQuery.ToList();
+                    //Start rendering the row for the employee
                     <tr class="painter-row @(rownum++%2==0?"evenrow":"")">
                         <td class="painter-name-cell">@theEmployee.FullName()</td>
                         <td style="background-color:darkgray;" class="painter-cell"></td>
@@ -102,7 +109,7 @@
                             {
                                 <td colspan="36" class="painter-cell @(rownum %2 == 0 ? "painter-unavailable-even" : "painter-unavailable")">Unavailable - Approved Time Off Request</td>
                             }
-                            else if (theShifts.Count > 0) //Fires if a shift exists on the current row
+                            else if (theShifts.Count > 0) //Fires if a shift exists on the current row.
                             {
                                 Shift theShift = theShifts.ElementAt(0);
 
@@ -114,7 +121,7 @@
                                     {
                                         <td colspan="2" class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"></td>
                                     }
-                                    else //Adds paragraph tag with shift
+                                    else //Adds a cell to graphically represent the shift. The cell spans the entire length of the shift. Also render an "x" button to allow the shift to be deleted with one click.
                                     {
                                         <td style="vertical-align:middle;" class="painter-shift painter-cell" colspan="@(shiftLength*2)">@theShift.ToString() - @theShift.Role<a class="painter-link-button-small-x" asp-action="DeleteShift" asp-route-id="@theShift.ID">x</a></td>
                                         i += shiftLength - 1;
@@ -142,19 +149,20 @@
                                         }
                                         else //Show the EndTime buttons.
                                         {
-                                            if(i<23)
+                                            if (i < 23)
                                             {
                                                 <td colspan="2" class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"><input type="submit" name="Submit" onmousedown="ChangeValue('EndTime', '@targetTime.AddHours(1).ToString()')" value="@ViewBag.TargetDate.AddHours(i+1).ToString("htt")" class="painter-link-button-nofloat" asp-action="AddShift"></td>
-                                            }  
+                                            }
                                         }
                                     }
-                                    else
+                                    else //No shifts exist on this day, and the painter is not in the middle of creating a shift, so show all of the start buttons for this row.
                                     {
                                         <td colspan="2" class="@((theAvailability.IsAvailableAt(ViewBag.TargetDate.DayOfWeek, i) ? "painter-cell": (rownum%2==0?"painter-unavailable-even":"painter-unavailable")))"></td>
                                     }
                                 }
                             }
                         }
+                        //End the Employee Row
                     </tr>
                 }
             }
@@ -162,6 +170,11 @@
     </form>
 </center>
 <script>
+    /*
+     * Each submit button's onmousedown event is attached to the ChangeValue function that changes the values of the hidden form elements' values to whatever
+     * time was clicked. The ScrollToFocusButton() function is used to scroll to the selected row automatically when a shift is started. This way, the user
+     * does not have to scroll down the page to finish painting the shift onto the day.
+     */
     function ChangeValue(id, val) {
         document.getElementById(id).setAttribute("Value", val);
     }

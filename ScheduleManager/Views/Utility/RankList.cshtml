@@ -3,7 +3,7 @@
 *@
 @{
     ViewData["Title"]="Rank List";
-    foreach (Rank theRank in ViewBag.RankList)
+    foreach (Rank theRank in ViewBag.RankList) //Show each Rank in the list in an item-box
     {
         <div class="item-box">
             <p><h4>Rank @theRank.ID</h4></p>

@@ -1,16 +1,11 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-    Prevent users from going past two weeks of todays date
-    Prevent managers from editing the sc
-*@
-
-<center>
+﻿<center>
     <h1>Schedule Creator - Week View</h1>
     <h2>Dates: @ViewData["DateRange"]</h2>
+    <!--Render the Previous and Next Week Buttons and the Show Availabilities Button-->
     <div style="width:100%;">
         <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier - 1)">Previous Week</a>
-        <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier + 1)">Next Week</a>
-        <a class="link-button" asp-action="Index" asp-route-modifier="@ViewBag.Modifier" asp-route-showavailabilities="@(!(ViewBag.ShowAvailabilities))">@(ViewBag.ShowAvailabilities ? "Hide Availabilities" : "Show Availabilities")</a>
+        <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier + 1)">Next Week</a><br />
+        <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@ViewBag.Modifier" asp-route-showavailabilities="@(!(ViewBag.ShowAvailabilities))">@(ViewBag.ShowAvailabilities ? "Hide Availabilities" : "Show Availabilities")</a>
     </div>
     <p>Click on a day below to zoom to that day.</p>
 </center>
@@ -33,40 +28,30 @@
                 if( ViewBag.StartDate.AddDays(j) < DateTime.Today)
                 {//if the day in question is before today, then it shouldn't be able to be edited
                     <td class="cell2"><a class="link-button-nofloat">@ViewBag.StartDate.AddDays(j).ToString("d")</a></td>
-
                 }
                 else
                 {//this means it is after today
                     <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(j).ToString("d")">@ViewBag.StartDate.AddDays(j).ToString("d")</a></td>
-
                 }
             }
-            /*
-        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.ToString("d")">@ViewBag.StartDate.ToString("d")</a></td>
-        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(1).ToString("d")">@ViewBag.StartDate.AddDays(1).ToString("d")</a></td>
-        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(2).ToString("d")">@ViewBag.StartDate.AddDays(2).ToString("d")</a></td>
-        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(3).ToString("d")">@ViewBag.StartDate.AddDays(3).ToString("d")</a></td>
-        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(4).ToString("d")">@ViewBag.StartDate.AddDays(4).ToString("d")</a></td>
-        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(5).ToString("d")">@ViewBag.StartDate.AddDays(5).ToString("d")</a></td>
-        <td class="cell2"><a class="link-button-nofloat" asp-action="Painter" asp-route-date="@ViewBag.StartDate.AddDays(6).ToString("d")">@ViewBag.StartDate.AddDays(6).ToString("d")</a></td>
-   */
         }
         </tr>
     @{
         int i = 0;
-        foreach (Employee theEmployee in ViewBag.EmployeeList)
+        foreach (Employee theEmployee in ViewBag.EmployeeList) //Iterate once per employee (Y-Axis)
         {
             DateTime theCursor = ViewBag.StartDate;
             <tr class="row2 @(i++%2==0 ? "evenrow" : "")">
                 <td class="cell2">@theEmployee.FullName()</td>
                 @{
-                    foreach (DayOfWeek theDay in Availability.GetDaysOfWeek())
+                    foreach (DayOfWeek theDay in Availability.GetDaysOfWeek()) //Iterate once for each day of the week (starting on Monday) (X-Axis)
                     {
                         List<Shift> theShiftList = ViewBag.ShiftList;
                         IEnumerable<Shift> dayQuery = from theShift in theShiftList
                                                       where (theShift.ShiftDate.DayOfWeek == theDay)
                                                       && (theShift.EmployeeID == theEmployee.ID)
                                                       select theShift;
+                                                      //Filter shift list to current employee record
                         List<Shift> theMatchingList = dayQuery.ToList();
                         <td class="cell2">
                             @{
@@ -89,7 +74,7 @@
                                 }
                             </p>
                             @{
-                                if(ViewBag.ShowAvailabilities)
+                                if(ViewBag.ShowAvailabilities) //If the ShowAvailabilities flag is set, also show the employee's availability
                                 {
                                     <p class="sv-availability-bubble">
                                         Availability<br />
@@ -98,7 +83,7 @@
                                 }
                             }
                         </td>
-                        theCursor = theCursor.AddDays(1);
+                        theCursor = theCursor.AddDays(1); //Move the cursor to the next day of the week.
                     }
                 }
             </tr>
