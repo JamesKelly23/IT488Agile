@@ -20,6 +20,8 @@ namespace ScheduleManager.Controllers
             return View();
 
         }
+        /*Shift Edit function. Divides Employee detials into sections. The a variable decides which section to show, which it gets 
+         from the user's input (see view page)*/
         [AuthenticateUser]
         public IActionResult Edit(int id, int a)
         {
@@ -43,6 +45,8 @@ namespace ScheduleManager.Controllers
                 return EmployeeDetails(id);
             }
         }
+        /*Displays Employee Information. Users will be taken to their own details. Managers and GMs are able to 
+         view the details of other users.*/
         [AuthenticateUser]
         public IActionResult EmployeeDetails(int id)
         {
@@ -60,6 +64,7 @@ namespace ScheduleManager.Controllers
             ViewBag.currentDetails = new Models.Employee(id);
             return View("EmployeeDetails");
         }
+        /*Logic for searching employee. Not implemented as the need for it was not great.*/
         public IActionResult SearchEmply()
         {
             return View();
@@ -85,6 +90,7 @@ namespace ScheduleManager.Controllers
                 }
             }
         }
+        /*This is where data from edits are saved to the database. Data from the sections edited are saved.*/
         [AuthenticateUser]
         public IActionResult Update(int id, int a) 
         {
@@ -115,11 +121,14 @@ namespace ScheduleManager.Controllers
             EmployeeDetails(id);
             return View("EmployeeDetails");
         }
+        /*Displays the page for creating a new employee*/
         [AuthenticateManager]
         public ActionResult NewEmployee() 
         {
             return View();
         }
+        /*Saves the details of the new Employee created. Should only be available to managers. Once the employee
+         is created, it should take you to the detail page for the new employee.*/
         [AuthenticateManager]
         public ActionResult AddEmployee()
         {
@@ -136,6 +145,7 @@ namespace ScheduleManager.Controllers
             EmployeeDetails(newEmployee.ID);
             return View("EmployeeDetails");
         }
+        /*Method to delete an employee. Should only be available to Managers and GMs.*/
         [AuthenticateManager]
         public IActionResult Delete(int id)
         {

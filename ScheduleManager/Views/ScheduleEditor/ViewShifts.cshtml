@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "View Shifts";
     List<Shift> theShifts = ViewBag.ShiftList;
-    
+    @*Will give the option to view Shifts by Date*@
     if(ViewBag.control == 1 )
     {
         <center>
@@ -54,6 +54,7 @@
         </table>
         </center>
     }
+    @*This will Display Shifts By Employee*@
     else if(ViewBag.control == 2)
     {
         <center>
@@ -137,6 +138,7 @@
         </table>
         </center>
     }
+    @*This will Display all Shifts*@
     else if(ViewBag.control == 3)
     {
         <h3 class="text-center">All Shifts</h3>
@@ -176,6 +178,7 @@
             </table>
         </center>
     }
+    @*This will Show Open Shifts*@
     else if (ViewBag.control == 4)
     {
         <h3 class="text-center">Open Shifts</h3>
