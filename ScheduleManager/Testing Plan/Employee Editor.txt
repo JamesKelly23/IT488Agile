@@ -1,0 +1,13 @@
+Employee Editor Test Plan
+-Team members are only able to view and edit their own data.
+-Edit Employee information as Manager General Manager.
+-Edit data as logged in employee.
+-Delete Employee as General Manager.
+-Delete Employee as Manager
+-View Employee List as General Manager.
+-Add a new User.
+-Add a new User (SQL Injection).
+-Attempt to delete logged in User.
+-Attempt to view data of Employee of higher rank.
+-Attempt to Delete Employee of higher rank.
+-Attempt to view Employee List as Manager and Team Member

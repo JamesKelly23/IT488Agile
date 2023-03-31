@@ -1,0 +1,12 @@
+﻿Schedule Editor Test Plan
+-Only available To Managers and General Managers
+-Managers are only able to edit shifts on days they are scheduled to work.
+-No past shifts can be edited.
+-Create a new shift.
+-Create a new shift (SQL Injection).
+-Edit a shift.
+-View list of Shifts by Date Range.
+-View list of Shifts by Employee.
+-View list of all Shifts.
+-Delete a Shift.
+-Attempt to access schedule Editor as Team Member.
