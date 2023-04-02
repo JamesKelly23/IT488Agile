@@ -4,10 +4,10 @@
     <!--Render the Previous and Next Week Buttons and the Show Availabilities Button-->
     <div style="width:100%;">
         <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier - 1)">Previous Week</a>
-        <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier + 1)">Next Week</a><br />
-        <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@ViewBag.Modifier" asp-route-showavailabilities="@(!(ViewBag.ShowAvailabilities))">@(ViewBag.ShowAvailabilities ? "Hide Availabilities" : "Show Availabilities")</a>
+        <a class="link-button-nofloat" asp-action="Index" asp-route-modifier="@(ViewBag.Modifier + 1)">Next Week</a><br /><br />
+        <a style="margin-top: 40px;" class="link-button-nofloat" asp-action="Index" asp-route-modifier="@ViewBag.Modifier" asp-route-showavailabilities="@(!(ViewBag.ShowAvailabilities))">@(ViewBag.ShowAvailabilities ? "Hide Availabilities" : "Show Availabilities")</a>
     </div>
-    <p>Click on a day below to zoom to that day.</p>
+    <p style="margin-top: 20px;">Click on a day below to zoom to that day.</p>
 </center>
 <table>
     <tr class="headerrow2">

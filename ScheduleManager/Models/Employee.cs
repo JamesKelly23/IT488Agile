@@ -108,6 +108,7 @@ namespace ScheduleManager.Models
             newParameter.Direction = System.Data.ParameterDirection.Output;
             theCommand.Parameters.Add(newParameter);
             String message = "The row was successfully updated.";
+            bool success = false;
             try
             {
                 theConnection.Open();
@@ -115,6 +116,7 @@ namespace ScheduleManager.Models
                 if (ID == 0)
                 {
                     ID = Convert.ToInt32(theCommand.Parameters["@NewID"].Value);
+                    success = true;
                     message = "Success, the ID of the new record is " + ID;
                 }
             }
@@ -125,6 +127,11 @@ namespace ScheduleManager.Models
             finally
             {
                 theConnection.Close();
+            }
+            if(success)
+            {
+                Availability newAvail = new(ID, DateTime.Now);
+                newAvail.Save();
             }
             return message;
         }
