@@ -33,6 +33,7 @@ namespace ScheduleManager.Models
             {
                 list.Add(new Role(theReader.GetInt32(0)));
             }
+            staticConnection.Close();
             return list;
         }
         public static void Delete(int id)
