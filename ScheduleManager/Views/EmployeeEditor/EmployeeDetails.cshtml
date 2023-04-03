@@ -17,7 +17,7 @@
         {
             <a asp-action="EditorIndex" class="link-button">Back to List</a>
         }
-
+        <a style="float: left;" class="link-button-nofloat" asp-controller="AvailabilityEditor" asp-action="Index" asp-route-id="@currentDetails.GetCurrentAvailability().ID">View/Edit Availability</a>
 
     <br/>
     }

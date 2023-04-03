@@ -117,28 +117,21 @@
             <p>What would you like to do today? Here are some suggestions:</p>
             <ul class="container2 linklist">
                 <li class="linklist-item">
+                    <a class="link-button" asp-controller="ScheduleViewer" asp-action="Index">View My Schedule</a>
+                </li>
+                <li class="linklist-item">
                     <a class="link-button" asp-controller="OpenShifts" asp-action="Index">View Available Shifts</a>
                 </li>
                 <li class="linklist-item">
                     <a class="link-button" asp-controller="EmployeeEditor" asp-action="EmployeeDetails" asp-route-id="@ViewBag.CurrentUser.ID">Edit My Information</a>
                 </li>
-                @{
-                    if (ViewBag.CurrentUser.RankID > 1)
-                    {
-                        <li class="linklist-item">
-                            <a class="link-button" asp-controller="Approvals" asp-action="Index">View Manager Approvals</a>
-                        </li>
-                        <li class="linklist-item">
-                            <a class="link-button" asp-controller="ScheduleEditor" asp-action="ScheduleEditorIndex">Manage Schedules</a>
-                        </li>
-                    }
-                    if (ViewBag.CurrentUser.RankID > 2)
-                    {
-                        <li class="linklist-item">
-                            <a class="link-button" asp-controller="Composer" asp-action="Index">Schedule Composer - GM Only</a>
-                        </li>
-                    }
-                }
+                <li class="linklist-item">
+                    <a class="link-button" asp-controller="RequestTimeOff" asp-action="Index">Request Time Off</a>
+                </li>
+                <li class="linklist-item">
+                    <a class="link-button" asp-controller="AvailabilityEditor" asp-action="Index">Change My Availability</a>
+                </li>
+
             </ul>
         }
     }

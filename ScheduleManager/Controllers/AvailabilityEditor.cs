@@ -8,19 +8,24 @@ namespace ScheduleManager.Controllers
     public class AvailabilityEditor : Controller
     {
         [AuthenticateUser]
-        public IActionResult Index()
+        public IActionResult Index(int? id)
         {
             int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
             ViewBag.CurrentUser = new Employee(loggedInEmployee);
-            ViewBag.CurrentAvailability =  ViewBag.CurrentUser.GetCurrentAvailability();
+            if (id == null)
+            {
+                ViewBag.CurrentAvailability = ViewBag.CurrentUser.GetCurrentAvailability();
+            }
+            else
+            {
+                ViewBag.CurrentAvailability = new Availability(id ?? 0);
+            }
             return View("Index");
         }
         [AuthenticateUser]
-        public IActionResult Update()
+        public IActionResult Update(int? id)
         {
-            int loggedInEmployee = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
-            Employee currentUser = new Employee(loggedInEmployee);
-            Availability theAvail = currentUser.GetCurrentAvailability();
+            Availability theAvail = new Availability(id ?? 0);
             bool success = true; //Defaults to true, any validation error detected throughout this process will change the value to false
             foreach(DayOfWeek theDay in Models.Availability.GetDaysOfWeek()) //Loop through each of the 7 days of the week.
             {
@@ -59,7 +64,7 @@ namespace ScheduleManager.Controllers
             {
                 ViewData["Message"] = "Save Unsuccessful: Resolve errors listed below.<br>" + ViewData["Message"];
             }
-            return Index();
+            return Index(theAvail.ID);
         }
     }
 }

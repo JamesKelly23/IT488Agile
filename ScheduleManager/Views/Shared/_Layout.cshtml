@@ -18,46 +18,41 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                    <ol class="navbar-nav flex-grow-1">
+                        <li style="order:1;" class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @{
-                            if ((Context.Session.GetInt32("_LoggedInEmployeeID") ?? 0) != 0)
+                            if ((Context.Session.GetInt32("_LoggedInRank") ?? 0) >= 2)
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="ScheduleViewer" asp-action="Index">View Schedule</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="AvailabilityEditor" asp-action="Index">Availability Editor</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="RequestTimeOff" asp-action="Index">Request Time Off</a>
-                                </li>
-                            }
-                            if((Context.Session.GetInt32("_LoggedInRank") ?? 0) >=2)
-                            {
-                                <li class="nav-item">
+                                <li style="order:5;" class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="EmployeeEditor" asp-action="EditorIndex">Employee Editor</a>
                                 </li>
-                            }
-                            if((Context.Session.GetInt32("_LoggedInRank") ?? 0 ) > 2)
-                            {
-                                @*<li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="EmployeeEditor" asp-action="EditorIndex">Employee Editor</a>
-                                </li>*@
-                                <li class="nav-item">
+                                <li style="order:6;" class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Utility" asp-action="Index">Utilities</a>
                                 </li>
+                                <li style="order:4;" class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Approvals" asp-action="Index">Manager Approvals</a>
+                                </li>
+                                <li style="order:2;" class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="ScheduleEditor" asp-action="ScheduleEditorIndex">Manage Schedules</a>
+                                </li>
                             }
+                            if ((Context.Session.GetInt32("_LoggedInRank") ?? 0) >= 3)
+                            {
+                                <li style="order:3;" class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Composer" asp-action="Index">Schedule Composer</a>
+                                </li>
+                            }
+
                             if ((Context.Session.GetInt32("_LoggedInEmployeeID") ?? 0) != 0)
                             {
-                                <li class="nav-item">
+                                <li style="order:7;" class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Log-Out</a>
                                 </li>
                             }
                         }
-                    </ul>
+                    </ol>
                 </div>
             </div>
         </nav>
