@@ -65,6 +65,19 @@
                 return false;
             }
         }
+        public List<PickupRequest> GetConflictingRequests()
+        {
+            List<PickupRequest> theList = new();
+            SqlCommand theCommand = new("SELECT ShiftID, EmployeeID FROM PickupRequest WHERE ShiftID =" + ShiftID + " AND EmployeeID != " + EmployeeID, theConnection);
+            theConnection.Open();
+            SqlDataReader theReader = theCommand.ExecuteReader();
+            while(theReader.Read())
+            {
+                theList.Add(new PickupRequest(theReader.GetInt32(0), theReader.GetInt32(1)));
+            }
+            theConnection.Close();
+            return theList;
+        }
         public Shift GetShift()
         {
             return new Shift(ShiftID);

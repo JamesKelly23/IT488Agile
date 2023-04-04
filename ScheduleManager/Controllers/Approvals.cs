@@ -64,6 +64,13 @@ namespace ScheduleManager.Controllers
             theRequest.IsApproved = approved; //Update the request to show the appropriate approved status
             theRequest.ManagerID = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0; //Mark that the currently logged in user is the actioning manager
             theRequest.Save(); //Update the request in the database
+            //Deny all conflicting requests
+            foreach (PickupRequest theConflictingRequest in theRequest.GetConflictingRequests())
+            {
+                theConflictingRequest.IsApproved = false;
+                theConflictingRequest.ManagerID = HttpContext.Session.GetInt32("_LoggedInEmployeeID") ?? 0;
+                theConflictingRequest.Save();
+            }
             return Index();
         }
         [AuthenticateManager]
