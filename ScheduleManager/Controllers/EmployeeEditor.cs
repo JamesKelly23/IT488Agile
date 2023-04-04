@@ -132,12 +132,14 @@ namespace ScheduleManager.Controllers
             {
                 Console.Write("Passwords Don't Match");
                 EmployeeDetails(id);
+                ViewData["EmployeeEditResult"] = "Passwords do not match";
                 return View("EmployeeDetails");
             }
             else
             {
                 thisEmployee.Save();
                 EmployeeDetails(id);
+                ViewData["EmployeeEditResult"] = "Changes Saved";
                 return View("EmployeeDetails");
             }
 
@@ -164,6 +166,7 @@ namespace ScheduleManager.Controllers
             newEmployee.Password = HttpContext.Request.Form["addPassword"];
             newEmployee.Save();
             EmployeeDetails(newEmployee.ID);
+            ViewData["EmployeeEditResult"] = "Employee Created Successfully!";
             return View("EmployeeDetails");
         }
         /*Method to delete an employee. Should only be available to Managers and GMs.*/
@@ -172,6 +175,7 @@ namespace ScheduleManager.Controllers
         {
             Models.Employee.Delete(id);
             EditorIndex();
+            ViewData["EmployeeIndexResult"] = "Employee Deleted Successfully!";
             return View("EditorIndex");
         }
     }
