@@ -174,7 +174,7 @@
                     Verify Password
                 </dt>
                 <dd class="col-sm-4">
-                    <input name="verifyPassword" placeholder="##############">
+                    <input name="verifyPassword" placeholder="##############" type="password">
                 </dd>
             </dl>
             <input type="Submit"><br />
@@ -289,12 +289,16 @@
                 }
             
             </div><br/>
+            <hr />
         </div>
-        <hr/>
+
 
         if(ViewBag.CurrentUser.RankID>1 && ViewBag.CurrentUser != ViewBag.currentDetails && ViewBag.CurrentUser.RankID > ViewBag.currentDetails.RankID)
         {
-            <a class="link-button" asp-action="Delete" asp-route-id=@currentDetails.ID>Delete</a>
+            <div>
+                <a class="link-button-nofloat" asp-action="Delete" asp-route-id=@currentDetails.ID style=" Background:Orangered">Delete</a>
+            <br/><br/>
+            </div>
         }
 
     }

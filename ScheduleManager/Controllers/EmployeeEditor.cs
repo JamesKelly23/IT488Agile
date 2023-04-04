@@ -99,6 +99,7 @@ namespace ScheduleManager.Controllers
         public IActionResult Update(int id, int a) 
         {
             Employee thisEmployee = new(id);
+            bool passwordVerify = true;
             if (a == 1)
             {
                 thisEmployee.FirstName = HttpContext.Request.Form["newFirstName"];
@@ -115,15 +116,31 @@ namespace ScheduleManager.Controllers
             {
                 thisEmployee.Username = HttpContext.Request.Form["newUserName"];
                 thisEmployee.Password = HttpContext.Request.Form["newPassword"];
+                string matchPassword = HttpContext.Request.Form["verifyPassword"];
+
+                if(matchPassword != thisEmployee.Password)
+                {
+                    passwordVerify = false;
+                }
             }
             else
             {
                 return View("EmployeeDetails");
             }
 
-            thisEmployee.Save();
-            EmployeeDetails(id);
-            return View("EmployeeDetails");
+            if (passwordVerify == false)
+            {
+                Console.Write("Passwords Don't Match");
+                EmployeeDetails(id);
+                return View("EmployeeDetails");
+            }
+            else
+            {
+                thisEmployee.Save();
+                EmployeeDetails(id);
+                return View("EmployeeDetails");
+            }
+
         }
         /*Displays the page for creating a new employee*/
         [AuthenticateManager]
