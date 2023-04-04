@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.FlowAnalysis;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using ScheduleManager.Models;
 using System.ComponentModel.DataAnnotations;
@@ -130,9 +131,21 @@ namespace ScheduleManager.Controllers
 
             if (passwordVerify == false)
             {
-                Console.Write("Passwords Don't Match");
-                EmployeeDetails(id);
+
+                Edit(id, 3);
                 ViewData["EmployeeEditResult"] = "Passwords do not match";
+                return View("EmployeeDetails");
+            }
+            else if (HttpContext.Request.Form["newUserName"] == "")
+            {
+                Edit(id, 3);
+                ViewData["EmployeeEditResult"] = "User Name cannot be empty.";
+                return View("EmployeeDetails");
+            }
+            else if (HttpContext.Request.Form["newPassword"] == "")
+            {
+                Edit(id, 3);
+                ViewData["EmployeeEditResult"] = "Password must be set.";
                 return View("EmployeeDetails");
             }
             else
@@ -164,10 +177,24 @@ namespace ScheduleManager.Controllers
             newEmployee.Phone = HttpContext.Request.Form["addPhone"];
             newEmployee.Username = HttpContext.Request.Form["addUserName"];
             newEmployee.Password = HttpContext.Request.Form["addPassword"];
-            newEmployee.Save();
-            EmployeeDetails(newEmployee.ID);
-            ViewData["EmployeeEditResult"] = "Employee Created Successfully!";
-            return View("EmployeeDetails");
+            if (HttpContext.Request.Form["addUserName"].ToString() == "")
+            {
+                ViewData["NewEmployeeMessage"] = "Username cannot be null.";
+                return View("NewEmployee");
+            }
+            else if(HttpContext.Request.Form["addPassword"].ToString() == "")
+            {
+                ViewData["NewEmployeeMessage"] = "Password must be filled out";
+                return View("NewEmployee");
+            }
+            else
+            {
+                newEmployee.Save();
+                EmployeeDetails(newEmployee.ID);
+                ViewData["EmployeeEditResult"] = "Employee Created Successfully!";
+                return View("EmployeeDetails");
+            }
+
         }
         /*Method to delete an employee. Should only be available to Managers and GMs.*/
         [AuthenticateManager]
