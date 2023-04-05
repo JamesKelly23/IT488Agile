@@ -2,7 +2,7 @@
 GO
 
 /****** Object:  Login [IIS APPPOOL\BoilingOwls]    Script Date: 4/4/2023 6:51:28 PM ******/
-CREATE LOGIN [IIS APPPOOL\BoilingOwls] FROM WINDOWS WITH DEFAULT_DATABASE=[master], DEFAULT_LANGUAGE=[us_english]
+CREATE LOGIN [IIS APPPOOL\ScheduleManager] FROM WINDOWS WITH DEFAULT_DATABASE=[master], DEFAULT_LANGUAGE=[us_english]
 GO
 
 /****** Object:  Database [ScheduleManager]    Script Date: 4/4/2023 7:15:56 PM ******/
@@ -90,10 +90,7 @@ GO
 /****** Object:  User [ScheduleManager]    Script Date: 4/4/2023 7:15:56 PM ******/
 CREATE USER [ScheduleManager] FOR LOGIN [IIS APPPOOL\ScheduleManager] WITH DEFAULT_SCHEMA=[dbo]
 GO
-/****** Object:  User [BoilingOwls]    Script Date: 4/4/2023 7:15:56 PM ******/
-CREATE USER [BoilingOwls] FOR LOGIN [IIS APPPOOL\BoilingOwls] WITH DEFAULT_SCHEMA=[dbo]
-GO
-ALTER ROLE [db_owner] ADD MEMBER [BoilingOwls]
+ALTER ROLE [db_owner] ADD MEMBER [ScheduleManager]
 GO
 /****** Object:  Table [dbo].[Availability]    Script Date: 4/4/2023 7:15:56 PM ******/
 SET ANSI_NULLS ON
